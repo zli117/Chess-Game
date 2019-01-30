@@ -4,7 +4,9 @@ import utils.Location;
 
 public interface GameObserverCallBacks {
 
-  void lost(Side loser);
+  void onCheckmate(Side loser);
+
+  void onStalemate(Side loser);
 
   void pieceMoved(ChessBoardBase chessBoard, Location from, Location to);
 

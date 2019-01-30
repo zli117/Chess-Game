@@ -37,6 +37,14 @@ public class ChessBoardBase {
     mStateChanged = false;
   }
 
+  public int getWidth() {
+    return mWidth;
+  }
+
+  public int getHeight() {
+    return mHeight;
+  }
+
   /**
    * Checks whether the location is on the chess board, and if it has a piece.
    *
@@ -119,7 +127,23 @@ public class ChessBoardBase {
     }
   }
 
-  protected void killPiece(Location location) {
+  /**
+   * Remove a piece from the board
+   *
+   * @param location The location of the piece
+   * @return The piece being removed. If the location is empty or invalid, null
+   * will be returned
+   */
+  public Piece removePiece(Location location) {
+    Piece piece = getPiece(location);
+    if (piece != null) {
+      mBoard[location.getRow()][location.getCol()] = null;
+      piece.setLocation(null);
+    }
+    return piece;
+  }
+
+  private void killPiece(Location location) {
     Piece piece = getPiece(location);
     if (piece != null) {
       mBoard[location.getRow()][location.getCol()] = null;
