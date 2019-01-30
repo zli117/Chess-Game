@@ -7,23 +7,24 @@ public class Location extends Pair<Integer, Integer> {
   }
 
   public Location getLeft() {
-    return getIncrement(0, -1);
+    return getIncrement(new Direction(0, -1));
   }
 
   public Location getRight() {
-    return getIncrement(0, 1);
+    return getIncrement(new Direction(0, 1));
   }
 
   public Location getAbove() {
-    return getIncrement(-1, 0);
+    return getIncrement(new Direction(-1, 0));
   }
 
   public Location getBelow() {
-    return getIncrement(1, 0);
+    return getIncrement(new Direction(1, 0));
   }
 
-  public Location getIncrement(int rowInc, int colInc) {
-    return new Location(getA() + rowInc, getB() + colInc);
+  public Location getIncrement(Direction direction) {
+    return new Location(getRow() + direction.getVerticalDelta(),
+        getCol() + direction.getHorizontalDelta());
   }
 
   public int getRow() {

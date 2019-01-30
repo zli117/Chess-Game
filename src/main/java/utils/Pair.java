@@ -5,27 +5,26 @@ public class Pair<A, B> {
   private A mA;
   private B mB;
 
-  public Pair(A a, B b) {
+  Pair(A a, B b) {
     mA = a;
     mB = b;
   }
 
-  public A getA() {
+  A getA() {
     return mA;
   }
 
-  public B getB() {
-    return mB;
-  }
-
-  public void setA(A a) {
+  void setA(A a) {
     mA = a;
   }
 
-  public void setB(B b) {
-    mB = b;
+  B getB() {
+    return mB;
   }
 
+  void setB(B b) {
+    mB = b;
+  }
 
   @Override
   public int hashCode() {
