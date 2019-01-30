@@ -23,4 +23,5 @@ public class Queen extends UnboundedPiece {
         new Direction(0, -1)};
     return new ArrayList<>(Arrays.asList(directions));
   }
+
 }

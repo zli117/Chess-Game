@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import utils.Location;
 import utils.Move;
@@ -10,6 +12,7 @@ public abstract class Piece {
   private ChessBoardBase mChessBoard;
   private Location mLocation;
   private Side mSide;
+  private Set<Move> mAdjustedMoves;
 
   /**
    * Create a chess piece
@@ -20,6 +23,7 @@ public abstract class Piece {
   Piece(ChessBoardBase chessBoard, Side side) {
     mChessBoard = chessBoard;
     mSide = side;
+    mAdjustedMoves = new LinkedHashSet<>();
   }
 
   /**
@@ -51,6 +55,25 @@ public abstract class Piece {
    */
   public Side getSide() {
     return mSide;
+  }
+
+  /**
+   * Get the moves adjusted by the chess board
+   *
+   * @return Unmodifiable set of moves.
+   */
+  public Set<Move> getAdjustedMoves() {
+    return Collections.unmodifiableSet(mAdjustedMoves);
+  }
+
+  /**
+   * Set the set of adjusted moves. The moves can be adjusted by the chess board
+   * or post process modifier
+   *
+   * @param adjustedMoves The set of adjusted moves
+   */
+  public void setAdjustedMoves(Set<Move> adjustedMoves) {
+    mAdjustedMoves = adjustedMoves;
   }
 
   /**
