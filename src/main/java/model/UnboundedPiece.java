@@ -42,14 +42,14 @@ public abstract class UnboundedPiece extends Piece {
   private ArrayList<Move> getMovesInOneDir(Direction direction) {
     ArrayList<Move> moves = new ArrayList<>();
     Location current = getLocation();
-    Location increment = current.getIncrement(direction);
     ChessBoardBase chessBoard = getChessBoard();
-    while (chessBoard.checkIsEmpty(increment)) {
+    Location increment;
+    do {
+      increment = current.getIncrement(direction);
       Move move = new Move(current, increment);
       move.setCanAttack(true);
       moves.add(move);
-      increment = increment.getIncrement(direction);
-    }
+    } while (chessBoard.checkIsEmpty(increment));
     return moves;
   }
 

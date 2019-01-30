@@ -54,7 +54,9 @@ public abstract class Piece {
   }
 
   /**
-   * Get a set of possible moves and attacks
+   * Get a set of possible moves and attacks. Could contain invalid locations
+   * (out of board, occupied etc.). Chessboard will trim out the invalid ones
+   * later on
    */
   public abstract Set<Move> getMovesAndAttacks();
 
