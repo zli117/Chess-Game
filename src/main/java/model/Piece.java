@@ -62,18 +62,25 @@ public abstract class Piece {
    *
    * @return Unmodifiable set of moves.
    */
-  public Set<Move> getAdjustedMoves() {
+  Set<Move> getAdjustedMoves() {
     return Collections.unmodifiableSet(mAdjustedMoves);
   }
 
   /**
-   * Set the set of adjusted moves. The moves can be adjusted by the chess board
-   * or post process modifier
+   * Set the set of adjusted moves. The moves can be adjusted by the chess
+   * board
    *
    * @param adjustedMoves The set of adjusted moves
    */
-  public void setAdjustedMoves(Set<Move> adjustedMoves) {
+  void setAdjustedMoves(Set<Move> adjustedMoves) {
     mAdjustedMoves = adjustedMoves;
+  }
+
+  /**
+   * Modify the adjusted moves once all the adjusted moves are decided Should
+   * not introduce invalid locations
+   */
+  void modifyAdjustedMoves() {
   }
 
   /**
