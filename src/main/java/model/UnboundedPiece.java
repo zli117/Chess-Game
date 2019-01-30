@@ -46,7 +46,7 @@ public abstract class UnboundedPiece extends Piece {
     ChessBoardBase chessBoard = getChessBoard();
     while (chessBoard.checkIsEmpty(increment)) {
       Move move = new Move(current, increment);
-      move.setIsAttack(true);
+      move.setCanAttack(true);
       moves.add(move);
       increment = increment.getIncrement(direction);
     }

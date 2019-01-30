@@ -2,19 +2,19 @@ package utils;
 
 public class Move extends Pair<Location, Location> {
 
-  private boolean mIsAttack;
+  private boolean mCanAttack;
 
   public Move(Location from, Location to) {
     super(from, to);
-    mIsAttack = false;
+    mCanAttack = false;
   }
 
-  public void setIsAttack(boolean isAttack) {
-    mIsAttack = isAttack;
+  public void setCanAttack(boolean canAttack) {
+    mCanAttack = canAttack;
   }
 
-  public boolean isAttack() {
-    return mIsAttack;
+  public boolean canAttack() {
+    return mCanAttack;
   }
 
   public Location getFrom() {
