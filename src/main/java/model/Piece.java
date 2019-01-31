@@ -37,7 +37,7 @@ public abstract class Piece {
    * Called when the piece has been moved
    *
    * @param location The new location. Will be null if the piece has been
-   * captured
+   *                 captured
    */
   public void setLocation(Location location) {
     mLocation = location;
