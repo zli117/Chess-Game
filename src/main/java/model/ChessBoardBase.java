@@ -49,16 +49,19 @@ public class ChessBoardBase {
   }
 
   public Piece withHoldPiece(Location location) {
-    Piece piece = removePiece(location);
+    Piece piece = mBoard[location.getRow()][location.getCol()];
     if (piece != null) {
       mWithHeldPieces.push(piece);
+      mBoard[location.getRow()][location.getCol()] = null;
+      mStateChanged = true;
     }
     return piece;
   }
 
   public boolean restoreWithHold() {
     Piece top = mWithHeldPieces.pop();
-    setPiece(top, top.getLocation());
+    Location location = top.getLocation();
+    mBoard[location.getRow()][location.getCol()] = top;
     if (mWithHeldPieces.isEmpty()) {
       mStateChanged = false;
     }
