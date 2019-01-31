@@ -15,7 +15,7 @@ public abstract class Piece {
   private Set<Move> mAdjustedMoves;
 
   /**
-   * Create a chess piece
+   * Create a chess piece.
    *
    * @param chessBoard A reference to the chess board
    * @param side The side the piece belongs to
@@ -27,14 +27,14 @@ public abstract class Piece {
   }
 
   /**
-   * Get the current location
+   * Get the current location.
    */
   public Location getLocation() {
     return mLocation;
   }
 
   /**
-   * Called when the piece has been moved
+   * Called when the piece has been moved.
    *
    * @param location The new location. Will be null if the piece has been
    *                 captured
@@ -44,21 +44,21 @@ public abstract class Piece {
   }
 
   /**
-   * Get get chess board it belongs to
+   * Get get chess board it belongs to.
    */
   ChessBoardBase getChessBoard() {
     return mChessBoard;
   }
 
   /**
-   * Get which side this piece belongs to
+   * Get which side this piece belongs to.
    */
   public Side getSide() {
     return mSide;
   }
 
   /**
-   * Get the moves adjusted by the chess board
+   * Get the moves adjusted by the chess board.
    *
    * @return Unmodifiable set of moves.
    */
@@ -68,7 +68,7 @@ public abstract class Piece {
 
   /**
    * Set the set of adjusted moves. The moves can be adjusted by the chess
-   * board
+   * board.
    *
    * @param adjustedMoves The set of adjusted moves
    */
@@ -78,7 +78,7 @@ public abstract class Piece {
 
   /**
    * Modify the adjusted moves once all the adjusted moves are decided Should
-   * not introduce invalid locations
+   * not introduce invalid locations.
    */
   void modifyAdjustedMoves() {
   }
@@ -86,12 +86,12 @@ public abstract class Piece {
   /**
    * Get a set of possible moves and attacks. Could contain invalid locations
    * (out of board, occupied etc.). Chessboard will trim out the invalid ones
-   * later on
+   * later on.
    */
   public abstract Set<Move> getMovesAndAttacks();
 
   /**
-   * Get string representation
+   * Get string representation.
    */
   public String toString() {
     return this.getClass().getName();

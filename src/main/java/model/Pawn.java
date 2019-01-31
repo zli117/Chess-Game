@@ -11,6 +11,13 @@ public class Pawn extends Piece {
   private boolean mMovingUp;
   private boolean mMoved;
 
+  /**
+   * Create a pawn.
+   *
+   * @param chessBoard The chess board it belongs to
+   * @param side       Which side it belongs to
+   * @param movingUp   Whether it's moving up or down
+   */
   public Pawn(ChessBoardBase chessBoard, Side side, boolean movingUp) {
     super(chessBoard, side);
     mMovingUp = movingUp;

@@ -23,9 +23,9 @@ public class ChessBoardBase {
   private boolean mStateChanged;
 
   /**
-   * Create a chess board
+   * Create a chess board.
    *
-   * @param width the width of the chess board. Need to be non negative
+   * @param width  the width of the chess board. Need to be non negative
    * @param height the height of the chess board. Need to be non negative
    */
   public ChessBoardBase(int width, int height) throws RuntimeException {
@@ -48,6 +48,13 @@ public class ChessBoardBase {
     return mHeight;
   }
 
+  /**
+   * Withhold a piece from the board temporarily. Call restoreWithHold to retore
+   * the piece.
+   *
+   * @param location The location of the piece
+   * @return The piece withheld
+   */
   public Piece withHoldPiece(Location location) {
     Piece piece = mBoard[location.getRow()][location.getCol()];
     if (piece != null) {
@@ -58,6 +65,11 @@ public class ChessBoardBase {
     return piece;
   }
 
+  /**
+   * Restore the piece in the reverse order of withhold.
+   *
+   * @return Whether there are still some pieces not restored.
+   */
   public boolean restoreWithHold() {
     Piece top = mWithHeldPieces.pop();
     Location location = top.getLocation();
@@ -91,7 +103,7 @@ public class ChessBoardBase {
   /**
    * Add a piece to the board. Will overwrite the existing piece
    *
-   * @param piece The chess piece
+   * @param piece    The chess piece
    * @param location The location
    * @return True if success, false otherwise
    */
@@ -112,6 +124,13 @@ public class ChessBoardBase {
     return null;
   }
 
+  /**
+   * Get the possible moves and attacks of a piece.
+   *
+   * @param location The location of the piece
+   * @return A set of moves. If the location doesn't have any piece or invalid,
+   * return an empty set of moves.
+   */
   public Set<Move> getMoveHints(Location location) {
     Piece piece = getPiece(location);
     if (piece == null) {
@@ -151,7 +170,7 @@ public class ChessBoardBase {
   }
 
   /**
-   * Remove a piece from the board
+   * Remove a piece from the board.
    *
    * @param location The location of the piece
    * @return The piece being removed. If the location is empty or invalid, null
@@ -178,7 +197,7 @@ public class ChessBoardBase {
   }
 
   /**
-   * Move a piece on the board
+   * Move a piece on the board.
    *
    * @param move Move from a location to a location
    * @return True if moved successful, false otherwise
@@ -199,6 +218,9 @@ public class ChessBoardBase {
     return false;
   }
 
+  /**
+   * Get all the pieces that could capture pieces on this side.
+   */
   public List<Piece> getOpponentPieces(Side side) {
     ArrayList<Piece> opponents = new ArrayList<>();
     for (Piece[] row : mBoard) {
@@ -212,7 +234,7 @@ public class ChessBoardBase {
   }
 
   /**
-   * Register an observer
+   * Register an observer.
    *
    * @param observer the observer
    */
@@ -221,7 +243,7 @@ public class ChessBoardBase {
   }
 
   /**
-   * Get a const list of observers
+   * Get a const list of observers.
    *
    * @return list of observers
    */

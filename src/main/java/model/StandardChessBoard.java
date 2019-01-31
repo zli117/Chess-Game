@@ -11,7 +11,7 @@ public class StandardChessBoard extends ChessBoardBase {
   private Class mKingClass;
 
   /**
-   * Normal chess game setup
+   * Normal chess game setup.
    *
    * @param width the width of the board
    * @param height the height of the board
@@ -23,7 +23,7 @@ public class StandardChessBoard extends ChessBoardBase {
 
   /**
    * Check whether the game ends with Checkmate or Stalemate. If so, invoke the
-   * corresponding call backs
+   * corresponding call backs.
    *
    * @param side Which side to check for
    */

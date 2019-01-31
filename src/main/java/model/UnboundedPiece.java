@@ -19,7 +19,7 @@ public abstract class UnboundedPiece extends Piece {
   }
 
   /**
-   * Return directions to move in a straight line
+   * Return directions to move in a straight line.
    */
   protected abstract ArrayList<Direction> getDirections();
 
