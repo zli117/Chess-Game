@@ -42,7 +42,7 @@ public class LocationTest {
   public void testGetIncrement() {
     Location location = new Location(10, 11);
     Location newLocation = new Location(20, -10);
-    assertEquals(newLocation, location.getIncrement(10, -21));
+    assertEquals(newLocation, location.getIncrement(new Direction(10, -21)));
   }
 
 }

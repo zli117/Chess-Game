@@ -3,6 +3,10 @@ plugins {
     id 'checkstyle'
 }
 
+checkstyle {
+    toolVersion "8.17"
+}
+
 group 'edu.illinois.zonglin'
 version '1.0-SNAPSHOT'
 
