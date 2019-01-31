@@ -25,10 +25,10 @@ public class ChessBoardBase {
   /**
    * Create a chess board.
    *
-   * @param width  the width of the chess board. Need to be non negative
    * @param height the height of the chess board. Need to be non negative
+   * @param width  the width of the chess board. Need to be non negative
    */
-  public ChessBoardBase(int width, int height) throws RuntimeException {
+  public ChessBoardBase(int height, int width) throws RuntimeException {
     if (width < 0 || height < 0) {
       throw new RuntimeException("Invalid size for chess board");
     }

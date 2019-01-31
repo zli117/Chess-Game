@@ -16,8 +16,8 @@ public class StandardChessBoard extends ChessBoardBase {
    * @param width the width of the board
    * @param height the height of the board
    */
-  public StandardChessBoard(int width, int height, Class kingClass) {
-    super(width, height);
+  public StandardChessBoard(int height, int width, Class kingClass) {
+    super(height, width);
     mKingClass = kingClass;
   }
 

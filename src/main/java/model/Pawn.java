@@ -16,12 +16,19 @@ public class Pawn extends Piece {
    *
    * @param chessBoard The chess board it belongs to
    * @param side       Which side it belongs to
-   * @param movingUp   Whether it's moving up or down
    */
-  public Pawn(ChessBoardBase chessBoard, Side side, boolean movingUp) {
+  public Pawn(ChessBoardBase chessBoard, Side side) {
     super(chessBoard, side);
-    mMovingUp = movingUp;
+    mMovingUp = true;
     mMoved = false;
+  }
+
+  public boolean isMovingUp() {
+    return mMovingUp;
+  }
+
+  public void setMovingUp(boolean movingUp) {
+    mMovingUp = movingUp;
   }
 
   @Override

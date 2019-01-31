@@ -26,6 +26,9 @@ public class King extends BoundedPiece {
         new Direction(-1, -1),
         new Direction(-1, 0),
         new Direction(-1, 1)};
+
+    // TODO: Support castling
+
     return new ArrayList<>(Arrays.asList(relativeLocations));
   }
 
@@ -50,7 +53,5 @@ public class King extends BoundedPiece {
       }
     }
     setAdjustedMoves(adjustedMoves);
-
-    // TODO: Support for castling
   }
 }
