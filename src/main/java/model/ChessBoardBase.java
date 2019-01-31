@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 import utils.Location;
 import utils.Move;
 
@@ -17,7 +18,8 @@ public class ChessBoardBase {
   private int mWidth;
   private int mHeight;
   private Piece[][] mBoard;
-  private ArrayList<GameObserverCallBacks> mObservers;
+  private List<GameObserverCallBacks> mObservers;
+  private Stack<Piece> mWithHeldPieces;
   private boolean mStateChanged;
 
   /**
@@ -34,6 +36,7 @@ public class ChessBoardBase {
     mHeight = height;
     mBoard = new Piece[height][width];
     mObservers = new ArrayList<>();
+    mWithHeldPieces = new Stack<>();
     mStateChanged = false;
   }
 
@@ -43,6 +46,23 @@ public class ChessBoardBase {
 
   public int getHeight() {
     return mHeight;
+  }
+
+  public Piece withHoldPiece(Location location) {
+    Piece piece = removePiece(location);
+    if (piece != null) {
+      mWithHeldPieces.push(piece);
+    }
+    return piece;
+  }
+
+  public boolean restoreWithHold() {
+    Piece top = mWithHeldPieces.pop();
+    setPiece(top, top.getLocation());
+    if (mWithHeldPieces.isEmpty()) {
+      mStateChanged = false;
+    }
+    return mStateChanged;
   }
 
   /**
@@ -140,15 +160,14 @@ public class ChessBoardBase {
       mBoard[location.getRow()][location.getCol()] = null;
       piece.setLocation(null);
     }
+    mStateChanged = true;
     return piece;
   }
 
   private void killPiece(Location location) {
     Piece piece = getPiece(location);
     if (piece != null) {
-      mBoard[location.getRow()][location.getCol()] = null;
-      piece.setLocation(null);
-      mStateChanged = true;
+      removePiece(location);
       for (GameObserverCallBacks observer : mObservers) {
         observer.pieceKilled(this, piece);
       }
