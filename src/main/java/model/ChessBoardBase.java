@@ -192,6 +192,11 @@ public class ChessBoardBase {
     return piece;
   }
 
+  /**
+   * Kill a piece: Remove the piece from the board if the location actually has
+   * a piece, and invoke the killed() callback on the piece.
+   * @param location The location of the piece.
+   */
   public void killPiece(Location location) {
     Piece piece = removePiece(location);
     if (piece != null) {

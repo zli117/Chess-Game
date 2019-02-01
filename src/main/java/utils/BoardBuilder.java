@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import model.Bishop;
 import model.ChessBoardBase;
-import model.Ghost;
 import model.King;
 import model.Knight;
 import model.Pawn;
@@ -20,6 +19,13 @@ import model.StandardChessBoard;
 
 public class BoardBuilder {
 
+  /**
+   * Create a board from a string.
+   *
+   * @param boardName The (class) name of the board
+   * @param height    The height of the board
+   * @param width     The width of the board
+   */
   public static ChessBoardBase boardFactory(String boardName, int height,
       int width) {
     if (boardName.equals("StandardChessBoard")) {
@@ -28,6 +34,13 @@ public class BoardBuilder {
     return null;
   }
 
+  /**
+   * Create a piece from a string.
+   *
+   * @param board     The instance of the board
+   * @param pieceName The (class) name of the piece
+   * @param sideName  The name of the side
+   */
   public static Piece pieceFactory(ChessBoardBase board, String pieceName,
       String sideName) {
     Side side;
@@ -59,6 +72,13 @@ public class BoardBuilder {
     return null;
   }
 
+  /**
+   * Create a chess configuration from a file.
+   *
+   * @param filePath The path of the file
+   * @throws RuntimeException If the file content is invalid
+   * @throws FileNotFoundException If the file doesn't exist
+   */
   public static ChessBoardBase constructFromFile(URL filePath)
       throws RuntimeException, FileNotFoundException {
     File file = new File(filePath.getFile());
