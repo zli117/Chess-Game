@@ -3,6 +3,7 @@ package model;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import utils.Direction;
 import utils.Location;
 import utils.Move;
 
@@ -35,15 +36,18 @@ public class Pawn extends Piece {
   public Set<Move> getMovesAndAttacks() {
     LinkedHashSet<Move> moves = new LinkedHashSet<>();
     Location current = getLocation();
-    moves.add(
-        new Move(current, mMovingUp ? current.getAbove() : current.getBelow()));
+    Direction moveDirection = new Direction(mMovingUp ? -1 : 1, 0);
+    Location moveOnDirection = current.getIncrement(moveDirection);
+    moves.add(new Move(current, moveOnDirection));
     if (!mMoved) {
-      moves.add(new Move(current, mMovingUp ? current.getAbove().getAbove()
-          : current.getBelow().getBelow()));
+      moves.add(new Move(current, moveOnDirection.getIncrement(moveDirection)));
     }
-    Move attack = new Move(current, current.getAbove().getRight());
-    attack.setCanAttack(true);
-    moves.add(attack);
+    Move rightAttack = new Move(current, moveOnDirection.getRight());
+    rightAttack.setCanAttack(true);
+    moves.add(rightAttack);
+    Move leftAttack = new Move(current, moveOnDirection.getLeft());
+    leftAttack.setCanAttack(true);
+    moves.add(leftAttack);
     return Collections.unmodifiableSet(moves);
   }
 
