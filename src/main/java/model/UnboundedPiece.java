@@ -46,8 +46,13 @@ public abstract class UnboundedPiece extends Piece {
     Location increment;
     do {
       increment = current.getIncrement(direction);
+      Move attackMove = new Move(current, increment);
+      attackMove.setIsAttack(true);
+      moves.add(attackMove);
+      // Add the non attack moves as well. Since attack moves must attack, but
+      // unbounded pieces can also have plain moves. In other words, the moves
+      // are optional attacks.
       Move move = new Move(current, increment);
-      move.setCanAttack(true);
       moves.add(move);
     } while (chessBoard.checkIsEmpty(increment));
     return moves;

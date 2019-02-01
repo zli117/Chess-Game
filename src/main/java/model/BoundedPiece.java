@@ -22,8 +22,13 @@ public abstract class BoundedPiece extends Piece {
     ArrayList<Direction> relativeLocations = getRelativeLocations();
     Location current = getLocation();
     for (Direction relativeLocation : relativeLocations) {
-      Move move = new Move(current, current.getIncrement(relativeLocation));
-      move.setCanAttack(true);
+      Move attackMove = new Move(current,
+          current.getIncrement(relativeLocation));
+      attackMove.setIsAttack(true);
+      moves.add(attackMove);
+      // Same reason as unbounded piece. The move is an optional attack.
+      Move move = new Move(current,
+          current.getIncrement(relativeLocation));
       moves.add(move);
     }
     return Collections.unmodifiableSet(moves);

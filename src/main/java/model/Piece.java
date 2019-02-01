@@ -19,7 +19,7 @@ public abstract class Piece {
    * Create a chess piece.
    *
    * @param chessBoard A reference to the chess board
-   * @param side The side the piece belongs to
+   * @param side       The side the piece belongs to
    */
   Piece(ChessBoardBase chessBoard, Side side) {
     mChessBoard = chessBoard;
@@ -109,6 +109,27 @@ public abstract class Piece {
    */
   public String toString() {
     return this.getClass().getName();
+  }
+
+  /**
+   * Is the piece a ghost. (Used to implement Pawn)
+   */
+  public boolean isGhost() {
+    return false;
+  }
+
+  /**
+   * Whether the piece can kill a ghost. For standard pieces, only Pawn can kill
+   * a ghost piece
+   */
+  public boolean canKillGhost() {
+    return false;
+  }
+
+  /**
+   * Called when the piece has been killed.
+   */
+  public void killed() {
   }
 
 }

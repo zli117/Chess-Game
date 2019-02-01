@@ -55,7 +55,7 @@ public class ChessBoardBase {
    * @param location The location of the piece
    * @return The piece withheld
    */
-  public Piece withHoldPiece(Location location) {
+  Piece withHoldPiece(Location location) {
     Piece piece = mBoard[location.getRow()][location.getCol()];
     if (piece != null) {
       mWithHeldPieces.push(piece);
@@ -70,7 +70,7 @@ public class ChessBoardBase {
    *
    * @return Whether there are still some pieces not restored.
    */
-  public boolean restoreWithHold() {
+  boolean restoreWithHold() {
     Piece top = mWithHeldPieces.pop();
     Location location = top.getLocation();
     mBoard[location.getRow()][location.getCol()] = top;
@@ -92,12 +92,19 @@ public class ChessBoardBase {
   }
 
   private boolean checkCanCapture(Location location, Piece piece) {
-    return getPiece(location) != null
-        && (getPiece(location).getSide() != piece.getSide());
+    Piece target = getPiece(location);
+    if (target != null && (getPiece(location).getSide() != piece.getSide())) {
+      return (!target.isGhost() || piece.canKillGhost());
+    }
+    return false;
   }
 
   boolean checkIsEmpty(Location location) {
-    return checkValidLocation(location) && getPiece(location) == null;
+    if (checkValidLocation(location)) {
+      Piece piece = getPiece(location);
+      return (piece == null || piece.isGhost());
+    }
+    return false;
   }
 
   /**
@@ -138,9 +145,9 @@ public class ChessBoardBase {
     }
     if (mStateChanged) {
       computeAdjustedMoves();
-      piece.modifyAdjustedMoves();
       mStateChanged = false;
     }
+    piece.modifyAdjustedMoves();
     return piece.getAdjustedMoves();
   }
 
@@ -158,8 +165,8 @@ public class ChessBoardBase {
             Location moveTo = move.getTo();
             // checkValidLocation is implicitly called in checkCanCapture and
             // checkIsEmpty
-            if ((move.canAttack() && checkCanCapture(moveTo, piece))
-                || checkIsEmpty(moveTo)) {
+            if ((move.isAttack() && checkCanCapture(moveTo, piece))
+                || (!move.isAttack() && checkIsEmpty(moveTo))) {
               adjustedMoves.add(move);
             }
           }
@@ -171,28 +178,24 @@ public class ChessBoardBase {
 
   /**
    * Remove a piece from the board.
-   *
-   * @param location The location of the piece
-   * @return The piece being removed. If the location is empty or invalid, null
-   * will be returned
    */
   public Piece removePiece(Location location) {
     Piece piece = getPiece(location);
     if (piece != null) {
       mBoard[location.getRow()][location.getCol()] = null;
       piece.setLocation(null);
+      for (GameObserverCallBacks observer : mObservers) {
+        observer.pieceRemoved(this, piece);
+      }
+      mStateChanged = true;
     }
-    mStateChanged = true;
     return piece;
   }
 
-  private void killPiece(Location location) {
-    Piece piece = getPiece(location);
+  public void killPiece(Location location) {
+    Piece piece = removePiece(location);
     if (piece != null) {
-      removePiece(location);
-      for (GameObserverCallBacks observer : mObservers) {
-        observer.pieceKilled(this, piece);
-      }
+      piece.killed();
     }
   }
 
@@ -207,11 +210,15 @@ public class ChessBoardBase {
     Location toLocation = move.getTo();
     Set<Move> possibleMoves = getMoveHints(fromLocation);
     if (possibleMoves.contains(move)) {
-      if (move.canAttack() && !checkIsEmpty(toLocation)) {
+      Piece piece = getPiece(move.getFrom());
+      // Let the victim piece know it has been killed
+      if (move.isAttack() && checkCanCapture(toLocation, piece)) {
         killPiece(toLocation);
       }
-      Piece piece = getPiece(move.getFrom());
-      // mStateChanged is set to true in setPiece
+      // removePiece will ignore the piece if it has already been removed from
+      // the board
+      // mStateChanged is set to true in removePiece
+      removePiece(toLocation);
       setPiece(piece, toLocation);
       mBoard[fromLocation.getRow()][fromLocation.getCol()] = null;
     }

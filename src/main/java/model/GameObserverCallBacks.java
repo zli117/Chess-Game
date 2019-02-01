@@ -10,6 +10,6 @@ public interface GameObserverCallBacks {
 
   void pieceMoved(ChessBoardBase chessBoard, Location from, Location to);
 
-  void pieceKilled(ChessBoardBase chessBoard, Piece pieceKilled);
+  void pieceRemoved(ChessBoardBase chessBoard, Piece pieceKilled);
 
 }

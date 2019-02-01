@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import model.Bishop;
 import model.ChessBoardBase;
+import model.Ghost;
 import model.King;
 import model.Knight;
 import model.Pawn;

@@ -82,6 +82,7 @@ public class King extends BoundedPiece {
         if (noPieceBetween) {
           Move rightCastling = new Move(location,
               location.getRight().getRight());
+          // The move is not an attack, since there's no piece in between
           moves.add(rightCastling);
           mCastlingTo.add(rightCastling.getTo());
         }
@@ -122,7 +123,10 @@ public class King extends BoundedPiece {
     for (Piece opponent : chessBoard.getOpponentPieces(getSide())) {
       Set<Move> moves = opponent.getMovesAndAttacks();
       for (Move move : moves) {
-        dangerousLocation.add(move.getTo());
+        // Only attack moves are dangerous
+        if (move.isAttack()) {
+          dangerousLocation.add(move.getTo());
+        }
       }
     }
     LinkedHashSet<Move> adjustedMoves = new LinkedHashSet<>();
@@ -145,6 +149,7 @@ public class King extends BoundedPiece {
     }
 
     setAdjustedMoves(adjustedMoves);
+    chessBoard.restoreWithHold();
   }
 
 }
