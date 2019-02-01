@@ -46,7 +46,7 @@ public class BoardBuilder {
     }
     if (pieceName.equals("Pawn")) {
       Pawn pawn = new Pawn(board, side);
-      pawn.setMovingUp(side == Side.B);
+      pawn.setMovingUp(side == Side.White);
       return pawn;
     }
     if (pieceName.equals("Rook")) {

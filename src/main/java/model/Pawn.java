@@ -32,17 +32,6 @@ public class Pawn extends Piece {
   }
 
   @Override
-  public void setLocation(Location location) {
-    Location currentLocation = getLocation();
-    if (location != null) {
-      if (currentLocation != null && currentLocation != location) {
-        mMoved = true;
-      }
-    }
-    super.setLocation(location);
-  }
-
-  @Override
   public Set<Move> getMovesAndAttacks() {
     LinkedHashSet<Move> moves = new LinkedHashSet<>();
     Location current = getLocation();

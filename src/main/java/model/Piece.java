@@ -13,6 +13,7 @@ public abstract class Piece {
   private Location mLocation;
   private Side mSide;
   private Set<Move> mAdjustedMoves;
+  private boolean mMoved;
 
   /**
    * Create a chess piece.
@@ -24,6 +25,7 @@ public abstract class Piece {
     mChessBoard = chessBoard;
     mSide = side;
     mAdjustedMoves = new LinkedHashSet<>();
+    mMoved = false;
   }
 
   /**
@@ -40,7 +42,19 @@ public abstract class Piece {
    *                 captured
    */
   public void setLocation(Location location) {
+    if (location != null) {
+      if (mLocation != null && mLocation != location) {
+        mMoved = true;
+      }
+    }
     mLocation = location;
+  }
+
+  /**
+   * Check whether the piece has moved.
+   */
+  public boolean hasMoved() {
+    return mMoved;
   }
 
   /**
