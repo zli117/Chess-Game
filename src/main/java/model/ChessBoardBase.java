@@ -262,4 +262,5 @@ public class ChessBoardBase {
   List<GameObserverCallBacks> getObservers() {
     return Collections.unmodifiableList(mObservers);
   }
+
 }

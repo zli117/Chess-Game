@@ -13,4 +13,5 @@ public class Direction extends Pair<Integer, Integer> {
   public int getHorizontalDelta() {
     return getB();
   }
+
 }

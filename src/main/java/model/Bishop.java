@@ -19,4 +19,5 @@ public class Bishop extends UnboundedPiece {
         new Direction(1, -1)};
     return new ArrayList<>(Arrays.asList(directions));
   }
+
 }

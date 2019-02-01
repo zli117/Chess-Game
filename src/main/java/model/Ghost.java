@@ -31,4 +31,5 @@ public class Ghost extends Piece {
   public Set<Move> getMovesAndAttacks() {
     return new LinkedHashSet<>();
   }
+
 }

@@ -27,4 +27,5 @@ public class Knight extends BoundedPiece {
         new Direction(-1, -2)};
     return new ArrayList<>(Arrays.asList(relativeLocations));
   }
+
 }
