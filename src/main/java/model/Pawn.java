@@ -10,7 +10,6 @@ import utils.Move;
 public class Pawn extends Piece {
 
   private boolean mMovingUp;
-  private boolean mMoved;
   private Location mGhostLocation;
 
   /**
@@ -22,7 +21,6 @@ public class Pawn extends Piece {
   public Pawn(ChessBoardBase chessBoard, Side side) {
     super(chessBoard, side);
     mMovingUp = true;
-    mMoved = false;
     mGhostLocation = null;
   }
 
@@ -32,7 +30,7 @@ public class Pawn extends Piece {
 
     // Set the ghost if the pawn has not moved before and it's moving two steps
     Location currLocation = getLocation();
-    if (location != null && !mMoved && currLocation != null) {
+    if (location != null && !hasMoved() && currLocation != null) {
       // If the new location is two steps away from the current one we set a
       // ghost at the place as if the pawn has only moved one step
       if (Math.abs(location.getRow() - currLocation.getRow()) == 2) {
@@ -42,7 +40,7 @@ public class Pawn extends Piece {
         Ghost ghost = new Ghost(chessBoard, getSide(), this);
         chessBoard.setPiece(ghost, mGhostLocation);
       }
-    } else if (mGhostLocation != null) {
+    } else if (mGhostLocation != null && currLocation != null) {
       // If the pawn has a ghost, but it gets moved / removed, remove the ghost
       // from the board
       chessBoard.removePiece(mGhostLocation);
@@ -72,7 +70,7 @@ public class Pawn extends Piece {
     Direction moveDirection = new Direction(mMovingUp ? -1 : 1, 0);
     Location moveOnDirection = current.getIncrement(moveDirection);
     moves.add(new Move(current, moveOnDirection));
-    if (!mMoved) {
+    if (!hasMoved()) {
       moves.add(new Move(current, moveOnDirection.getIncrement(moveDirection)));
     }
     Move rightAttack = new Move(current, moveOnDirection.getRight());
