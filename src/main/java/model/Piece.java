@@ -43,7 +43,7 @@ public abstract class Piece {
    */
   public void setLocation(Location location) {
     if (location != null) {
-      if (mLocation != null && mLocation != location) {
+      if (mLocation != null && !mLocation.equals(location)) {
         mMoved = true;
       }
     }
