@@ -56,13 +56,16 @@ public class ChessBoardBase {
    * @return The piece withheld
    */
   Piece withHoldPiece(Location location) {
-    Piece piece = mBoard[location.getRow()][location.getCol()];
-    if (piece != null) {
-      mWithHeldPieces.push(piece);
-      mBoard[location.getRow()][location.getCol()] = null;
-      mStateChanged = true;
+    if (checkValidLocation(location)) {
+      Piece piece = mBoard[location.getRow()][location.getCol()];
+      if (piece != null) {
+        mWithHeldPieces.push(piece);
+        mBoard[location.getRow()][location.getCol()] = null;
+        mStateChanged = true;
+      }
+      return piece;
     }
-    return piece;
+    return null;
   }
 
   /**
@@ -71,11 +74,13 @@ public class ChessBoardBase {
    * @return Whether there are still some pieces not restored.
    */
   boolean restoreWithHold() {
-    Piece top = mWithHeldPieces.pop();
-    Location location = top.getLocation();
-    mBoard[location.getRow()][location.getCol()] = top;
-    if (mWithHeldPieces.isEmpty()) {
-      mStateChanged = false;
+    if (!mWithHeldPieces.isEmpty()) {
+      Piece top = mWithHeldPieces.pop();
+      Location location = top.getLocation();
+      mBoard[location.getRow()][location.getCol()] = top;
+      if (mWithHeldPieces.isEmpty()) {
+        mStateChanged = false;
+      }
     }
     return mStateChanged;
   }
@@ -86,12 +91,23 @@ public class ChessBoardBase {
    * @param location the location.
    * @return True if on the chess board, false otherwise.
    */
-  private boolean checkValidLocation(Location location) {
+  boolean checkValidLocation(Location location) {
     return location.getCol() >= 0 && location.getCol() < mWidth
         && location.getRow() >= 0 && location.getRow() < mHeight;
   }
 
-  private boolean checkCanCapture(Location location, Piece piece) {
+  /**
+   * Check if the location can be captured by the piece. The condition is: 1.
+   * The location is valid and has a piece. 2. The piece at the location is not
+   * on the same side as the piece. 3. If the location has a ghost and piece can
+   * capture a ghost then true. 4. Otherwise if the location has a normal piece
+   * then true.
+   *
+   * @param location The location to capture
+   * @param piece    The piece that performs capture
+   * @return True if captured, false otherwise.
+   */
+  boolean checkCanCapture(Location location, Piece piece) {
     Piece target = getPiece(location);
     if (target != null && (getPiece(location).getSide() != piece.getSide())) {
       return (!target.isGhost() || piece.canKillGhost());
@@ -124,6 +140,11 @@ public class ChessBoardBase {
     return false;
   }
 
+  /**
+   * Get the piece at location.
+   *
+   * @param location The location
+   */
   Piece getPiece(Location location) {
     if (checkValidLocation(location)) {
       return mBoard[location.getRow()][location.getCol()];
@@ -155,7 +176,7 @@ public class ChessBoardBase {
    * Query all the possible moves and trim out invalid ones. Adjusted moves will
    * be saved in the piece.
    */
-  private void computeAdjustedMoves() {
+  public void computeAdjustedMoves() {
     for (Piece[] row : mBoard) {
       for (Piece piece : row) {
         if (piece != null) {
@@ -195,6 +216,7 @@ public class ChessBoardBase {
   /**
    * Kill a piece: Remove the piece from the board if the location actually has
    * a piece, and invoke the killed() callback on the piece.
+   *
    * @param location The location of the piece.
    */
   public void killPiece(Location location) {
@@ -217,7 +239,7 @@ public class ChessBoardBase {
     if (possibleMoves.contains(move)) {
       Piece piece = getPiece(move.getFrom());
       // Let the victim piece know it has been killed
-      if (move.isAttack() && checkCanCapture(toLocation, piece)) {
+      if (move.isAttack()) {
         killPiece(toLocation);
       }
       // removePiece will ignore the piece if it has already been removed from
@@ -225,7 +247,11 @@ public class ChessBoardBase {
       // mStateChanged is set to true in removePiece
       removePiece(toLocation);
       setPiece(piece, toLocation);
+      for (GameObserverCallBacks observer : mObservers) {
+        observer.pieceMoved(this, move);
+      }
       mBoard[fromLocation.getRow()][fromLocation.getCol()] = null;
+      return true;
     }
     return false;
   }

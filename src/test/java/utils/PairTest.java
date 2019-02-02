@@ -13,6 +13,8 @@ public class PairTest {
     Pair<Integer, Integer> pair1 = new Pair<>(10, 11);
     assertEquals(pair0, pair1);
     pair1.setA(100);
+    assertNotEquals(pair0, pair1);
+    pair1.setA(10);
     pair1.setB(-100);
     assertNotEquals(pair0, pair1);
     assertNotEquals(pair0, null);

@@ -43,9 +43,9 @@ public abstract class UnboundedPiece extends Piece {
     ArrayList<Move> moves = new ArrayList<>();
     Location current = getLocation();
     ChessBoardBase chessBoard = getChessBoard();
-    Location increment;
+    Location increment = current;
     do {
-      increment = current.getIncrement(direction);
+      increment = increment.getIncrement(direction);
       Move attackMove = new Move(current, increment);
       attackMove.setIsAttack(true);
       moves.add(attackMove);

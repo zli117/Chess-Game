@@ -72,7 +72,7 @@ public class King extends BoundedPiece {
           && !rightMost.hasMoved()) {
         boolean noPieceBetween = true;
         for (Location toRight = location.getRight();
-            toRight != rightMost.getLocation();
+            !toRight.equals(rightMost.getLocation());
             toRight = toRight.getRight()) {
           if (chessBoard.getPiece(toRight) != null) {
             noPieceBetween = false;
@@ -95,8 +95,8 @@ public class King extends BoundedPiece {
           && !leftMost.hasMoved()) {
         boolean noPieceBetween = true;
         for (Location toLeft = location.getLeft();
-            toLeft != leftMost.getLocation();
-            toLeft = toLeft.getRight()) {
+            !toLeft.equals(leftMost.getLocation());
+            toLeft = toLeft.getLeft()) {
           if (chessBoard.getPiece(toLeft) != null) {
             noPieceBetween = false;
             break;

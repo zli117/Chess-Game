@@ -1,6 +1,7 @@
 package model;
 
 import utils.Location;
+import utils.Move;
 
 public interface GameObserverCallBacks {
 
@@ -8,7 +9,7 @@ public interface GameObserverCallBacks {
 
   void onStalemate(Side loser);
 
-  void pieceMoved(ChessBoardBase chessBoard, Location from, Location to);
+  void pieceMoved(ChessBoardBase chessBoard, Move move);
 
   void pieceRemoved(ChessBoardBase chessBoard, Piece pieceKilled);
 

@@ -108,7 +108,7 @@ public abstract class Piece {
    * Get string representation.
    */
   public String toString() {
-    return this.getClass().getName();
+    return String.format("%s_%s", getClass().getSimpleName(), getSide().name());
   }
 
   /**

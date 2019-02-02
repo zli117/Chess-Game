@@ -38,7 +38,7 @@ public class Pair<A, B> {
     }
     @SuppressWarnings("unchecked")
     Pair<A, B> other = (Pair<A, B>) o;
-    return other.mA == mA && other.mB == mB;
+    return other.mA.equals(mA) && other.mB.equals(mB);
   }
 
   @Override
