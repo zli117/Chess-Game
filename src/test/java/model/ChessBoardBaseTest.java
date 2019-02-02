@@ -24,7 +24,7 @@ public class ChessBoardBaseTest {
       chessBoard = new ChessBoardBase(10, -10);
       fail();
     } catch (RuntimeException exception) {
-
+      assertTrue(true);
     }
     chessBoard = new ChessBoardBase(10, 0);
     assertEquals(0, chessBoard.getWidth());
@@ -38,7 +38,7 @@ public class ChessBoardBaseTest {
       chessBoard = new ChessBoardBase(-10, 10);
       fail();
     } catch (RuntimeException exception) {
-
+      assertTrue(true);
     }
     chessBoard = new ChessBoardBase(0, 10);
     assertEquals(0, chessBoard.getHeight());
@@ -146,7 +146,6 @@ public class ChessBoardBaseTest {
     chessBoardBase.setPiece(mockPieceBlack1, mockB1Location);
     chessBoardBase.setPiece(mockPieceWhite2, mockW2Location);
 
-    Set<Move> moves = chessBoardBase.getMoveHints(mockW1Location);
     assertTrue(mockPieceWhite1.hasModifiedAdjustedMoves());
     assertTrue(mockPieceWhite1.hasSetAdjustedMoves());
     assertFalse(mockPieceWhite2.hasModifiedAdjustedMoves());
@@ -154,6 +153,7 @@ public class ChessBoardBaseTest {
     assertFalse(mockPieceBlack1.hasModifiedAdjustedMoves());
     assertTrue(mockPieceBlack1.hasSetAdjustedMoves());
 
+    Set<Move> moves = chessBoardBase.getMoveHints(mockW1Location);
     Move move = new Move(mockW1Location, mockB1Location);
     move.setIsAttack(true);
     assertTrue(moves.contains(move));

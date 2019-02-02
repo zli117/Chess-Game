@@ -10,7 +10,10 @@ public class MockCallBack implements GameObserverCallBacks {
   private Move mMove;
   private Piece mRemoved;
 
-  public MockCallBack() {
+  /**
+   * Mock a callback.
+   */
+  MockCallBack() {
     mCheckedSide = null;
     mStaledSide = null;
     mMove = null;
