@@ -41,4 +41,5 @@ public class MoveTest {
     Move move3 = new Move(new Location(2, 2), new Location(2, 3));
     assertNotEquals(move2, move3);
   }
+
 }
