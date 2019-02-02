@@ -38,4 +38,14 @@ public class Move extends Pair<Location, Location> {
     return getB();
   }
 
+  @Override
+  public boolean equals(Object o) {
+    Move move = (Move) o;
+    return super.equals(o) && move.mIsAttack == mIsAttack;
+  }
+
+  @Override
+  public int hashCode() {
+    return super.hashCode() + (mIsAttack ? 29 : 63);
+  }
 }
