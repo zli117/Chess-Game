@@ -2,8 +2,10 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import utils.Location;
@@ -21,6 +23,7 @@ public class ChessBoardBase {
   private List<GameObserverCallBacks> mObservers;
   private Stack<Piece> mWithHeldPieces;
   private boolean mStateChanged;
+  private Map<Side, King> mKings;
 
   /**
    * Create a chess board.
@@ -38,6 +41,7 @@ public class ChessBoardBase {
     mObservers = new ArrayList<>();
     mWithHeldPieces = new Stack<>();
     mStateChanged = false;
+    mKings = new HashMap<>();
   }
 
   public int getWidth() {
@@ -124,7 +128,8 @@ public class ChessBoardBase {
   }
 
   /**
-   * Add a piece to the board. Will overwrite the existing piece
+   * Add a piece to the board. Will overwrite the existing piece. If the piece
+   * is a king, setPiece will fail.
    *
    * @param piece    The chess piece
    * @param location The location
@@ -138,6 +143,33 @@ public class ChessBoardBase {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Set the king of a side. If a king of this side already exists, it will be
+   * removed.
+   *
+   * @param king     The king
+   * @param location The location
+   * @return True if success, false otherwise
+   */
+  public boolean setKing(King king, Location location) {
+    if (checkValidLocation(location)) {
+      Side side = king.getSide();
+      if (mKings.containsKey(side)) {
+        removePiece(mKings.get(side).getLocation());
+      }
+      mKings.put(side, king);
+      return setPiece(king, location);
+    }
+    return false;
+  }
+
+  public King getKing(Side side) {
+    if (mKings.containsKey(side)) {
+      return mKings.get(side);
+    }
+    return null;
   }
 
   /**

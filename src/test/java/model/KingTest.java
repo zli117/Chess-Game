@@ -53,7 +53,7 @@ public class KingTest {
     Queen queen = new Queen(chessBoardBase, Side.White);
 
     Location kingLocation = new Location(6, 4);
-    chessBoardBase.setPiece(king, kingLocation);
+    assertTrue(chessBoardBase.setKing(king, kingLocation));
     chessBoardBase.setPiece(rookLeft, new Location(6, 0));
     chessBoardBase.setPiece(rookRight, new Location(6, 7));
     chessBoardBase.setPiece(queen, new Location(5, 3));
@@ -85,7 +85,7 @@ public class KingTest {
     Queen queen2 = new Queen(chessBoardBase, Side.Black);
 
     Location kingLocation = new Location(6, 4);
-    chessBoardBase.setPiece(king, kingLocation);
+    chessBoardBase.setKing(king, kingLocation);
     chessBoardBase.setPiece(rookLeft, new Location(6, 0));
     chessBoardBase.setPiece(rookRight, new Location(6, 7));
     chessBoardBase.setPiece(queen1, new Location(6, 6));
@@ -134,7 +134,7 @@ public class KingTest {
     Pawn pawn = new Pawn(chessBoardBase, Side.White);
 
     Location kingLocation = new Location(3, 2);
-    chessBoardBase.setPiece(king, kingLocation);
+    chessBoardBase.setKing(king, kingLocation);
     chessBoardBase.setPiece(rook1, new Location(2, 3));
     chessBoardBase.setPiece(rook2, new Location(3, 4));
     chessBoardBase.setPiece(pawn, new Location(5, 2));
@@ -153,8 +153,8 @@ public class KingTest {
     King king2 = new King(chessBoardBase, Side.White);
     Location king1Location = new Location(4, 3);
     Location king2Location = new Location(4, 5);
-    chessBoardBase.setPiece(king1, king1Location);
-    chessBoardBase.setPiece(king2, king2Location);
+    chessBoardBase.setKing(king1, king1Location);
+    chessBoardBase.setKing(king2, king2Location);
 
     Set<Move> moves1 = chessBoardBase.getMoveHints(king1Location);
     Set<Move> moves2 = chessBoardBase.getMoveHints(king2Location);
