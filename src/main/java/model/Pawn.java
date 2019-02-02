@@ -31,8 +31,8 @@ public class Pawn extends Piece {
     ChessBoardBase chessBoard = getChessBoard();
 
     // Set the ghost if the pawn has not moved before and it's moving two steps
-    if (location != null && !mMoved) {
-      Location currLocation = getLocation();
+    Location currLocation = getLocation();
+    if (location != null && !mMoved && currLocation != null) {
       // If the new location is two steps away from the current one we set a
       // ghost at the place as if the pawn has only moved one step
       if (Math.abs(location.getRow() - currLocation.getRow()) == 2) {

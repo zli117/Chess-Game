@@ -10,7 +10,6 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 import java.util.Set;
-import java.util.TreeMap;
 import org.junit.Test;
 import utils.Location;
 import utils.Move;
