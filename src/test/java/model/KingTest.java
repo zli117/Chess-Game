@@ -147,6 +147,28 @@ public class KingTest {
     assertFalse(moves.contains(move));
     move.setIsAttack(true);
     assertTrue(moves.contains(move));
+
+    chessBoardBase = new ChessBoardBase(8, 8);
+    King king1 = new King(chessBoardBase, Side.Black);
+    King king2 = new King(chessBoardBase, Side.White);
+    Location king1Location = new Location(4, 3);
+    Location king2Location = new Location(4, 5);
+    chessBoardBase.setPiece(king1, king1Location);
+    chessBoardBase.setPiece(king2, king2Location);
+
+    Set<Move> moves1 = chessBoardBase.getMoveHints(king1Location);
+    Set<Move> moves2 = chessBoardBase.getMoveHints(king2Location);
+
+    assertEquals(5, moves1.size());
+    assertEquals(5, moves2.size());
+
+    assertFalse(moves1.contains(new Move(king1Location, new Location(3, 4))));
+    assertFalse(moves1.contains(new Move(king1Location, new Location(3, 4))));
+    assertFalse(moves1.contains(new Move(king1Location, new Location(5, 4))));
+
+    assertFalse(moves2.contains(new Move(king2Location, new Location(3, 4))));
+    assertFalse(moves2.contains(new Move(king2Location, new Location(3, 4))));
+    assertFalse(moves2.contains(new Move(king2Location, new Location(5, 4))));
   }
 
 }
