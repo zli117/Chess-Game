@@ -1,10 +1,13 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import utils.Location;
 import utils.Move;
+import utils.Vector;
 
 
 public abstract class Piece {
@@ -72,6 +75,20 @@ public abstract class Piece {
   }
 
   /**
+   * Get the direction if the piece can move in a straight line.
+   */
+  public List<Vector> getStraightLineMoveDirections() {
+    return new ArrayList<>();
+  }
+
+  /**
+   * Get the offsets for single step moves.
+   */
+  public List<Vector> getOneStepOffsets() {
+    return new ArrayList<>();
+  }
+
+  /**
    * Get the moves adjusted by the chess board.
    *
    * @return Unmodifiable set of moves.
@@ -92,9 +109,63 @@ public abstract class Piece {
 
   /**
    * Modify the adjusted moves once all the adjusted moves are decided Should
-   * not introduce invalid locations.
+   * not introduce invalid locations. Default implementation removes any move
+   * that could get king checked.
    */
   void modifyAdjustedMoves() {
+    ChessBoardBase chessBoard = getChessBoard();
+    King king = chessBoard.getKing(getSide());
+    Location currLocation = getLocation();
+    List<Vector> directionOfMovesToKeep = new ArrayList<>();
+    if (king != null && king.getLocation() != null) {
+      List<Piece> opponents = chessBoard.getOpponentPieces(getSide());
+      for (Piece opponent : opponents) {
+        // See if this opponent can attack me
+        Location opponentLocation = opponent.getLocation();
+        Move move = new Move(opponentLocation, currLocation);
+        move.setIsAttack(true);
+        // When this function is called, moves are already adjusted
+        if (opponent.getAdjustedMoves().contains(move)) {
+          // Check to see if its straight line attacks can reach the king
+          List<Vector> straightLines = opponent
+              .getStraightLineMoveDirections();
+          Vector meToOpponent = new Vector(
+              currLocation.getRow() - opponentLocation.getRow(),
+              currLocation.getCol() - opponentLocation.getCol());
+          // Find the direction opponent attacked me
+          for (Vector direction : straightLines) {
+            if (direction.checkSameDirection(meToOpponent)) {
+              Location kingLocation = king.getLocation();
+              Location increment = currLocation;
+              do {
+                increment = increment.getIncrement(direction);
+              } while (chessBoard.checkIsEmpty(increment));
+              // Oops, king can be attacked if I move away from the line
+              if (increment.equals(kingLocation)) {
+                // Remove all moves not alone this direction
+                directionOfMovesToKeep.add(direction);
+              }
+            }
+          }
+        }
+      }
+    }
+    // Remove the moves
+    Set<Move> newAdjustedMoves = new LinkedHashSet<>();
+    for (Move move : getAdjustedMoves()) {
+      Vector moveDirection = move.getDirection();
+      boolean aloneTheLine = true;
+      for (Vector direction : directionOfMovesToKeep) {
+        if (!moveDirection.checkSameDirection(direction)) {
+          aloneTheLine = false;
+          break;
+        }
+      }
+      if (aloneTheLine) {
+        newAdjustedMoves.add(move);
+      }
+    }
+    setAdjustedMoves(newAdjustedMoves);
   }
 
   /**
@@ -102,7 +173,53 @@ public abstract class Piece {
    * (out of board, occupied etc.). Chessboard will trim out the invalid ones
    * later on.
    */
-  public abstract Set<Move> getMovesAndAttacks();
+  public Set<Move> getMovesAndAttacks() {
+    LinkedHashSet<Move> moves = new LinkedHashSet<>();
+    List<Vector> directions = getStraightLineMoveDirections();
+    for (Vector direction : directions) {
+      moves.addAll(getMovesInOneDir(direction));
+    }
+
+    List<Vector> relativeLocations = getOneStepOffsets();
+    Location current = getLocation();
+    for (Vector relativeLocation : relativeLocations) {
+      Move attackMove = new Move(current,
+          current.getIncrement(relativeLocation));
+      attackMove.setIsAttack(true);
+      moves.add(attackMove);
+      // Same reason as unbounded piece. The move is an optional attack.
+      Move move = new Move(current,
+          current.getIncrement(relativeLocation));
+      moves.add(move);
+    }
+
+    return Collections.unmodifiableSet(moves);
+  }
+
+  /**
+   * Get the moves in one direction. Which is specified by the increment for row
+   * and column
+   *
+   * @param direction The direction to move along
+   */
+  private ArrayList<Move> getMovesInOneDir(Vector direction) {
+    ArrayList<Move> moves = new ArrayList<>();
+    Location current = getLocation();
+    ChessBoardBase chessBoard = getChessBoard();
+    Location increment = current;
+    do {
+      increment = increment.getIncrement(direction);
+      Move attackMove = new Move(current, increment);
+      attackMove.setIsAttack(true);
+      moves.add(attackMove);
+      // Add the non attack moves as well. Since attack moves must attack, but
+      // unbounded pieces can also have plain moves. In other words, the moves
+      // are optional attacks.
+      Move move = new Move(current, increment);
+      moves.add(move);
+    } while (chessBoard.checkIsEmpty(increment));
+    return moves;
+  }
 
   /**
    * Get string representation.

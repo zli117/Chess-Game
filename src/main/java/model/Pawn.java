@@ -3,7 +3,7 @@ package model;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import utils.Direction;
+import utils.Vector;
 import utils.Location;
 import utils.Move;
 
@@ -67,7 +67,7 @@ public class Pawn extends Piece {
   public Set<Move> getMovesAndAttacks() {
     LinkedHashSet<Move> moves = new LinkedHashSet<>();
     Location current = getLocation();
-    Direction moveDirection = new Direction(mMovingUp ? -1 : 1, 0);
+    Vector moveDirection = new Vector(mMovingUp ? -1 : 1, 0);
     Location moveOnDirection = current.getIncrement(moveDirection);
     moves.add(new Move(current, moveOnDirection));
     if (!hasMoved()) {

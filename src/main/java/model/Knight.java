@@ -3,10 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
-import utils.Direction;
+import java.util.List;
+import utils.Vector;
 import utils.Location;
 
-public class Knight extends BoundedPiece {
+public class Knight extends Piece {
 
   private LinkedHashSet<Location> mCachedMoves;
 
@@ -15,16 +16,16 @@ public class Knight extends BoundedPiece {
   }
 
   @Override
-  ArrayList<Direction> getRelativeLocations() {
-    Direction[] relativeLocations = {
-        new Direction(-2, 1),
-        new Direction(-1, 2),
-        new Direction(1, 2),
-        new Direction(2, 1),
-        new Direction(2, -1),
-        new Direction(1, -2),
-        new Direction(-2, -1),
-        new Direction(-1, -2)};
+  public List<Vector> getOneStepOffsets() {
+    Vector[] relativeLocations = {
+        new Vector(-2, 1),
+        new Vector(-1, 2),
+        new Vector(1, 2),
+        new Vector(2, 1),
+        new Vector(2, -1),
+        new Vector(1, -2),
+        new Vector(-2, -1),
+        new Vector(-1, -2)};
     return new ArrayList<>(Arrays.asList(relativeLocations));
   }
 

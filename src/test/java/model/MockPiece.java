@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
-import utils.Direction;
+import utils.Vector;
 import utils.Location;
 import utils.Move;
 
-public class MockPiece extends UnboundedPiece {
+public class MockPiece extends Piece {
 
   private boolean mKilled;
   private boolean mIsGhost;
@@ -26,12 +27,12 @@ public class MockPiece extends UnboundedPiece {
   }
 
   @Override
-  protected ArrayList<Direction> getDirections() {
-    Direction[] directions = {
-        new Direction(1, 0),
-        new Direction(-1, 0),
-        new Direction(0, 1),
-        new Direction(0, -1)};
+  public List<Vector> getStraightLineMoveDirections() {
+    Vector[] directions = {
+        new Vector(1, 0),
+        new Vector(-1, 0),
+        new Vector(0, 1),
+        new Vector(0, -1)};
     return new ArrayList<>(Arrays.asList(directions));
   }
 
@@ -40,7 +41,7 @@ public class MockPiece extends UnboundedPiece {
     Set<Move> moves = new LinkedHashSet<>(super.getMovesAndAttacks());
     Location currLocation = getLocation();
     moves.add(
-        new Move(currLocation, currLocation.getIncrement(new Direction(1, 1))));
+        new Move(currLocation, currLocation.getIncrement(new Vector(1, 1))));
     return Collections.unmodifiableSet(moves);
   }
 
