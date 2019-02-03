@@ -171,4 +171,37 @@ public class KingTest {
     assertFalse(moves2.contains(new Move(king2Location, new Location(5, 4))));
   }
 
+  @Test
+  public void testPieceProtectingKing() {
+    ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
+    King king = new King(chessBoardBase, Side.White);
+    Pawn pawn = new Pawn(chessBoardBase, Side.White);
+    Rook rook = new Rook(chessBoardBase, Side.White);
+    Rook rookb = new Rook(chessBoardBase, Side.Black);
+    Queen queen = new Queen(chessBoardBase, Side.Black);
+
+    chessBoardBase.setKing(king, new Location(4, 3));
+    chessBoardBase.setPiece(pawn, new Location(3, 2));
+    chessBoardBase.setPiece(rook, new Location(2, 3));
+    chessBoardBase.setPiece(rookb, new Location(0, 3));
+    chessBoardBase.setPiece(queen, new Location(2, 1));
+
+    Set<Move> moves = chessBoardBase.getMoveHints(pawn.getLocation());
+    assertEquals(1, moves.size());
+    Move move = new Move(pawn.getLocation(), queen.getLocation());
+    move.setIsAttack(true);
+    assertTrue(moves.contains(move));
+
+    moves = chessBoardBase.getMoveHints(rook.getLocation());
+    assertEquals(3, moves.size());
+
+    move = new Move(rook.getLocation(), rook.getLocation().getBelow());
+    assertTrue(moves.contains(move));
+    move = new Move(rook.getLocation(), rook.getLocation().getAbove());
+    assertTrue(moves.contains(move));
+    move = new Move(rook.getLocation(), rookb.getLocation());
+    move.setIsAttack(true);
+    assertTrue(moves.contains(move));
+  }
+
 }
