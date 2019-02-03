@@ -29,7 +29,7 @@ public class BoardBuilder {
   public static ChessBoardBase boardFactory(String boardName, int height,
       int width) {
     if (boardName.equals("StandardChessBoard")) {
-      return new StandardChessBoard(height, width, King.class);
+      return new StandardChessBoard(height, width);
     }
     return null;
   }
