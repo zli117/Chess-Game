@@ -39,17 +39,20 @@ public class King extends Piece {
     // Handling castling
     Location currLocation = getLocation();
     ChessBoardBase chessBoard = getChessBoard();
-    if (mCastlingTo.contains(location)) {
-      if (location.getCol() > currLocation.getCol()) {
-        chessBoard.movePiece(
-            new Move(
-                new Location(currLocation.getRow(), chessBoard.getWidth() - 1),
-                location.getLeft()));
-      } else {
-        chessBoard.movePiece(
-            new Move(
-                new Location(currLocation.getRow(), 0),
-                location.getRight()));
+    if (currLocation != null && location != null) {
+      if (mCastlingTo.contains(location)) {
+        if (location.getCol() > currLocation.getCol()) {
+          chessBoard.movePiece(
+              new Move(
+                  new Location(currLocation.getRow(),
+                      chessBoard.getWidth() - 1),
+                  location.getLeft()));
+        } else {
+          chessBoard.movePiece(
+              new Move(
+                  new Location(currLocation.getRow(), 0),
+                  location.getRight()));
+        }
       }
     }
     super.setLocation(location);

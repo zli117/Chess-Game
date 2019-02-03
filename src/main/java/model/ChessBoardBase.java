@@ -129,7 +129,7 @@ public class ChessBoardBase {
 
   /**
    * Add a piece to the board. Will overwrite the existing piece. If the piece
-   * is a king, setPiece will fail.
+   * is a king, the king won't be registered.
    *
    * @param piece    The chess piece
    * @param location The location

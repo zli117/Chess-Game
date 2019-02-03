@@ -202,6 +202,13 @@ public class KingTest {
     move = new Move(rook.getLocation(), rookb.getLocation());
     move.setIsAttack(true);
     assertTrue(moves.contains(move));
+
+    chessBoardBase.removePiece(king.getLocation());
+    moves = chessBoardBase.getMoveHints(rook.getLocation());
+    assertEquals(13, moves.size());
+
+    moves = chessBoardBase.getMoveHints(pawn.getLocation());
+    assertEquals(3, moves.size());
   }
 
 }
