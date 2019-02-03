@@ -289,18 +289,33 @@ public class ChessBoardBase {
   }
 
   /**
-   * Get all the pieces that could capture pieces on this side.
+   * Get pieces satisfying some criteria.
+   *
+   * @param side    The side
+   * @param include Whether should include the side or exclude the side
+   * @return The list of pieces
    */
-  public List<Piece> getOpponentPieces(Side side) {
+  private List<Piece> filterPiecesBySide(Side side, boolean include) {
     ArrayList<Piece> opponents = new ArrayList<>();
     for (Piece[] row : mBoard) {
       for (Piece piece : row) {
-        if (piece != null && piece.getSide() != side) {
-          opponents.add(piece);
+        if (piece != null) {
+          if ((!include && piece.getSide() != side)
+              || (include && piece.getSide() == side)) {
+            opponents.add(piece);
+          }
         }
       }
     }
     return Collections.unmodifiableList(opponents);
+  }
+
+  public List<Piece> getOpponentPieces(Side side) {
+    return filterPiecesBySide(side, false);
+  }
+
+  public List<Piece> getPiecesFromSide(Side side) {
+    return filterPiecesBySide(side, true);
   }
 
   /**

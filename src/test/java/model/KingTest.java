@@ -148,6 +148,7 @@ public class KingTest {
     move.setIsAttack(true);
     assertTrue(moves.contains(move));
 
+    // When two kings are very close
     chessBoardBase = new ChessBoardBase(8, 8);
     King king1 = new King(chessBoardBase, Side.Black);
     King king2 = new King(chessBoardBase, Side.White);
