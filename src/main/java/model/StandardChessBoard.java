@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import utils.Location;
 import utils.Move;
+import utils.Vector;
 
 public class StandardChessBoard extends ChessBoardBase {
 
@@ -40,7 +41,7 @@ public class StandardChessBoard extends ChessBoardBase {
     for (Piece piece : getOpponentPieces(side)) {
       Set<Move> moves = getMoveHints(piece.getLocation());
       Move attack = new Move(piece.getLocation(), kingLocation);
-      attack.setIsAttack(true);
+      attack.attack();
       if (moves.contains(attack)) {
         return false;
       }
@@ -63,10 +64,11 @@ public class StandardChessBoard extends ChessBoardBase {
       // and could it be resolved.
       if (kingMoves.isEmpty()) {
         List<Piece> attackers = new ArrayList<>();
+        Location kingLocation = king.getLocation();
         for (Piece opponent : getOpponentPieces(side)) {
           Location opponentLocation = opponent.getLocation();
-          Move attack = new Move(opponentLocation, king.getLocation());
-          attack.setIsAttack(true);
+          Move attack = new Move(opponentLocation, kingLocation);
+          attack.attack();
           if (getMoveHints(opponentLocation).contains(attack)) {
             attackers.add(opponent);
           }
@@ -74,12 +76,37 @@ public class StandardChessBoard extends ChessBoardBase {
         if (attackers.size() == 1) {
           Piece attacker = attackers.get(0);
           Location attackerLocation = attacker.getLocation();
+          Vector attackerAndKing = Vector
+              .buildVectorFromLocations(attackerLocation, kingLocation);
+          // If the attack is a straight, we need to see if any piece could
+          // block it.
+          List<Location> straightLineLocations = new ArrayList<>();
+          for (Vector direction : attacker.getStraightLineMoveDirections()) {
+            if (direction.checkSameLocation(attackerAndKing)) {
+              System.out.println(direction);
+              for (Location increment = attackerLocation
+                  .getIncrement(direction);
+                  !increment.equals(kingLocation);
+                  increment = increment.getIncrement(direction)) {
+                straightLineLocations.add(increment);
+              }
+            }
+          }
           for (Piece thisSide : getPiecesFromSide(side)) {
             Location location = thisSide.getLocation();
             Move rescue = new Move(location, attackerLocation);
-            rescue.setIsAttack(true);
-            if (getMoveHints(location).contains(rescue)) {
+            rescue.attack();
+            Set<Move> moves = getMoveHints(location);
+            if (moves.contains(rescue)) {
               return false;
+            }
+            // If the attacker has straight line attacks, check if there's any
+            // piece could block.
+            for (Location toBlock : straightLineLocations) {
+              Move block = new Move(location, toBlock);
+              if (moves.contains(block)) {
+                return false;
+              }
             }
           }
           return true;

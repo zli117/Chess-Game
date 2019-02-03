@@ -12,8 +12,8 @@ public class Move extends Pair<Location, Location> {
   /**
    * Set whether the move is an attack move.
    */
-  public void setIsAttack(boolean isAttack) {
-    mIsAttack = isAttack;
+  public void attack() {
+    mIsAttack = true;
   }
 
   /**
@@ -44,8 +44,7 @@ public class Move extends Pair<Location, Location> {
   public Vector getDirection() {
     Location toLocation = getTo();
     Location fromLocation = getFrom();
-    return new Vector(toLocation.getRow() - fromLocation.getRow(),
-        toLocation.getCol() - fromLocation.getCol());
+    return Vector.buildVectorFromLocations(fromLocation, toLocation);
   }
 
   @Override
@@ -58,4 +57,5 @@ public class Move extends Pair<Location, Location> {
   public int hashCode() {
     return super.hashCode() + (mIsAttack ? 29 : 63);
   }
+
 }

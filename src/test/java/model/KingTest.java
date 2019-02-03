@@ -144,7 +144,7 @@ public class KingTest {
     assertTrue(moves.contains(move));
     move = new Move(kingLocation, new Location(2, 3));
     assertFalse(moves.contains(move));
-    move.setIsAttack(true);
+    move.attack();
     assertTrue(moves.contains(move));
 
     // When two kings are very close
@@ -189,7 +189,7 @@ public class KingTest {
     Set<Move> moves = chessBoardBase.getMoveHints(pawn.getLocation());
     assertEquals(1, moves.size());
     Move move = new Move(pawn.getLocation(), queen.getLocation());
-    move.setIsAttack(true);
+    move.attack();
     assertTrue(moves.contains(move));
 
     moves = chessBoardBase.getMoveHints(rook.getLocation());
@@ -200,7 +200,7 @@ public class KingTest {
     move = new Move(rook.getLocation(), rook.getLocation().getAbove());
     assertTrue(moves.contains(move));
     move = new Move(rook.getLocation(), rookb.getLocation());
-    move.setIsAttack(true);
+    move.attack();
     assertTrue(moves.contains(move));
 
     chessBoardBase.removePiece(king.getLocation());

@@ -123,7 +123,7 @@ public abstract class Piece {
         // See if this opponent can attack me
         Location opponentLocation = opponent.getLocation();
         Move move = new Move(opponentLocation, currLocation);
-        move.setIsAttack(true);
+        move.attack();
         // When this function is called, moves are already adjusted
         if (opponent.getAdjustedMoves().contains(move)) {
           // Check to see if its straight line attacks can reach the king
@@ -134,7 +134,7 @@ public abstract class Piece {
               currLocation.getCol() - opponentLocation.getCol());
           // Find the direction opponent attacked me
           for (Vector direction : straightLines) {
-            if (direction.checkSameDirection(meToOpponent)) {
+            if (direction.checkParallel(meToOpponent)) {
               Location kingLocation = king.getLocation();
               Location increment = currLocation;
               do {
@@ -156,7 +156,7 @@ public abstract class Piece {
       Vector moveDirection = move.getDirection();
       boolean aloneTheLine = true;
       for (Vector direction : directionOfMovesToKeep) {
-        if (!moveDirection.checkSameDirection(direction)) {
+        if (!moveDirection.checkParallel(direction)) {
           aloneTheLine = false;
           break;
         }
@@ -185,7 +185,7 @@ public abstract class Piece {
     for (Vector relativeLocation : relativeLocations) {
       Move attackMove = new Move(current,
           current.getIncrement(relativeLocation));
-      attackMove.setIsAttack(true);
+      attackMove.attack();
       moves.add(attackMove);
       // Same reason as unbounded piece. The move is an optional attack.
       Move move = new Move(current,
@@ -210,7 +210,7 @@ public abstract class Piece {
     do {
       increment = increment.getIncrement(direction);
       Move attackMove = new Move(current, increment);
-      attackMove.setIsAttack(true);
+      attackMove.attack();
       moves.add(attackMove);
       // Add the non attack moves as well. Since attack moves must attack, but
       // unbounded pieces can also have plain moves. In other words, the moves

@@ -14,10 +14,8 @@ public class MoveTest {
     Location dummyLocation = new Location(0, 0);
     Move move = new Move(dummyLocation, dummyLocation);
     assertFalse(move.isAttack());
-    move.setIsAttack(true);
+    move.attack();
     assertTrue(move.isAttack());
-    move.setIsAttack(false);
-    assertFalse(move.isAttack());
   }
 
   @Test
@@ -35,7 +33,7 @@ public class MoveTest {
     Move move2 = new Move(new Location(1, 2), new Location(2, 3));
 
     assertEquals(move1, move2);
-    move1.setIsAttack(true);
+    move1.attack();
     assertNotEquals(move1, move2);
 
     Move move3 = new Move(new Location(2, 2), new Location(2, 3));

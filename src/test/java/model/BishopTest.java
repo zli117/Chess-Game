@@ -29,15 +29,15 @@ public class BishopTest {
     assertEquals(20, possibleMoves.size());
     Move move = new Move(bishopLocation, mock1Location);
     assertTrue(possibleMoves.contains(move));
-    move.setIsAttack(true);
+    move.attack();
     assertTrue(possibleMoves.contains(move));
     move = new Move(bishopLocation, new Location(5, 5));
     assertTrue(possibleMoves.contains(move));
-    move.setIsAttack(true);
+    move.attack();
     assertTrue(possibleMoves.contains(move));
     move = new Move(bishopLocation, new Location(6, 6));
     assertFalse(possibleMoves.contains(move));
-    move.setIsAttack(true);
+    move.attack();
     assertFalse(possibleMoves.contains(move));
   }
 
