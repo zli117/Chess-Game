@@ -284,6 +284,7 @@ public class ChessBoardBaseTest {
     assertTrue(chessBoardBase.setKing(king, new Location(5, 5)));
     assertTrue(chessBoardBase.setKing(king, new Location(4, 5)));
     assertEquals(new Location(4, 5), king.getLocation());
+    assertSame(king, chessBoardBase.getKing(Side.Black));
   }
 
 }
