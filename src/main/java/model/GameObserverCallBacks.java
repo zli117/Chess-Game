@@ -1,6 +1,5 @@
 package model;
 
-import utils.Location;
 import utils.Move;
 
 public interface GameObserverCallBacks {

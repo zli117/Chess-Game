@@ -162,7 +162,6 @@ public class ChessBoardBaseTest {
     assertFalse(mockPieceBlack1.hasModifiedAdjustedMoves());
     assertTrue(mockPieceBlack1.hasSetAdjustedMoves());
 
-
     move = new Move(mockW2Location, mockW1Location);
     moves = chessBoardBase.getMoveHints(mockW2Location);
     assertFalse(moves.contains(move));

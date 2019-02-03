@@ -6,9 +6,9 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import utils.Vector;
 import utils.Location;
 import utils.Move;
+import utils.Vector;
 
 public class MockPiece extends Piece {
 

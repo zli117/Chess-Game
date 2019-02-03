@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
-import utils.Vector;
 import utils.Location;
+import utils.Vector;
 
 public class Knight extends Piece {
 
