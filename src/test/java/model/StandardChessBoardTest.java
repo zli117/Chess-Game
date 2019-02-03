@@ -41,6 +41,8 @@ public class StandardChessBoardTest {
 
     assertFalse(standardChessBoard.checkCheckMate(Side.Black));
     assertFalse(standardChessBoard.checkCheckMate(Side.White));
+
+    System.out.println(standardChessBoard);
   }
 
   @Test
@@ -59,6 +61,8 @@ public class StandardChessBoardTest {
 
     assertFalse(standardChessBoard.checkCheckMate(Side.Black));
     assertFalse(standardChessBoard.checkCheckMate(Side.White));
+
+    System.out.println(standardChessBoard);
   }
 
   @Test
@@ -77,6 +81,8 @@ public class StandardChessBoardTest {
 
     assertFalse(standardChessBoard.checkStaleMate(Side.White));
     assertFalse(standardChessBoard.checkStaleMate(Side.Black));
+
+    System.out.println(standardChessBoard);
   }
 
   @Test
@@ -95,6 +101,8 @@ public class StandardChessBoardTest {
 
     assertFalse(standardChessBoard.checkStaleMate(Side.White));
     assertFalse(standardChessBoard.checkStaleMate(Side.Black));
+
+    System.out.println(standardChessBoard);
   }
 
   @Test
@@ -116,6 +124,8 @@ public class StandardChessBoardTest {
     assertFalse(standardChessBoard.checkStaleMate(Side.White));
     assertFalse(standardChessBoard.checkStaleMate(Side.Black));
 
+    System.out.println(standardChessBoard);
+
     // But now we got 2 attackers. Not resolvable anymore (black checkmated)
     Queen queenW = new Queen(standardChessBoard, Side.White);
     standardChessBoard.setPiece(queenW, new Location(0, 7));
@@ -124,6 +134,8 @@ public class StandardChessBoardTest {
 
     assertFalse(standardChessBoard.checkStaleMate(Side.White));
     assertFalse(standardChessBoard.checkStaleMate(Side.Black));
+
+    System.out.println(standardChessBoard);
   }
 
   @Test
@@ -140,6 +152,8 @@ public class StandardChessBoardTest {
 
     assertFalse(standardChessBoard.checkStaleMate(Side.White));
     assertFalse(standardChessBoard.checkStaleMate(Side.Black));
+
+    System.out.println(standardChessBoard);
   }
 
 

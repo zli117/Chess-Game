@@ -336,4 +336,24 @@ public class ChessBoardBase {
     return Collections.unmodifiableList(mObservers);
   }
 
+  /**
+   * Get a string representation of the chess board
+   */
+  @Override
+  public String toString() {
+    StringBuilder stringBuilder = new StringBuilder();
+    for (Piece[] row : mBoard) {
+      for (Piece piece : row) {
+        String name = "";
+        if (piece != null) {
+          name = piece.toString();
+        }
+        stringBuilder.append(String.format("%-12s", name));
+        stringBuilder.append(',');
+      }
+      stringBuilder.append('\n');
+    }
+    return stringBuilder.toString();
+  }
+
 }
