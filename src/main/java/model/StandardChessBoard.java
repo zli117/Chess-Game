@@ -22,17 +22,26 @@ public class StandardChessBoard extends ChessBoardBase {
    * Check whether one side has no legal move.
    *
    * @param side The side
-   * @return True if there's no legal move available, false otherwise.
+   * @return True if there's no legal move available, false otherwise or invalid
+   * condition
    */
   public boolean checkStaleMate(Side side) {
-    List<Piece> sameSide = getPiecesFromSide(side);
-    for (Piece piece : sameSide) {
+    for (Piece piece : getPiecesFromSide(side)) {
       Set<Move> moves = getMoveHints(piece.getLocation());
       if (!moves.isEmpty()) {
-        System.out.println(piece);
-        for (Move m : moves) {
-          System.out.println(m);
-        }
+        return false;
+      }
+    }
+    King king = getKing(side);
+    if (king == null) {
+      return false;
+    }
+    Location kingLocation = king.getLocation();
+    for (Piece piece : getOpponentPieces(side)) {
+      Set<Move> moves = getMoveHints(piece.getLocation());
+      Move attack = new Move(piece.getLocation(), kingLocation);
+      attack.setIsAttack(true);
+      if (moves.contains(attack)) {
         return false;
       }
     }
