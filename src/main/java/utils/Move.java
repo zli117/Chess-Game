@@ -38,6 +38,9 @@ public class Move extends Pair<Location, Location> {
     return getB();
   }
 
+  /**
+   * Get the direction of this move.
+   */
   public Vector getDirection() {
     Location toLocation = getTo();
     Location fromLocation = getFrom();

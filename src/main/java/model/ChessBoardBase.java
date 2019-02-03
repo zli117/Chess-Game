@@ -165,6 +165,12 @@ public class ChessBoardBase {
     return false;
   }
 
+  /**
+   * Get the king of a side.
+   *
+   * @param side The side
+   * @return The king reference. Null if there's no king for the side.
+   */
   public King getKing(Side side) {
     if (mKings.containsKey(side)) {
       return mKings.get(side);
@@ -337,7 +343,7 @@ public class ChessBoardBase {
   }
 
   /**
-   * Get a string representation of the chess board
+   * Get a string representation of the chess board.
    */
   @Override
   public String toString() {

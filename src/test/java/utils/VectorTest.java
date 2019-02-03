@@ -24,6 +24,9 @@ public class VectorTest {
     @Parameter(1)
     public int mHorizontal;
 
+    /**
+     * Parameters for the test.
+     */
     @Parameters
     public static Collection<Object[]> data() {
       return Arrays.asList(new Object[][]{
@@ -58,6 +61,9 @@ public class VectorTest {
     public int mDifferentHorizontal;
 
 
+    /**
+     * Parameters for the test.
+     */
     @Parameters
     public static Collection<Object[]> data() {
       return Arrays.asList(new Object[][]{
@@ -71,7 +77,6 @@ public class VectorTest {
       Vector vector1 = new Vector(mVertical, mHorizontal);
       Vector vector2 = new Vector(mSameVertical, mSameHorizontal);
       Vector vector3 = new Vector(mDifferentVertical, mDifferentHorizontal);
-
 
       assertTrue(vector1.checkSameDirection(vector1));
       assertTrue(vector2.checkSameDirection(vector2));

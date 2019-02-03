@@ -48,14 +48,13 @@ public class KingTest {
     // Test moving rook when castling
     ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
     King king = new King(chessBoardBase, Side.Black);
-    Rook rookLeft = new Rook(chessBoardBase, Side.Black);
-    Rook rookRight = new Rook(chessBoardBase, Side.Black);
-    Queen queen = new Queen(chessBoardBase, Side.White);
-
     Location kingLocation = new Location(6, 4);
     assertTrue(chessBoardBase.setKing(king, kingLocation));
+    Rook rookLeft = new Rook(chessBoardBase, Side.Black);
     chessBoardBase.setPiece(rookLeft, new Location(6, 0));
+    Rook rookRight = new Rook(chessBoardBase, Side.Black);
     chessBoardBase.setPiece(rookRight, new Location(6, 7));
+    Queen queen = new Queen(chessBoardBase, Side.White);
     chessBoardBase.setPiece(queen, new Location(5, 3));
 
     Location leftCastling = new Location(6, 2);

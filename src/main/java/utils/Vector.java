@@ -6,14 +6,25 @@ public class Vector extends Pair<Integer, Integer> {
     super(vertical, horizontal);
   }
 
+  /**
+   * Get the vertical displacement.
+   */
   public int getVerticalDelta() {
     return getA();
   }
 
+  /**
+   * Get the horizontal displacement.
+   */
   public int getHorizontalDelta() {
     return getB();
   }
 
+  /**
+   * Check if two vectors are parallel.
+   *
+   * @param other Another vector
+   */
   public boolean checkSameDirection(Vector other) {
     float myVertical = getVerticalDelta();
     float myHorizontal = getHorizontalDelta();
@@ -24,8 +35,8 @@ public class Vector extends Pair<Integer, Integer> {
       return false;
     }
 
-    return (myHorizontal == 0 ||
-        (myVertical / myHorizontal == otherVertical / otherHorizontal));
+    return (myHorizontal == 0
+        || (myVertical / myHorizontal == otherVertical / otherHorizontal));
   }
 
 }
