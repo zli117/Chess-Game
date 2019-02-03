@@ -6,11 +6,11 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import utils.Direction;
 import utils.Location;
 import utils.Move;
+import utils.Vector;
 
-public class King extends BoundedPiece {
+public class King extends Piece {
 
   private List<Location> mCastlingTo;
 
@@ -20,16 +20,16 @@ public class King extends BoundedPiece {
   }
 
   @Override
-  ArrayList<Direction> getRelativeLocations() {
-    Direction[] relativeLocations = {
-        new Direction(1, -1),
-        new Direction(1, 0),
-        new Direction(1, 1),
-        new Direction(0, -1),
-        new Direction(0, 1),
-        new Direction(-1, -1),
-        new Direction(-1, 0),
-        new Direction(-1, 1)};
+  public List<Vector> getOneStepOffsets() {
+    Vector[] relativeLocations = {
+        new Vector(1, -1),
+        new Vector(1, 0),
+        new Vector(1, 1),
+        new Vector(0, -1),
+        new Vector(0, 1),
+        new Vector(-1, -1),
+        new Vector(-1, 0),
+        new Vector(-1, 1)};
 
     return new ArrayList<>(Arrays.asList(relativeLocations));
   }
@@ -39,17 +39,20 @@ public class King extends BoundedPiece {
     // Handling castling
     Location currLocation = getLocation();
     ChessBoardBase chessBoard = getChessBoard();
-    if (mCastlingTo.contains(location)) {
-      if (location.getCol() > currLocation.getCol()) {
-        chessBoard.movePiece(
-            new Move(
-                new Location(currLocation.getRow(), chessBoard.getWidth() - 1),
-                location.getLeft()));
-      } else {
-        chessBoard.movePiece(
-            new Move(
-                new Location(currLocation.getRow(), 0),
-                location.getRight()));
+    if (currLocation != null && location != null) {
+      if (mCastlingTo.contains(location)) {
+        if (location.getCol() > currLocation.getCol()) {
+          chessBoard.movePiece(
+              new Move(
+                  new Location(currLocation.getRow(),
+                      chessBoard.getWidth() - 1),
+                  location.getLeft()));
+        } else {
+          chessBoard.movePiece(
+              new Move(
+                  new Location(currLocation.getRow(), 0),
+                  location.getRight()));
+        }
       }
     }
     super.setLocation(location);
@@ -114,7 +117,6 @@ public class King extends BoundedPiece {
 
   @Override
   void modifyAdjustedMoves() {
-    super.modifyAdjustedMoves();
     ChessBoardBase chessBoard = getChessBoard();
 
     // Remove any move that could get king checked

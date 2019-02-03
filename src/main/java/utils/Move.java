@@ -38,6 +38,16 @@ public class Move extends Pair<Location, Location> {
     return getB();
   }
 
+  /**
+   * Get the direction of this move.
+   */
+  public Vector getDirection() {
+    Location toLocation = getTo();
+    Location fromLocation = getFrom();
+    return new Vector(toLocation.getRow() - fromLocation.getRow(),
+        toLocation.getCol() - fromLocation.getCol());
+  }
+
   @Override
   public boolean equals(Object o) {
     Move move = (Move) o;

@@ -162,7 +162,6 @@ public class ChessBoardBaseTest {
     assertFalse(mockPieceBlack1.hasModifiedAdjustedMoves());
     assertTrue(mockPieceBlack1.hasSetAdjustedMoves());
 
-
     move = new Move(mockW2Location, mockW1Location);
     moves = chessBoardBase.getMoveHints(mockW2Location);
     assertFalse(moves.contains(move));
@@ -273,6 +272,18 @@ public class ChessBoardBaseTest {
     chessBoardBase.registerObserver(callBack);
     assertEquals(1, chessBoardBase.getObservers().size());
     assertTrue(chessBoardBase.getObservers().contains(callBack));
+  }
+
+  @Test
+  public void testSetKing() {
+    ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
+    King king = new King(chessBoardBase, Side.Black);
+
+    assertFalse(chessBoardBase.setKing(king, new Location(8, 9)));
+    assertTrue(chessBoardBase.setKing(king, new Location(5, 5)));
+    assertTrue(chessBoardBase.setKing(king, new Location(4, 5)));
+    assertEquals(new Location(4, 5), king.getLocation());
+    assertSame(king, chessBoardBase.getKing(Side.Black));
   }
 
 }

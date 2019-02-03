@@ -75,6 +75,11 @@ public class PawnTest {
 
     assertEquals(4, upMoves.size());
     assertEquals(4, downMoves.size());
+
+    Pawn blocker = new Pawn(chessBoardBase, Side.White);
+    chessBoardBase.setPiece(blocker, new Location(5, 6));
+    upMoves = upPawn.getMovesAndAttacks();
+    assertEquals(3, upMoves.size());
   }
 
   @Test

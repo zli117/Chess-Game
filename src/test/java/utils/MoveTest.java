@@ -42,4 +42,10 @@ public class MoveTest {
     assertNotEquals(move2, move3);
   }
 
+  @Test
+  public void testGetDirection() {
+    Move move = new Move(new Location(1, 2), new Location(3, 4));
+    assertEquals(new Vector(2, 2), move.getDirection());
+  }
+
 }

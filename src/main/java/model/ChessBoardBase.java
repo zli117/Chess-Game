@@ -2,8 +2,10 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import utils.Location;
@@ -21,6 +23,7 @@ public class ChessBoardBase {
   private List<GameObserverCallBacks> mObservers;
   private Stack<Piece> mWithHeldPieces;
   private boolean mStateChanged;
+  private Map<Side, King> mKings;
 
   /**
    * Create a chess board.
@@ -38,6 +41,7 @@ public class ChessBoardBase {
     mObservers = new ArrayList<>();
     mWithHeldPieces = new Stack<>();
     mStateChanged = false;
+    mKings = new HashMap<>();
   }
 
   public int getWidth() {
@@ -124,7 +128,8 @@ public class ChessBoardBase {
   }
 
   /**
-   * Add a piece to the board. Will overwrite the existing piece
+   * Add a piece to the board. Will overwrite the existing piece. If the piece
+   * is a king, the king won't be registered.
    *
    * @param piece    The chess piece
    * @param location The location
@@ -138,6 +143,39 @@ public class ChessBoardBase {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Set the king of a side. If a king of this side already exists, it will be
+   * removed.
+   *
+   * @param king     The king
+   * @param location The location
+   * @return True if success, false otherwise
+   */
+  public boolean setKing(King king, Location location) {
+    if (checkValidLocation(location)) {
+      Side side = king.getSide();
+      if (mKings.containsKey(side)) {
+        removePiece(mKings.get(side).getLocation());
+      }
+      mKings.put(side, king);
+      return setPiece(king, location);
+    }
+    return false;
+  }
+
+  /**
+   * Get the king of a side.
+   *
+   * @param side The side
+   * @return The king reference. Null if there's no king for the side.
+   */
+  public King getKing(Side side) {
+    if (mKings.containsKey(side)) {
+      return mKings.get(side);
+    }
+    return null;
   }
 
   /**
@@ -257,18 +295,33 @@ public class ChessBoardBase {
   }
 
   /**
-   * Get all the pieces that could capture pieces on this side.
+   * Get pieces satisfying some criteria.
+   *
+   * @param side    The side
+   * @param include Whether should include the side or exclude the side
+   * @return The list of pieces
    */
-  public List<Piece> getOpponentPieces(Side side) {
+  private List<Piece> filterPiecesBySide(Side side, boolean include) {
     ArrayList<Piece> opponents = new ArrayList<>();
     for (Piece[] row : mBoard) {
       for (Piece piece : row) {
-        if (piece != null && piece.getSide() != side) {
-          opponents.add(piece);
+        if (piece != null) {
+          if ((!include && piece.getSide() != side)
+              || (include && piece.getSide() == side)) {
+            opponents.add(piece);
+          }
         }
       }
     }
     return Collections.unmodifiableList(opponents);
+  }
+
+  public List<Piece> getOpponentPieces(Side side) {
+    return filterPiecesBySide(side, false);
+  }
+
+  public List<Piece> getPiecesFromSide(Side side) {
+    return filterPiecesBySide(side, true);
   }
 
   /**
@@ -287,6 +340,26 @@ public class ChessBoardBase {
    */
   List<GameObserverCallBacks> getObservers() {
     return Collections.unmodifiableList(mObservers);
+  }
+
+  /**
+   * Get a string representation of the chess board.
+   */
+  @Override
+  public String toString() {
+    StringBuilder stringBuilder = new StringBuilder();
+    for (Piece[] row : mBoard) {
+      for (Piece piece : row) {
+        String name = "";
+        if (piece != null) {
+          name = piece.toString();
+        }
+        stringBuilder.append(String.format("%-12s", name));
+        stringBuilder.append(',');
+      }
+      stringBuilder.append('\n');
+    }
+    return stringBuilder.toString();
   }
 
 }
