@@ -70,7 +70,7 @@ public class Pawn extends Piece {
     Vector moveDirection = new Vector(mMovingUp ? -1 : 1, 0);
     Location moveOnDirection = current.getIncrement(moveDirection);
     moves.add(new Move(current, moveOnDirection));
-    if (!hasMoved()) {
+    if (!hasMoved() && getChessBoard().checkIsEmpty(moveOnDirection)) {
       moves.add(new Move(current, moveOnDirection.getIncrement(moveDirection)));
     }
     Move rightAttack = new Move(current, moveOnDirection.getRight());

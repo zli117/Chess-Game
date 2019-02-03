@@ -29,10 +29,14 @@ public class StandardChessBoard extends ChessBoardBase {
     for (Piece piece : sameSide) {
       Set<Move> moves = getMoveHints(piece.getLocation());
       if (!moves.isEmpty()) {
-        return true;
+        System.out.println(piece);
+        for (Move m : moves) {
+          System.out.println(m);
+        }
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   /**
