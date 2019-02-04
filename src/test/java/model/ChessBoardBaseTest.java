@@ -183,6 +183,7 @@ public class ChessBoardBaseTest {
     assertNull(mockPiece.getLocation());
 
     assertNull(chessBoardBase.removePiece(location));
+    assertNull(chessBoardBase.removePiece(new Location(10, 10)));
 
     assertSame(mockPiece, callBack.getRemoved());
   }
@@ -284,6 +285,17 @@ public class ChessBoardBaseTest {
     assertTrue(chessBoardBase.setKing(king, new Location(4, 5)));
     assertEquals(new Location(4, 5), king.getLocation());
     assertSame(king, chessBoardBase.getKing(Side.Black));
+  }
+
+  @Test
+  public void testRemoveKing() {
+    ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
+    King king = new King(chessBoardBase, Side.Black);
+
+    assertTrue(chessBoardBase.setKing(king, new Location(5, 5)));
+    assertNull(chessBoardBase.removeKing(Side.White));
+    assertNotNull(chessBoardBase.removeKing(Side.Black));
+    assertNull(chessBoardBase.getKing(Side.White));
   }
 
 }

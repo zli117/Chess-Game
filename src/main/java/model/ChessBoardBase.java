@@ -252,7 +252,7 @@ public class ChessBoardBase {
    */
   public Piece removePiece(Location location) {
     Piece piece = getPiece(location);
-    if (piece != null && checkValidLocation(location)) {
+    if (piece != null) {
       mBoard[location.getRow()][location.getCol()] = null;
       piece.setLocation(null);
       for (GameObserverCallBacks observer : mObservers) {
