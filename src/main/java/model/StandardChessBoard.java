@@ -1,9 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
-import utils.Location;
 import utils.Move;
 
 public class StandardChessBoard extends ChessBoardBase {
@@ -18,6 +15,16 @@ public class StandardChessBoard extends ChessBoardBase {
     super(height, width);
   }
 
+  private boolean checkHasLegalMoves(Side side) {
+    for (Piece piece : getPiecesFromSide(side)) {
+      Set<Move> moves = getLegalMoves(piece.getLocation());
+      if (!moves.isEmpty()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
    * Check whether one side has no legal move.
    *
@@ -26,26 +33,9 @@ public class StandardChessBoard extends ChessBoardBase {
    * condition
    */
   public boolean checkStaleMate(Side side) {
-    for (Piece piece : getPiecesFromSide(side)) {
-      Set<Move> moves = getMoveHints(piece.getLocation());
-      if (!moves.isEmpty()) {
-        return false;
-      }
-    }
     King king = getKing(side);
-    if (king == null) {
-      return false;
-    }
-    Location kingLocation = king.getLocation();
-    for (Piece piece : getOpponentPieces(side)) {
-      Set<Move> moves = getMoveHints(piece.getLocation());
-      Move attack = new Move(piece.getLocation(), kingLocation);
-      attack.setIsAttack(true);
-      if (moves.contains(attack)) {
-        return false;
-      }
-    }
-    return true;
+    return king != null && !checkHasLegalMoves(side)
+        && !checkKingPossiblyUnderCheck(side);
   }
 
   /**
@@ -57,38 +47,8 @@ public class StandardChessBoard extends ChessBoardBase {
    */
   public boolean checkCheckMate(Side side) {
     King king = getKing(side);
-    if (king != null) {
-      Set<Move> kingMoves = getMoveHints(king.getLocation());
-      // If king doesn't have any legal move, check whether it's under check
-      // and could it be resolved.
-      if (kingMoves.isEmpty()) {
-        List<Piece> attackers = new ArrayList<>();
-        for (Piece opponent : getOpponentPieces(side)) {
-          Location opponentLocation = opponent.getLocation();
-          Move attack = new Move(opponentLocation, king.getLocation());
-          attack.setIsAttack(true);
-          if (getMoveHints(opponentLocation).contains(attack)) {
-            attackers.add(opponent);
-          }
-        }
-        if (attackers.size() == 1) {
-          Piece attacker = attackers.get(0);
-          Location attackerLocation = attacker.getLocation();
-          for (Piece thisSide : getPiecesFromSide(side)) {
-            Location location = thisSide.getLocation();
-            Move rescue = new Move(location, attackerLocation);
-            rescue.setIsAttack(true);
-            if (getMoveHints(location).contains(rescue)) {
-              return false;
-            }
-          }
-          return true;
-        }
-        // No way to resolve if there are two attackers
-        return attackers.size() > 1;
-      }
-    }
-    return false;
+    return king != null && !checkHasLegalMoves(side)
+        && checkKingPossiblyUnderCheck(side);
   }
 
 }

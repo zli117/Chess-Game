@@ -157,7 +157,7 @@ public class ChessBoardBase {
     if (checkValidLocation(location)) {
       Side side = king.getSide();
       if (mKings.containsKey(side)) {
-        removePiece(mKings.get(side).getLocation());
+        removeKing(side);
       }
       mKings.put(side, king);
       return setPiece(king, location);
@@ -191,13 +191,13 @@ public class ChessBoardBase {
   }
 
   /**
-   * Get the possible moves and attacks of a piece.
+   * Get the legal moves and attacks of a piece.
    *
    * @param location The location of the piece
    * @return A set of moves. If the location doesn't have any piece or invalid,
-   * return an empty set of moves.
+   * return an empty set of move.
    */
-  public Set<Move> getMoveHints(Location location) {
+  public Set<Move> getLegalMoves(Location location) {
     Piece piece = getPiece(location);
     if (piece == null) {
       return new LinkedHashSet<>();
@@ -236,6 +236,18 @@ public class ChessBoardBase {
   }
 
   /**
+   * Move the king of a side from the board. Will unregister the king.
+   */
+  public King removeKing(Side side) {
+    King king = getKing(side);
+    if (king != null) {
+      removePiece(king.getLocation());
+      mKings.remove(side);
+    }
+    return king;
+  }
+
+  /**
    * Remove a piece from the board.
    */
   public Piece removePiece(Location location) {
@@ -244,7 +256,7 @@ public class ChessBoardBase {
       mBoard[location.getRow()][location.getCol()] = null;
       piece.setLocation(null);
       for (GameObserverCallBacks observer : mObservers) {
-        observer.pieceRemoved(this, piece);
+        observer.pieceRemoved(piece, location);
       }
       mStateChanged = true;
     }
@@ -272,26 +284,35 @@ public class ChessBoardBase {
    */
   public boolean movePiece(Move move) {
     Location fromLocation = move.getFrom();
-    Location toLocation = move.getTo();
-    Set<Move> possibleMoves = getMoveHints(fromLocation);
+    Set<Move> possibleMoves = getLegalMoves(fromLocation);
     if (possibleMoves.contains(move)) {
-      Piece piece = getPiece(move.getFrom());
-      // Let the victim piece know it has been killed
-      if (move.isAttack()) {
-        killPiece(toLocation);
-      }
-      // removePiece will ignore the piece if it has already been removed from
-      // the board
-      // mStateChanged is set to true in removePiece
-      removePiece(toLocation);
-      setPiece(piece, toLocation);
-      for (GameObserverCallBacks observer : mObservers) {
-        observer.pieceMoved(this, move);
-      }
-      mBoard[fromLocation.getRow()][fromLocation.getCol()] = null;
+      moveWithOutCheck(move);
       return true;
     }
     return false;
+  }
+
+  /**
+   * Simple move. No validation of the actual move. In other words, the move can
+   * be any illegal move.
+   */
+  void moveWithOutCheck(Move move) {
+    Location toLocation = move.getTo();
+    Piece piece = getPiece(move.getFrom());
+    // Let the victim piece know it has been killed
+    if (move.isAttack()) {
+      killPiece(toLocation);
+    }
+    // removePiece will ignore the piece if it has already been removed from
+    // the board
+    // mStateChanged is set to true in removePiece
+    removePiece(toLocation);
+    setPiece(piece, toLocation);
+    for (GameObserverCallBacks observer : mObservers) {
+      observer.pieceMoved(move);
+    }
+    Location fromLocation = move.getFrom();
+    mBoard[fromLocation.getRow()][fromLocation.getCol()] = null;
   }
 
   /**
@@ -342,6 +363,10 @@ public class ChessBoardBase {
     return Collections.unmodifiableList(mObservers);
   }
 
+  void removeObserver(GameObserverCallBacks observer) {
+    mObservers.remove(observer);
+  }
+
   /**
    * Get a string representation of the chess board.
    */
@@ -360,6 +385,28 @@ public class ChessBoardBase {
       stringBuilder.append('\n');
     }
     return stringBuilder.toString();
+  }
+
+  /**
+   * Check whether the king is possibly under check of a side.
+   *
+   * @param side The side
+   * @return A list of king attackers. If king is not under check, or there's no
+   * king of this side, the list will be empty
+   */
+  public boolean checkKingPossiblyUnderCheck(Side side) {
+    List<Piece> opponents = getOpponentPieces(side);
+    King king = mKings.get(side);
+    if (king != null) {
+      for (Piece opponent : opponents) {
+        Move move = new Move(opponent.getLocation(), king.getLocation());
+        move.attack();
+        if (opponent.getMovesAndAttacks().contains(move)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
 }

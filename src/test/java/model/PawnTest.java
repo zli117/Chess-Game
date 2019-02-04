@@ -106,7 +106,7 @@ public class PawnTest {
         .movePiece(new Move(downLocation, downLocation.getBelow())));
 
     Move captureMove = new Move(downPawn.getLocation(), upLocation.getAbove());
-    captureMove.setIsAttack(true);
+    captureMove.attack();
     assertNotNull(upPawn.getLocation());
     assertTrue(chessBoardBase.movePiece(captureMove));
     assertNull(upPawn.getLocation());

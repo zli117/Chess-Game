@@ -33,7 +33,7 @@ public class StandardChessBoardTest {
     assertFalse(standardChessBoard.checkStaleMate(Side.Black));
 
     Move capturePawn = new Move(kingB.getLocation(), pawnW1.getLocation());
-    capturePawn.setIsAttack(true);
+    capturePawn.attack();
     standardChessBoard.movePiece(capturePawn);
     assertTrue(standardChessBoard.checkStaleMate(Side.White));
     assertFalse(standardChessBoard.checkStaleMate(Side.Black));
@@ -139,12 +139,17 @@ public class StandardChessBoardTest {
 
   @Test
   public void testCheckCheckMate4() {
-    // Invalid (no king)
+    // Resolvable (shouldn't checkmate). A piece can block the straight line
+    // attack
     StandardChessBoard standardChessBoard = new StandardChessBoard(8, 8);
     King kingW = new King(standardChessBoard, Side.White);
+    King kingB = new King(standardChessBoard, Side.Black);
     Rook rookW = new Rook(standardChessBoard, Side.White);
+    Rook rookB = new Rook(standardChessBoard, Side.Black);
     standardChessBoard.setKing(kingW, new Location(3, 5));
+    standardChessBoard.setKing(kingB, new Location(3, 7));
     standardChessBoard.setPiece(rookW, new Location(7, 7));
+    standardChessBoard.setPiece(rookB, new Location(6, 0));
 
     assertFalse(standardChessBoard.checkCheckMate(Side.Black));
     assertFalse(standardChessBoard.checkCheckMate(Side.White));
@@ -153,6 +158,24 @@ public class StandardChessBoardTest {
     assertFalse(standardChessBoard.checkStaleMate(Side.Black));
 
     System.out.println(standardChessBoard);
+  }
+
+  @Test
+  public void testCheckCheckMate5() {
+    // Invalid (no king)
+    StandardChessBoard standardChessBoard = new StandardChessBoard(8, 8);
+    King kingW = new King(standardChessBoard, Side.White);
+    Rook rookW = new Rook(standardChessBoard, Side.White);
+    standardChessBoard.setKing(kingW, new Location(3, 5));
+    standardChessBoard.setPiece(rookW, new Location(7, 7));
+
+    System.out.println(standardChessBoard);
+
+    assertFalse(standardChessBoard.checkCheckMate(Side.Black));
+    assertFalse(standardChessBoard.checkCheckMate(Side.White));
+
+    assertFalse(standardChessBoard.checkStaleMate(Side.White));
+    assertFalse(standardChessBoard.checkStaleMate(Side.Black));
   }
 
 

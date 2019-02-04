@@ -30,7 +30,7 @@ public class KingTest {
 
     Location leftCastling = new Location(6, 2);
     Location rightCastling = new Location(6, 6);
-    Set<Move> moves = chessBoardBase.getMoveHints(kingLocation);
+    Set<Move> moves = chessBoardBase.getLegalMoves(kingLocation);
 
     assertTrue(moves.contains(new Move(kingLocation, leftCastling)));
     assertFalse(moves.contains(new Move(kingLocation, rightCastling)));
@@ -59,7 +59,8 @@ public class KingTest {
 
     Location leftCastling = new Location(6, 2);
     Location rightCastling = new Location(6, 6);
-    Set<Move> moves = chessBoardBase.getMoveHints(kingLocation);
+    Set<Move> moves = chessBoardBase.getLegalMoves(kingLocation);
+
 
     assertFalse(moves.contains(new Move(kingLocation, leftCastling)));
     assertTrue(moves.contains(new Move(kingLocation, rightCastling)));
@@ -71,7 +72,7 @@ public class KingTest {
     assertEquals(new Location(6, 5), rookRight.getLocation());
     assertTrue(chessBoardBase.getPiece(new Location(6, 5)) instanceof Rook);
 
-    chessBoardBase.getMoveHints(new Location(6, 6));
+    chessBoardBase.getLegalMoves(new Location(6, 6));
   }
 
   @Test
@@ -90,14 +91,14 @@ public class KingTest {
     chessBoardBase.setPiece(queen1, new Location(6, 6));
     chessBoardBase.setPiece(queen2, new Location(6, 1));
 
-    Set<Move> moves = chessBoardBase.getMoveHints(kingLocation);
+    Set<Move> moves = chessBoardBase.getLegalMoves(kingLocation);
     assertFalse(moves.contains(new Move(kingLocation, new Location(6, 2))));
     assertFalse(moves.contains(new Move(kingLocation, new Location(6, 6))));
 
     assertNotNull(chessBoardBase.removePiece(queen1.getLocation()));
     assertNotNull(chessBoardBase.removePiece(queen2.getLocation()));
 
-    moves = chessBoardBase.getMoveHints(kingLocation);
+    moves = chessBoardBase.getLegalMoves(kingLocation);
     assertTrue(moves.contains(new Move(kingLocation, new Location(6, 2))));
     assertTrue(moves.contains(new Move(kingLocation, new Location(6, 6))));
 
@@ -110,7 +111,7 @@ public class KingTest {
     chessBoardBase.movePiece(
         new Move(rookRight.getLocation(), rookRight.getLocation().getBelow()));
 
-    moves = chessBoardBase.getMoveHints(kingLocation);
+    moves = chessBoardBase.getLegalMoves(kingLocation);
     assertFalse(moves.contains(new Move(kingLocation, new Location(6, 2))));
     assertFalse(moves.contains(new Move(kingLocation, new Location(6, 6))));
 
@@ -119,7 +120,7 @@ public class KingTest {
     chessBoardBase.setPiece(rookLeft, new Location(6, 0));
     chessBoardBase.setPiece(rookRight, new Location(6, 7));
 
-    moves = chessBoardBase.getMoveHints(kingLocation);
+    moves = chessBoardBase.getLegalMoves(kingLocation);
     assertFalse(moves.contains(new Move(kingLocation, new Location(6, 2))));
     assertFalse(moves.contains(new Move(kingLocation, new Location(6, 6))));
   }
@@ -138,13 +139,13 @@ public class KingTest {
     chessBoardBase.setPiece(rook2, new Location(3, 4));
     chessBoardBase.setPiece(pawn, new Location(5, 2));
 
-    Set<Move> moves = chessBoardBase.getMoveHints(kingLocation);
+    Set<Move> moves = chessBoardBase.getLegalMoves(kingLocation);
     assertEquals(2, moves.size());
     Move move = new Move(kingLocation, new Location(4, 2));
     assertTrue(moves.contains(move));
     move = new Move(kingLocation, new Location(2, 3));
     assertFalse(moves.contains(move));
-    move.setIsAttack(true);
+    move.attack();
     assertTrue(moves.contains(move));
 
     // When two kings are very close
@@ -156,8 +157,8 @@ public class KingTest {
     chessBoardBase.setKing(king1, king1Location);
     chessBoardBase.setKing(king2, king2Location);
 
-    Set<Move> moves1 = chessBoardBase.getMoveHints(king1Location);
-    Set<Move> moves2 = chessBoardBase.getMoveHints(king2Location);
+    Set<Move> moves1 = chessBoardBase.getLegalMoves(king1Location);
+    Set<Move> moves2 = chessBoardBase.getLegalMoves(king2Location);
 
     assertEquals(5, moves1.size());
     assertEquals(5, moves2.size());
@@ -176,38 +177,38 @@ public class KingTest {
     ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
     King king = new King(chessBoardBase, Side.White);
     Pawn pawn = new Pawn(chessBoardBase, Side.White);
-    Rook rook = new Rook(chessBoardBase, Side.White);
-    Rook rookb = new Rook(chessBoardBase, Side.Black);
+    Rook rookW = new Rook(chessBoardBase, Side.White);
+    Rook rookB = new Rook(chessBoardBase, Side.Black);
     Queen queen = new Queen(chessBoardBase, Side.Black);
 
     chessBoardBase.setKing(king, new Location(4, 3));
     chessBoardBase.setPiece(pawn, new Location(3, 2));
-    chessBoardBase.setPiece(rook, new Location(2, 3));
-    chessBoardBase.setPiece(rookb, new Location(0, 3));
+    chessBoardBase.setPiece(rookW, new Location(2, 3));
+    chessBoardBase.setPiece(rookB, new Location(0, 3));
     chessBoardBase.setPiece(queen, new Location(2, 1));
 
-    Set<Move> moves = chessBoardBase.getMoveHints(pawn.getLocation());
+    Set<Move> moves = chessBoardBase.getLegalMoves(pawn.getLocation());
     assertEquals(1, moves.size());
     Move move = new Move(pawn.getLocation(), queen.getLocation());
-    move.setIsAttack(true);
+    move.attack();
     assertTrue(moves.contains(move));
 
-    moves = chessBoardBase.getMoveHints(rook.getLocation());
+    moves = chessBoardBase.getLegalMoves(rookW.getLocation());
     assertEquals(3, moves.size());
 
-    move = new Move(rook.getLocation(), rook.getLocation().getBelow());
+    move = new Move(rookW.getLocation(), rookW.getLocation().getBelow());
     assertTrue(moves.contains(move));
-    move = new Move(rook.getLocation(), rook.getLocation().getAbove());
+    move = new Move(rookW.getLocation(), rookW.getLocation().getAbove());
     assertTrue(moves.contains(move));
-    move = new Move(rook.getLocation(), rookb.getLocation());
-    move.setIsAttack(true);
+    move = new Move(rookW.getLocation(), rookB.getLocation());
+    move.attack();
     assertTrue(moves.contains(move));
 
-    chessBoardBase.removePiece(king.getLocation());
-    moves = chessBoardBase.getMoveHints(rook.getLocation());
+    chessBoardBase.removeKing(king.getSide());
+    moves = chessBoardBase.getLegalMoves(rookW.getLocation());
     assertEquals(13, moves.size());
 
-    moves = chessBoardBase.getMoveHints(pawn.getLocation());
+    moves = chessBoardBase.getLegalMoves(pawn.getLocation());
     assertEquals(3, moves.size());
   }
 

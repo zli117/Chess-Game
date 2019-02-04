@@ -74,10 +74,10 @@ public class Pawn extends Piece {
       moves.add(new Move(current, moveOnDirection.getIncrement(moveDirection)));
     }
     Move rightAttack = new Move(current, moveOnDirection.getRight());
-    rightAttack.setIsAttack(true);
+    rightAttack.attack();
     moves.add(rightAttack);
     Move leftAttack = new Move(current, moveOnDirection.getLeft());
-    leftAttack.setIsAttack(true);
+    leftAttack.attack();
     moves.add(leftAttack);
     return Collections.unmodifiableSet(moves);
   }

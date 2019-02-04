@@ -146,13 +146,13 @@ public class ChessBoardBaseTest {
     chessBoardBase.setPiece(mockPieceBlack1, mockB1Location);
     chessBoardBase.setPiece(mockPieceWhite2, mockW2Location);
 
-    Set<Move> moves = chessBoardBase.getMoveHints(mockW1Location);
+    Set<Move> moves = chessBoardBase.getLegalMoves(mockW1Location);
     Move move = new Move(mockW1Location, mockB1Location);
-    move.setIsAttack(true);
+    move.attack();
     assertTrue(moves.contains(move));
     move = new Move(mockW1Location, mockW2Location);
     assertFalse(moves.contains(move));
-    move.setIsAttack(true);
+    move.attack();
     assertFalse(moves.contains(move));
 
     assertTrue(mockPieceWhite1.hasModifiedAdjustedMoves());
@@ -163,12 +163,12 @@ public class ChessBoardBaseTest {
     assertTrue(mockPieceBlack1.hasSetAdjustedMoves());
 
     move = new Move(mockW2Location, mockW1Location);
-    moves = chessBoardBase.getMoveHints(mockW2Location);
+    moves = chessBoardBase.getLegalMoves(mockW2Location);
     assertFalse(moves.contains(move));
-    move.setIsAttack(true);
+    move.attack();
     assertFalse(moves.contains(move));
 
-    assertEquals(0, chessBoardBase.getMoveHints(new Location(0, 0)).size());
+    assertEquals(0, chessBoardBase.getLegalMoves(new Location(0, 0)).size());
   }
 
   @Test
@@ -183,6 +183,7 @@ public class ChessBoardBaseTest {
     assertNull(mockPiece.getLocation());
 
     assertNull(chessBoardBase.removePiece(location));
+    assertNull(chessBoardBase.removePiece(new Location(10, 10)));
 
     assertSame(mockPiece, callBack.getRemoved());
   }
@@ -220,7 +221,7 @@ public class ChessBoardBaseTest {
     chessBoardBase.setPiece(mockPieceWhite2, mockW2Location);
 
     Move move = new Move(mockW1Location, mockB1Location);
-    move.setIsAttack(true);
+    move.attack();
     assertTrue(chessBoardBase.movePiece(move));
 
     assertEquals(mockB1Location, mockPieceWhite1.getLocation());
@@ -284,6 +285,17 @@ public class ChessBoardBaseTest {
     assertTrue(chessBoardBase.setKing(king, new Location(4, 5)));
     assertEquals(new Location(4, 5), king.getLocation());
     assertSame(king, chessBoardBase.getKing(Side.Black));
+  }
+
+  @Test
+  public void testRemoveKing() {
+    ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
+    King king = new King(chessBoardBase, Side.Black);
+
+    assertTrue(chessBoardBase.setKing(king, new Location(5, 5)));
+    assertNull(chessBoardBase.removeKing(Side.White));
+    assertNotNull(chessBoardBase.removeKing(Side.Black));
+    assertNull(chessBoardBase.getKing(Side.White));
   }
 
 }

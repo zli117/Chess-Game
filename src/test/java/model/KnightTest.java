@@ -30,7 +30,7 @@ public class KnightTest {
     assertEquals(16, moves.size());
     Move move = new Move(knightLocation, mock1Location);
     assertTrue(moves.contains(move));
-    move.setIsAttack(true);
+    move.attack();
     assertTrue(moves.contains(move));
   }
 

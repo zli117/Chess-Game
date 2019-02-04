@@ -5,24 +5,24 @@ public class Pair<A, B> {
   private A mA;
   private B mB;
 
-  Pair(A a, B b) {
+  public Pair(A a, B b) {
     mA = a;
     mB = b;
   }
 
-  A getA() {
+  public A getA() {
     return mA;
   }
 
-  void setA(A a) {
+  public void setA(A a) {
     mA = a;
   }
 
-  B getB() {
+  public B getB() {
     return mB;
   }
 
-  void setB(B b) {
+  public void setB(B b) {
     mB = b;
   }
 
