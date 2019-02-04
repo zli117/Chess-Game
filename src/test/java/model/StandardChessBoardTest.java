@@ -169,13 +169,13 @@ public class StandardChessBoardTest {
     standardChessBoard.setKing(kingW, new Location(3, 5));
     standardChessBoard.setPiece(rookW, new Location(7, 7));
 
+    System.out.println(standardChessBoard);
+
     assertFalse(standardChessBoard.checkCheckMate(Side.Black));
     assertFalse(standardChessBoard.checkCheckMate(Side.White));
 
     assertFalse(standardChessBoard.checkStaleMate(Side.White));
     assertFalse(standardChessBoard.checkStaleMate(Side.Black));
-
-    System.out.println(standardChessBoard);
   }
 
 

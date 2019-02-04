@@ -125,7 +125,7 @@ public abstract class Piece {
       MoveTracker tracker = new MoveTracker();
       chessBoardBase.registerObserver(tracker);
       chessBoardBase.moveWithOutCheck(move);
-      if (chessBoardBase.getPossibleKingAttackers(getSide()).isEmpty()) {
+      if (!chessBoardBase.checkKingPossiblyUnderCheck(getSide())) {
         safeMoves.add(move);
       }
       // Undo the move

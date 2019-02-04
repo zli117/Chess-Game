@@ -146,7 +146,7 @@ public class ChessBoardBaseTest {
     chessBoardBase.setPiece(mockPieceBlack1, mockB1Location);
     chessBoardBase.setPiece(mockPieceWhite2, mockW2Location);
 
-    Set<Move> moves = chessBoardBase.getMoveHints(mockW1Location);
+    Set<Move> moves = chessBoardBase.getLegalMoves(mockW1Location);
     Move move = new Move(mockW1Location, mockB1Location);
     move.attack();
     assertTrue(moves.contains(move));
@@ -163,12 +163,12 @@ public class ChessBoardBaseTest {
     assertTrue(mockPieceBlack1.hasSetAdjustedMoves());
 
     move = new Move(mockW2Location, mockW1Location);
-    moves = chessBoardBase.getMoveHints(mockW2Location);
+    moves = chessBoardBase.getLegalMoves(mockW2Location);
     assertFalse(moves.contains(move));
     move.attack();
     assertFalse(moves.contains(move));
 
-    assertEquals(0, chessBoardBase.getMoveHints(new Location(0, 0)).size());
+    assertEquals(0, chessBoardBase.getLegalMoves(new Location(0, 0)).size());
   }
 
   @Test

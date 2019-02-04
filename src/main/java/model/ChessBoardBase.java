@@ -191,13 +191,13 @@ public class ChessBoardBase {
   }
 
   /**
-   * Get the possible moves and attacks of a piece.
+   * Get the legal moves and attacks of a piece.
    *
    * @param location The location of the piece
    * @return A set of moves. If the location doesn't have any piece or invalid,
-   * return an empty set of moves.
+   * return an empty set of move.
    */
-  public Set<Move> getMoveHints(Location location) {
+  public Set<Move> getLegalMoves(Location location) {
     Piece piece = getPiece(location);
     if (piece == null) {
       return new LinkedHashSet<>();
@@ -284,7 +284,7 @@ public class ChessBoardBase {
    */
   public boolean movePiece(Move move) {
     Location fromLocation = move.getFrom();
-    Set<Move> possibleMoves = getMoveHints(fromLocation);
+    Set<Move> possibleMoves = getLegalMoves(fromLocation);
     if (possibleMoves.contains(move)) {
       moveWithOutCheck(move);
       return true;
@@ -394,8 +394,7 @@ public class ChessBoardBase {
    * @return A list of king attackers. If king is not under check, or there's no
    * king of this side, the list will be empty
    */
-  public List<Piece> getPossibleKingAttackers(Side side) {
-    List<Piece> attackers = new ArrayList<>();
+  public boolean checkKingPossiblyUnderCheck(Side side) {
     List<Piece> opponents = getOpponentPieces(side);
     King king = mKings.get(side);
     if (king != null) {
@@ -403,11 +402,11 @@ public class ChessBoardBase {
         Move move = new Move(opponent.getLocation(), king.getLocation());
         move.attack();
         if (opponent.getMovesAndAttacks().contains(move)) {
-          attackers.add(opponent);
+          return true;
         }
       }
     }
-    return attackers;
+    return false;
   }
 
 }
