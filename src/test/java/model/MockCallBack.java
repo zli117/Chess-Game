@@ -1,5 +1,6 @@
 package model;
 
+import utils.Location;
 import utils.Move;
 
 public class MockCallBack implements GameObserverCallBacks {
@@ -20,22 +21,12 @@ public class MockCallBack implements GameObserverCallBacks {
   }
 
   @Override
-  public void onCheckmate(Side loser) {
-    mCheckedSide = loser;
-  }
-
-  @Override
-  public void onStalemate(Side loser) {
-    mStaledSide = loser;
-  }
-
-  @Override
-  public void pieceMoved(ChessBoardBase chessBoard, Move move) {
+  public void pieceMoved(Move move) {
     mMove = move;
   }
 
   @Override
-  public void pieceRemoved(ChessBoardBase chessBoard, Piece pieceRemoved) {
+  public void pieceRemoved(Piece pieceRemoved, Location location) {
     mRemoved = pieceRemoved;
   }
 

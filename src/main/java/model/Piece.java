@@ -2,11 +2,13 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import utils.Location;
 import utils.Move;
+import utils.Pair;
 import utils.Vector;
 
 
@@ -17,6 +19,7 @@ public abstract class Piece {
   private Side mSide;
   private Set<Move> mAdjustedMoves;
   private boolean mMoved;
+  private boolean mFirstTimeMoved;
 
   /**
    * Create a chess piece.
@@ -29,6 +32,7 @@ public abstract class Piece {
     mSide = side;
     mAdjustedMoves = new LinkedHashSet<>();
     mMoved = false;
+    mFirstTimeMoved =false;
   }
 
   /**
@@ -47,6 +51,7 @@ public abstract class Piece {
   public void setLocation(Location location) {
     if (location != null) {
       if (mLocation != null && !mLocation.equals(location)) {
+        mFirstTimeMoved = !mMoved;
         mMoved = true;
       }
     }
@@ -113,59 +118,32 @@ public abstract class Piece {
    * that could get king checked.
    */
   void modifyAdjustedMoves() {
-    ChessBoardBase chessBoard = getChessBoard();
-    King king = chessBoard.getKing(getSide());
-    Location currLocation = getLocation();
-    List<Vector> directionOfMovesToKeep = new ArrayList<>();
-    if (king != null && king.getLocation() != null) {
-      List<Piece> opponents = chessBoard.getOpponentPieces(getSide());
-      for (Piece opponent : opponents) {
-        // See if this opponent can attack me
-        Location opponentLocation = opponent.getLocation();
-        Move move = new Move(opponentLocation, currLocation);
-        move.attack();
-        // When this function is called, moves are already adjusted
-        if (opponent.getAdjustedMoves().contains(move)) {
-          // Check to see if its straight line attacks can reach the king
-          List<Vector> straightLines = opponent
-              .getStraightLineMoveDirections();
-          Vector meToOpponent = new Vector(
-              currLocation.getRow() - opponentLocation.getRow(),
-              currLocation.getCol() - opponentLocation.getCol());
-          // Find the direction opponent attacked me
-          for (Vector direction : straightLines) {
-            if (direction.checkParallel(meToOpponent)) {
-              Location kingLocation = king.getLocation();
-              Location increment = currLocation;
-              do {
-                increment = increment.getIncrement(direction);
-              } while (chessBoard.checkIsEmpty(increment));
-              // Oops, king can be attacked if I move away from the line
-              if (increment.equals(kingLocation)) {
-                // Remove all moves not alone this direction
-                directionOfMovesToKeep.add(direction);
-              }
-            }
-          }
+    Set<Move> adjustedMoves = getAdjustedMoves();
+    Set<Move> safeMoves = new HashSet<>();
+    ChessBoardBase chessBoardBase = getChessBoard();
+    for (Move move : adjustedMoves) {
+      MoveTracker tracker = new MoveTracker();
+      chessBoardBase.registerObserver(tracker);
+      chessBoardBase.moveWithOutCheck(move);
+      if (chessBoardBase.getPossibleKingAttackers(getSide()).isEmpty()) {
+        safeMoves.add(move);
+      }
+      // Undo the move
+      chessBoardBase.removeObserver(tracker);
+      for (Move trackedMove : tracker.getMoves()) {
+        Move inverse = trackedMove.inverseMove();
+        Piece movedPiece = chessBoardBase.getPiece(inverse.getFrom());
+        boolean firstTimeMoved = movedPiece.mFirstTimeMoved;
+        chessBoardBase.moveWithOutCheck(inverse);
+        if (firstTimeMoved) {
+          movedPiece.mMoved = false;
         }
       }
-    }
-    // Remove the moves
-    Set<Move> newAdjustedMoves = new LinkedHashSet<>();
-    for (Move move : getAdjustedMoves()) {
-      Vector moveDirection = move.getDirection();
-      boolean aloneTheLine = true;
-      for (Vector direction : directionOfMovesToKeep) {
-        if (!moveDirection.checkParallel(direction)) {
-          aloneTheLine = false;
-          break;
-        }
-      }
-      if (aloneTheLine) {
-        newAdjustedMoves.add(move);
+      for (Pair<Piece, Location> removed : tracker.getRemovedPieces()) {
+        chessBoardBase.setPiece(removed.getA(), removed.getB());
       }
     }
-    setAdjustedMoves(newAdjustedMoves);
+    setAdjustedMoves(safeMoves);
   }
 
   /**

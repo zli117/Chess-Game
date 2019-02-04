@@ -58,4 +58,12 @@ public class Move extends Pair<Location, Location> {
     return super.hashCode() + (mIsAttack ? 29 : 63);
   }
 
+  public Move inverseMove() {
+    Move inverse = new Move(getTo(), getFrom());
+    if (isAttack()) {
+      inverse.attack();
+    }
+    return inverse;
+  }
+
 }

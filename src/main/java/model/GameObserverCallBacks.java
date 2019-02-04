@@ -1,15 +1,12 @@
 package model;
 
+import utils.Location;
 import utils.Move;
 
 public interface GameObserverCallBacks {
 
-  void onCheckmate(Side loser);
+  void pieceMoved(Move move);
 
-  void onStalemate(Side loser);
-
-  void pieceMoved(ChessBoardBase chessBoard, Move move);
-
-  void pieceRemoved(ChessBoardBase chessBoard, Piece pieceKilled);
+  void pieceRemoved(Piece pieceRemoved, Location originalLocation);
 
 }

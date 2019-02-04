@@ -42,13 +42,13 @@ public class King extends Piece {
     if (currLocation != null && location != null) {
       if (mCastlingTo.contains(location)) {
         if (location.getCol() > currLocation.getCol()) {
-          chessBoard.movePiece(
+          chessBoard.moveWithOutCheck(
               new Move(
                   new Location(currLocation.getRow(),
                       chessBoard.getWidth() - 1),
                   location.getLeft()));
         } else {
-          chessBoard.movePiece(
+          chessBoard.moveWithOutCheck(
               new Move(
                   new Location(currLocation.getRow(), 0),
                   location.getRight()));
@@ -117,6 +117,7 @@ public class King extends Piece {
 
   @Override
   void modifyAdjustedMoves() {
+    super.modifyAdjustedMoves();
     ChessBoardBase chessBoard = getChessBoard();
 
     // Remove any move that could get king checked
@@ -131,12 +132,7 @@ public class King extends Piece {
         }
       }
     }
-    LinkedHashSet<Move> adjustedMoves = new LinkedHashSet<>();
-    for (Move move : getAdjustedMoves()) {
-      if (!dangerousLocation.contains(move.getTo())) {
-        adjustedMoves.add(move);
-      }
-    }
+    LinkedHashSet<Move> adjustedMoves = new LinkedHashSet<>(getAdjustedMoves());
 
     // Remove invalid castling because of passing though an enemy controlled
     // square
