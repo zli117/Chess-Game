@@ -235,6 +235,9 @@ public class ChessBoardBase {
     }
   }
 
+  /**
+   * Move the king of a side from the board. Will unregister the king.
+   */
   public King removeKing(Side side) {
     King king = getKing(side);
     if (king != null) {
@@ -289,11 +292,13 @@ public class ChessBoardBase {
     return false;
   }
 
+  /**
+   * Simple move. No validation of the actual move. In other words, the move can
+   * be any illegal move.
+   */
   void moveWithOutCheck(Move move) {
-    Location fromLocation = move.getFrom();
     Location toLocation = move.getTo();
     Piece piece = getPiece(move.getFrom());
-    Piece movedTo = getPiece(move.getTo());
     // Let the victim piece know it has been killed
     if (move.isAttack()) {
       killPiece(toLocation);
@@ -306,6 +311,7 @@ public class ChessBoardBase {
     for (GameObserverCallBacks observer : mObservers) {
       observer.pieceMoved(move);
     }
+    Location fromLocation = move.getFrom();
     mBoard[fromLocation.getRow()][fromLocation.getCol()] = null;
   }
 

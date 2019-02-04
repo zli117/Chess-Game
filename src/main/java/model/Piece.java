@@ -32,7 +32,7 @@ public abstract class Piece {
     mSide = side;
     mAdjustedMoves = new LinkedHashSet<>();
     mMoved = false;
-    mFirstTimeMoved =false;
+    mFirstTimeMoved = false;
   }
 
   /**
@@ -222,7 +222,8 @@ public abstract class Piece {
   }
 
   /**
-   * Called when the piece has been killed.
+   * Called when the piece has been killed. Should not update any state as it
+   * won't be restored during undo.
    */
   public void killed() {
   }

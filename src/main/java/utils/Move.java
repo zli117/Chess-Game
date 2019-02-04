@@ -58,6 +58,9 @@ public class Move extends Pair<Location, Location> {
     return super.hashCode() + (mIsAttack ? 29 : 63);
   }
 
+  /**
+   * Get the inverse move of the current move.
+   */
   public Move inverseMove() {
     Move inverse = new Move(getTo(), getFrom());
     if (isAttack()) {
