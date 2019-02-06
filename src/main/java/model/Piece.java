@@ -15,7 +15,7 @@ import utils.Vector;
 /**
  * The base class of a piece.
  */
-public abstract class Piece {
+public class Piece {
 
   private ChessBoardBase mChessBoard;
   private Location mLocation;
