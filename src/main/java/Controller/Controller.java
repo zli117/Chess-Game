@@ -21,7 +21,7 @@ import view.ViewCallBack;
  * The controller of MVC. Responsible for player turns, showing information on
  * the GUI etc.
  */
-public class Controller implements GameObserverCallBacks, ViewCallBack {
+public class Controller implements ViewCallBack {
 
   private ChessBoard mChessBoardView;
   private ChessBoardBase mChessBoardModel;
@@ -34,7 +34,6 @@ public class Controller implements GameObserverCallBacks, ViewCallBack {
     mChessBoardView = chessBoardView;
     mCachedIcon = new HashMap<>();
     mChessBoardView.addCallBack(this);
-    mChessBoardModel.registerObserver(this);
     mCurrentSide = Side.values()[0];
     mLegalMoves = null;
   }
@@ -86,7 +85,7 @@ public class Controller implements GameObserverCallBacks, ViewCallBack {
       }
     } else {
       Move move = mLegalMoves.get(location);
-      System.out.printf("Going to move: %s", move);
+      System.out.printf("Going to move: %s\n", move);
       // Not allowed to implement in this checkpoint.
 //      if (move != null && mChessBoardModel.movePiece(move)) {
 //        System.out.printf("Move %s performed\n", move);
@@ -95,15 +94,6 @@ public class Controller implements GameObserverCallBacks, ViewCallBack {
       mLegalMoves = null;
       mChessBoardView.resetAllColor();
     }
-  }
-
-  @Override
-  public void pieceMoved(Move move) {
-    boardRedraw();
-  }
-
-  @Override
-  public void pieceRemoved(Piece pieceRemoved, Location originalLocation) {
     boardRedraw();
   }
 
