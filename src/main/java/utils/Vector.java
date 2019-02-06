@@ -59,34 +59,4 @@ public class Vector extends Pair<Integer, Integer> {
         || (myVertical / myHorizontal == otherVertical / otherHorizontal));
   }
 
-  /**
-   * Check whether the two vectors are parallel and point to the same
-   * direction.
-   *
-   * @param other The other vector
-   */
-  public boolean checkSameLocation(Vector other) {
-    Vector meNormalized = getNormalized();
-    Vector otherNormalized = other.getNormalized();
-    return meNormalized.equals(otherNormalized);
-  }
-
-  /**
-   * Helper function for computing the gcd of two numbers.
-   */
-  private int gcd(int a, int b) {
-    if (b == 0) {
-      return a;
-    }
-    return gcd(b, a % b);
-  }
-
-  /**
-   * Reduce the vector to the smallest length in the same direction.
-   */
-  public Vector getNormalized() {
-    int gcd = gcd(Math.abs(getVerticalDelta()), Math.abs(getHorizontalDelta()));
-    return new Vector(getVerticalDelta() / gcd, getHorizontalDelta() / gcd);
-  }
-
 }
