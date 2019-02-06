@@ -156,11 +156,13 @@ public abstract class Piece {
    */
   public Set<Move> getMovesAndAttacks() {
     LinkedHashSet<Move> moves = new LinkedHashSet<>();
+    //Straight line moves.
     List<Vector> directions = getStraightLineMoveDirections();
     for (Vector direction : directions) {
       moves.addAll(getMovesInOneDir(direction));
     }
 
+    // One step at a time moves.
     List<Vector> relativeLocations = getOneStepOffsets();
     Location current = getLocation();
     for (Vector relativeLocation : relativeLocations) {
@@ -168,7 +170,7 @@ public abstract class Piece {
           current.getIncrement(relativeLocation));
       attackMove.attack();
       moves.add(attackMove);
-      // Same reason as unbounded piece. The move is an optional attack.
+      // Same reason as straight line pieces. The move is an optional attack.
       Move move = new Move(current,
           current.getIncrement(relativeLocation));
       moves.add(move);
