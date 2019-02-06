@@ -1,7 +1,16 @@
 package utils;
 
+/**
+ * Represents a directed change of location.
+ */
 public class Vector extends Pair<Integer, Integer> {
 
+  /**
+   * Construct a vector with vertical change and horizontal change.
+   *
+   * @param vertical   The vertical increment.
+   * @param horizontal The horizontal increment.
+   */
   public Vector(int vertical, int horizontal) {
     super(vertical, horizontal);
   }

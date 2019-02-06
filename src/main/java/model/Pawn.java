@@ -7,6 +7,9 @@ import utils.Location;
 import utils.Move;
 import utils.Vector;
 
+/**
+ * Pawn with en passant.
+ */
 public class Pawn extends Piece {
 
   private boolean mMovingUp;
@@ -24,6 +27,13 @@ public class Pawn extends Piece {
     mGhostLocation = null;
   }
 
+  /**
+   * Extra logic for checking en passant. If the piece as moved from it's
+   * initial two step move, remove the associated ghost. If the move is the
+   * initial second step move, add the ghost.
+   *
+   * @param location The new location. Will be null if the piece has been
+   */
   @Override
   public void setLocation(Location location) {
     ChessBoardBase chessBoard = getChessBoard();
@@ -55,14 +65,24 @@ public class Pawn extends Piece {
     super.setLocation(location);
   }
 
+  /**
+   * Whether the pawn is moving up.
+   */
   public boolean isMovingUp() {
     return mMovingUp;
   }
 
+  /**
+   * Set true if the pawn is moving up. False otherwise. Pawn could only move up
+   * or down.
+   */
   public void setMovingUp(boolean movingUp) {
     mMovingUp = movingUp;
   }
 
+  /**
+   * Extra logic for adding the second step move.
+   */
   @Override
   public Set<Move> getMovesAndAttacks() {
     LinkedHashSet<Move> moves = new LinkedHashSet<>();
@@ -82,6 +102,9 @@ public class Pawn extends Piece {
     return Collections.unmodifiableSet(moves);
   }
 
+  /**
+   * Currently only pawn has the privilege to kill a ghost.
+   */
   @Override
   public boolean canKillGhost() {
     return true;

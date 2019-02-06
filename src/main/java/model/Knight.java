@@ -7,14 +7,23 @@ import java.util.List;
 import utils.Location;
 import utils.Vector;
 
+/**
+ * Chess piece for knight.
+ */
 public class Knight extends Piece {
 
   private LinkedHashSet<Location> mCachedMoves;
 
+  /**
+   * Create a Knight.
+   */
   public Knight(ChessBoardBase chessBoard, Side side) {
     super(chessBoard, side);
   }
 
+  /**
+   * Knight moves one step at a time. Check Wikipedia for knight's moves.
+   */
   @Override
   public List<Vector> getOneStepOffsets() {
     Vector[] relativeLocations = {

@@ -12,6 +12,9 @@ import utils.Pair;
 import utils.Vector;
 
 
+/**
+ * The base class of a piece.
+ */
 public abstract class Piece {
 
   private ChessBoardBase mChessBoard;

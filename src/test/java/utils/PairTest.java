@@ -24,7 +24,7 @@ public class PairTest {
   @Test
   public void testToString() {
     Pair<String, String> pair = new Pair<>("Hello", "World");
-    assertEquals("<Hello, World>", pair.toString());
+    assertEquals("(Hello, World)", pair.toString());
   }
 
   @Test
