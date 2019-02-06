@@ -1,9 +1,18 @@
 package utils;
 
+/**
+ * The class represents a move from one location to another.
+ */
 public class Move extends Pair<Location, Location> {
 
   private boolean mIsAttack;
 
+  /**
+   * Construct a move.
+   *
+   * @param from The location it moves from
+   * @param to   The location it moves to
+   */
   public Move(Location from, Location to) {
     super(from, to);
     mIsAttack = false;
@@ -47,12 +56,19 @@ public class Move extends Pair<Location, Location> {
     return Vector.buildVectorFromLocations(fromLocation, toLocation);
   }
 
+  /**
+   * Checks whether two moves are the same. Will check whether they have same
+   * start and end location. And whether the attack status are the same
+   */
   @Override
   public boolean equals(Object o) {
     Move move = (Move) o;
     return super.equals(o) && move.mIsAttack == mIsAttack;
   }
 
+  /**
+   * Compute hashcode based on location and attack status.
+   */
   @Override
   public int hashCode() {
     return super.hashCode() + (mIsAttack ? 29 : 63);

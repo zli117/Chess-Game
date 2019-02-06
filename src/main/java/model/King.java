@@ -10,15 +10,24 @@ import utils.Location;
 import utils.Move;
 import utils.Vector;
 
+/**
+ * King piece of chess.
+ */
 public class King extends Piece {
 
   private List<Location> mCastlingTo;
 
+  /**
+   * Create a king.
+   */
   public King(ChessBoardBase chessBoard, Side side) {
     super(chessBoard, side);
     mCastlingTo = new ArrayList<>();
   }
 
+  /**
+   * King moves one step each time. See Wikipedia for king's moves.
+   */
   @Override
   public List<Vector> getOneStepOffsets() {
     Vector[] relativeLocations = {
@@ -34,6 +43,10 @@ public class King extends Piece {
     return new ArrayList<>(Arrays.asList(relativeLocations));
   }
 
+  /**
+   * Extra logic when king has moved. If the location moved to is actually a
+   * castling location, will move the corresponding rook.
+   */
   @Override
   public void setLocation(Location location) {
     // Handling castling
@@ -58,6 +71,9 @@ public class King extends Piece {
     super.setLocation(location);
   }
 
+  /**
+   * Extra logic for validating and inserting the moves for castling.
+   */
   @Override
   public Set<Move> getMovesAndAttacks() {
     Set<Move> moves = new LinkedHashSet<>(super.getMovesAndAttacks());
@@ -115,12 +131,17 @@ public class King extends Piece {
     return moves;
   }
 
+  /**
+   * Extra logic for removing illegal moves for castling. A move for castling is
+   * invalid if it's under control of an opponent piece or king will pass
+   * through a location under opponents' control.
+   */
   @Override
   void modifyAdjustedMoves() {
     super.modifyAdjustedMoves();
     ChessBoardBase chessBoard = getChessBoard();
 
-    // Remove any move that could get king checked
+    // Collect all the possible attacks of opponent.
     chessBoard.withHoldPiece(getLocation());
     Set<Location> dangerousLocation = new HashSet<>();
     for (Piece opponent : chessBoard.getOpponentPieces(getSide())) {

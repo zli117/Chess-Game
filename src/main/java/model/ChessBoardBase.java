@@ -44,10 +44,16 @@ public class ChessBoardBase {
     mKings = new HashMap<>();
   }
 
+  /**
+   * Get the width of the board.
+   */
   public int getWidth() {
     return mWidth;
   }
 
+  /**
+   * Get the height of the board.
+   */
   public int getHeight() {
     return mHeight;
   }
@@ -119,6 +125,10 @@ public class ChessBoardBase {
     return false;
   }
 
+  /**
+   * Check whether the location contains a piece. Returns true iff the location
+   * is valid, empty or valid but has a ghost.
+   */
   boolean checkIsEmpty(Location location) {
     if (checkValidLocation(location)) {
       Piece piece = getPiece(location);

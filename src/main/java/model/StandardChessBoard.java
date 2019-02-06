@@ -3,6 +3,9 @@ package model;
 import java.util.Set;
 import utils.Move;
 
+/**
+ * Chess game with standard rule and stalemate, checkmate condition.
+ */
 public class StandardChessBoard extends ChessBoardBase {
 
   /**
