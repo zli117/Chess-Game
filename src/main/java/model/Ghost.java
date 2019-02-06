@@ -1,5 +1,6 @@
 package model;
 
+import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import utils.Move;
@@ -53,6 +54,15 @@ public class Ghost extends Piece {
   @Override
   public Set<Move> getMovesAndAttacks() {
     return new LinkedHashSet<>();
+  }
+
+  /**
+   * For now, there's no image for ghost. No just have null which will be
+   * empty.
+   */
+  @Override
+  public URL getImageResourceURL() {
+    return null;
   }
 
 }

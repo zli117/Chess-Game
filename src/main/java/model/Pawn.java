@@ -1,5 +1,6 @@
 package model;
 
+import java.net.URL;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -108,6 +109,15 @@ public class Pawn extends Piece {
   @Override
   public boolean canKillGhost() {
     return true;
+  }
+
+  @Override
+  public URL getImageResourceURL() {
+    if (getSide() == Side.White) {
+      return getClass().getResource("/images/45px-Chess_plt45.svg.png");
+    } else {
+      return getClass().getResource("/images/45px-Chess_pdt45.svg.png");
+    }
   }
 
 }

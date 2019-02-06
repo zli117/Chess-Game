@@ -193,7 +193,7 @@ public class ChessBoardBase {
    *
    * @param location The location
    */
-  Piece getPiece(Location location) {
+  public Piece getPiece(Location location) {
     if (checkValidLocation(location)) {
       return mBoard[location.getRow()][location.getCol()];
     }
@@ -417,6 +417,18 @@ public class ChessBoardBase {
       }
     }
     return false;
+  }
+
+  /**
+   * Get the side of the piece at the location. If the location is invalid or
+   * doesn't contain a piece (even a ghost), return null.
+   */
+  public Side getSideOfLocation(Location location) {
+    Piece piece = getPiece(location);
+    if (piece != null) {
+      return piece.getSide();
+    }
+    return null;
   }
 
 }

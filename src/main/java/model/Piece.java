@@ -1,5 +1,6 @@
 package model;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,7 +16,7 @@ import utils.Vector;
 /**
  * The base class of a piece.
  */
-public class Piece {
+public abstract class Piece {
 
   private ChessBoardBase mChessBoard;
   private Location mLocation;
@@ -232,5 +233,11 @@ public class Piece {
    */
   public void killed() {
   }
+
+
+  /**
+   * Get the image url for this piece
+   */
+  public abstract URL getImageResourceURL();
 
 }

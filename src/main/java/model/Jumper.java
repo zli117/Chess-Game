@@ -1,5 +1,6 @@
 package model;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,4 +47,8 @@ public class Jumper extends Piece {
     return new ArrayList<>(Arrays.asList(directions));
   }
 
+  @Override
+  public URL getImageResourceURL() {
+    return null;
+  }
 }

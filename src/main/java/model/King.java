@@ -1,5 +1,6 @@
 package model;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -169,6 +170,18 @@ public class King extends Piece {
 
     setAdjustedMoves(adjustedMoves);
     chessBoard.restoreWithHold();
+  }
+
+  /**
+   * Get the icon for king.
+   */
+  @Override
+  public URL getImageResourceURL() {
+    if (getSide() == Side.White) {
+      return getClass().getResource("/images/45px-Chess_klt45.svg.png");
+    } else {
+      return getClass().getResource("/images/45px-Chess_kdt45.svg.png");
+    }
   }
 
 }

@@ -7,5 +7,9 @@ public enum Side {
 
   Black, White;
 
+  public Side next() {
+    return Side.values()[(ordinal() + 1) % Side.values().length];
+  }
+
 }
 
