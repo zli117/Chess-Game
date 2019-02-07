@@ -96,7 +96,11 @@ public class BoardBuilder {
               String.format("Invalid piece config at %d, %d: (%s, %s)", i, j,
                   pieceName, sideName));
         }
-        board.setPiece(piece, new Location(i, j));
+        if (piece instanceof King) {
+          board.setKing((King)piece, new Location(i, j));
+        } else {
+          board.setPiece(piece, new Location(i, j));
+        }
       }
       if (j != width) {
         throw new RuntimeException(

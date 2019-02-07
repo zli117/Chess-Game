@@ -8,10 +8,9 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import model.ChessBoardBase;
-import model.GameObserverCallBacks;
 import model.Piece;
 import model.Side;
+import model.StandardChessBoard;
 import utils.Location;
 import utils.Move;
 import view.ChessBoard;
@@ -24,12 +23,13 @@ import view.ViewCallBack;
 public class Controller implements ViewCallBack {
 
   private ChessBoard mChessBoardView;
-  private ChessBoardBase mChessBoardModel;
+  private StandardChessBoard mChessBoardModel;
   private HashMap<URL, Icon> mCachedIcon;
   private Map<Location, Move> mLegalMoves;
   private Side mCurrentSide;
 
-  public Controller(ChessBoardBase chessBoardModel, ChessBoard chessBoardView) {
+  public Controller(StandardChessBoard chessBoardModel,
+      ChessBoard chessBoardView) {
     mChessBoardModel = chessBoardModel;
     mChessBoardView = chessBoardView;
     mCachedIcon = new HashMap<>();
@@ -91,6 +91,18 @@ public class Controller implements ViewCallBack {
       }
       mLegalMoves = null;
       mChessBoardView.resetAllColor();
+      if (mChessBoardModel.checkStaleMate(mCurrentSide)) {
+        System.out.println("Stalemate");
+        System.exit(0);
+      }
+      if (mChessBoardModel.checkCheckMate(mCurrentSide)) {
+        System.out.printf("Checkmate! %s lost\n", mCurrentSide);
+      }
+      if (mChessBoardModel.checkKingPossiblyUnderCheck(mCurrentSide)) {
+        Location kingLocation = mChessBoardModel.getKing(mCurrentSide)
+            .getLocation();
+        mChessBoardView.showWarningColor(kingLocation);
+      }
     }
     boardRedraw();
   }

@@ -18,6 +18,7 @@ class ChessBoardGrid extends JButton {
   private Color mDefaultColor;
   private Color mSelectedColor;
   private Color mHintColor;
+  private Color mWarningcolor;
 
   public ChessBoardGrid(int row, int col) {
     super();
@@ -31,6 +32,7 @@ class ChessBoardGrid extends JButton {
     mDefaultColor = new Color(0, 0, 0);
     mSelectedColor = new Color(0, 0, 0);
     mHintColor = new Color(0, 0, 0);
+    mWarningcolor = new Color(0, 0, 0);
   }
 
   public void setDefaultColor(Color defaultColor) {
@@ -39,6 +41,10 @@ class ChessBoardGrid extends JButton {
 
   public void setSelectedColor(Color selectedColor) {
     mSelectedColor = selectedColor;
+  }
+
+  public void setWarningColor(Color warningColor) {
+    mWarningcolor = warningColor;
   }
 
   public void setHintColor(Color hintColor) {
@@ -59,6 +65,10 @@ class ChessBoardGrid extends JButton {
 
   public void showSelected() {
     setBackground(mSelectedColor);
+  }
+
+  public void showWarning() {
+    setBackground(mWarningcolor);
   }
 
   public void showHint() {
@@ -97,6 +107,7 @@ public class ChessBoard extends JPanel {
     final Color[] colors = {new Color(254, 205, 159), new Color(211, 140, 71)};
     final Color hintColor = new Color(255, 124, 253, 255);
     final Color selectedColor = new Color(151, 255, 248, 255);
+    final Color warningColor = new Color(255, 10, 7, 255);
     final ChessBoardGrid button = new ChessBoardGrid(row, col);
     Location location = new Location(row, col);
     button.addActionListener(new ActionListener() {
@@ -112,6 +123,7 @@ public class ChessBoard extends JPanel {
     button.setDefaultColor(colors[(row + col) % 2]);
     button.setHintColor(hintColor);
     button.setSelectedColor(selectedColor);
+    button.setWarningColor(warningColor);
     button.setBorderPainted(false);
     button.setFocusPainted(false);
     button.resetColor();
@@ -142,6 +154,13 @@ public class ChessBoard extends JPanel {
     ChessBoardGrid grid = getGrid(location);
     if (grid != null) {
       grid.showHint();
+    }
+  }
+
+  public void showWarningColor(Location location) {
+    ChessBoardGrid grid = getGrid(location);
+    if (grid != null) {
+      grid.showWarning();
     }
   }
 

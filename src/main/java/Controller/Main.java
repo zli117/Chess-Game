@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.FileNotFoundException;
 import model.ChessBoardBase;
+import model.StandardChessBoard;
 import utils.BoardBuilder;
 import view.ChessBoard;
 import view.Window;
@@ -21,7 +22,8 @@ public class Main {
 
     ChessBoard chessBoardView = new ChessBoard(chessBoard.getHeight(),
         chessBoard.getWidth());
-    Controller controller = new Controller(chessBoard, chessBoardView);
+    Controller controller = new Controller((StandardChessBoard) chessBoard,
+        chessBoardView);
     controller.boardRedraw();
     Window window = new Window("Chess Game!!", chessBoardView);
     window.setVisible(true);
