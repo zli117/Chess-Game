@@ -85,12 +85,10 @@ public class Controller implements ViewCallBack {
       }
     } else {
       Move move = mLegalMoves.get(location);
-      System.out.printf("Going to move: %s\n", move);
       // Not allowed to implement in this checkpoint.
-//      if (move != null && mChessBoardModel.movePiece(move)) {
-//        System.out.printf("Move %s performed\n", move);
-//        mCurrentSide = mCurrentSide.next();
-//      }
+      if (move != null && mChessBoardModel.movePiece(move)) {
+        mCurrentSide = mCurrentSide.next();
+      }
       mLegalMoves = null;
       mChessBoardView.resetAllColor();
     }

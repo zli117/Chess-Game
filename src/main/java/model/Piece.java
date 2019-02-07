@@ -70,6 +70,13 @@ public abstract class Piece {
   }
 
   /**
+   * Check whether this is the piece's first time of moving.
+   */
+  public boolean isFirstTimeMoved() {
+    return mFirstTimeMoved;
+  }
+
+  /**
    * Get get chess board it belongs to.
    */
   ChessBoardBase getChessBoard() {
