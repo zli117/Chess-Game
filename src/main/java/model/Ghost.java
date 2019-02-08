@@ -97,12 +97,4 @@ public class Ghost extends Piece implements GameObserverCallBacks {
   public void pieceRemoved(Piece pieceRemoved, Location originalLocation) {
   }
 
-  /**
-   * Only cares about real moves.
-   */
-  @Override
-  public boolean includeTentativeMoves() {
-    return true;
-  }
-
 }

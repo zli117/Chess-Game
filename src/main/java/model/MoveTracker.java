@@ -41,15 +41,6 @@ public class MoveTracker implements GameObserverCallBacks {
   }
 
   /**
-   * Will listen to tentative move. Since this is mostly used for restoring
-   * tentative moves.
-   */
-  @Override
-  public boolean includeTentativeMoves() {
-    return true;
-  }
-
-  /**
    * Retrieve all the removed pieces during tracked period.
    */
   public List<Pair<Piece, Location>> getRemovedPieces() {

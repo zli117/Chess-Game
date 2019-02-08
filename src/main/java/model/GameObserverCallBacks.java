@@ -23,9 +23,4 @@ public interface GameObserverCallBacks {
    */
   void pieceRemoved(Piece pieceRemoved, Location originalLocation);
 
-  /**
-   * Whether the callback will subscribe to tentative moves as well.
-   */
-  boolean includeTentativeMoves();
-
 }

@@ -165,7 +165,7 @@ public class King extends Piece {
     }
     if (dangerousLocation.contains(currLocation.getLeft())) {
       adjustedMoves
-          .remove(new Move(currLocation, currLocation.getRight().getLeft()));
+          .remove(new Move(currLocation, currLocation.getLeft().getLeft()));
     }
 
     setAdjustedMoves(adjustedMoves);
