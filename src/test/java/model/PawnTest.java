@@ -31,16 +31,26 @@ public class PawnTest {
     // Remove from the board
     chessBoardBase.removePiece(newLocation);
     assertNull(pawn.getLocation());
-    assertNull(ghost.getLocation());
 
     // Restore to board
-    chessBoardBase.setPiece(ghost, ghostLocation);
     chessBoardBase.setPiece(pawn, newLocation);
     assertNotNull(chessBoardBase.getPiece(ghostLocation));
 
     // Move the pawn. Ghost should be removed
-    pawn.setLocation(new Location(3, 1));
+    chessBoardBase.movePiece(new Move(newLocation, newLocation.getAbove()));
     assertNull(chessBoardBase.getPiece(ghostLocation));
+
+    // Create a new pawn. If other piece has moved, the ghost should be removed.
+    pawn = new Pawn(chessBoardBase, Side.White);
+    chessBoardBase.setPiece(pawn, new Location(7, 7));
+    chessBoardBase.movePiece(
+        new Move(pawn.getLocation(), pawn.getLocation().getAbove().getAbove()));
+    assertNotNull(chessBoardBase.getPiece(pawn.getLocation().getBelow()));
+    // Now move the other pawn
+    chessBoardBase.movePiece(
+        new Move(newLocation.getAbove(), newLocation.getAbove().getAbove()));
+    assertNull(chessBoardBase.getPiece(pawn.getLocation().getBelow()));
+
 
     pawn = new Pawn(chessBoardBase, Side.White);
     chessBoardBase.setPiece(pawn, new Location(6, 6));
@@ -96,21 +106,46 @@ public class PawnTest {
     downPawn.setMovingUp(false);
 
     Location upLocation = new Location(5, 3);
-    Location downLocation = new Location(2, 4);
+    Location downLocation = new Location(3, 4);
     chessBoardBase.setPiece(upPawn, upLocation);
     chessBoardBase.setPiece(downPawn, downLocation);
 
     assertTrue(chessBoardBase
         .movePiece(new Move(upLocation, upLocation.getAbove().getAbove())));
-    assertTrue(chessBoardBase
-        .movePiece(new Move(downLocation, downLocation.getBelow())));
-
+    System.out.println(chessBoardBase);
     Move captureMove = new Move(downPawn.getLocation(), upLocation.getAbove());
     captureMove.attack();
     assertNotNull(upPawn.getLocation());
     assertTrue(chessBoardBase.movePiece(captureMove));
     assertNull(upPawn.getLocation());
     assertTrue(chessBoardBase.getPiece(captureMove.getTo()) instanceof Pawn);
+  }
+
+  @Test
+  public void testInvalidEnPassant() {
+    // Attack from the other pawn is not immediately after
+    ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
+    Pawn upPawn = new Pawn(chessBoardBase, Side.White);
+    Pawn downPawn = new Pawn(chessBoardBase, Side.Black);
+    downPawn.setMovingUp(false);
+
+    Location upLocation = new Location(5, 3);
+    Location downLocation = new Location(2, 4);
+    chessBoardBase.setPiece(upPawn, upLocation);
+    chessBoardBase.setPiece(downPawn, downLocation);
+
+    assertTrue(chessBoardBase
+        .movePiece(new Move(upLocation, upLocation.getAbove().getAbove())));
+    System.out.println(chessBoardBase);
+    assertTrue(chessBoardBase
+        .movePiece(new Move(downLocation, downLocation.getBelow())));
+    System.out.println(chessBoardBase);
+
+    Move captureMove = new Move(downPawn.getLocation(), upLocation.getAbove());
+    captureMove.attack();
+    assertNotNull(upPawn.getLocation());
+    assertFalse(chessBoardBase.movePiece(captureMove));
+    System.out.println(chessBoardBase);
   }
 
 }

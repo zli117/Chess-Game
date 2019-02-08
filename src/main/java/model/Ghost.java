@@ -3,6 +3,7 @@ package model;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import utils.Location;
 import utils.Move;
 
 /**
@@ -10,9 +11,10 @@ import utils.Move;
  * associated pawn. Created by pawn on its initial two step move. If not killed,
  * and pawn moved, will be removed from the board.
  */
-public class Ghost extends Piece {
+public class Ghost extends Piece implements GameObserverCallBacks {
 
   private Pawn mPawn;
+  private boolean mInitialPawnMove;
 
   /**
    * Create a ghost piece with necessary information.
@@ -24,6 +26,20 @@ public class Ghost extends Piece {
   public Ghost(ChessBoardBase chessBoard, Side side, Pawn pawn) {
     super(chessBoard, side);
     mPawn = pawn;
+    mInitialPawnMove = true;
+  }
+
+  @Override
+  public void setLocation(Location location) {
+    super.setLocation(location);
+    // Unregister myself from the watchers
+    if (location == null) {
+      getChessBoard().removeObserver(this);
+    } else {
+      // Register myself to the board. Since ghost won't move, it's not a
+      // problem
+      getChessBoard().registerObserver(this);
+    }
   }
 
   /**
@@ -63,6 +79,30 @@ public class Ghost extends Piece {
   @Override
   public URL getImageResourceURL() {
     return null;
+  }
+
+  @Override
+  public void pieceMoved(Move move) {
+    Location myLocation = getLocation();
+    ChessBoardBase chessBoard = getChessBoard();
+    if (!mInitialPawnMove && myLocation != null && chessBoard != null) {
+      // Remove itself if some piece has moved and the ghost is still on the
+      // board
+      chessBoard.removePiece(myLocation);
+    }
+    mInitialPawnMove = false;
+  }
+
+  @Override
+  public void pieceRemoved(Piece pieceRemoved, Location originalLocation) {
+  }
+
+  /**
+   * Only cares about real moves.
+   */
+  @Override
+  public boolean includeTentativeMoves() {
+    return true;
   }
 
 }

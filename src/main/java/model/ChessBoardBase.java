@@ -24,6 +24,7 @@ public class ChessBoardBase {
   private Stack<Piece> mWithHeldPieces;
   private boolean mStateChanged;
   private Map<Side, King> mKings;
+  private boolean mInTentativeMove;
 
   /**
    * Create a chess board.
@@ -42,6 +43,15 @@ public class ChessBoardBase {
     mWithHeldPieces = new Stack<>();
     mStateChanged = false;
     mKings = new HashMap<>();
+    mInTentativeMove = false;
+  }
+
+  public void beginTentativeMove() {
+    mInTentativeMove = true;
+  }
+
+  public void endTentativeMove() {
+    mInTentativeMove = false;
   }
 
   /**
@@ -266,7 +276,9 @@ public class ChessBoardBase {
       mBoard[location.getRow()][location.getCol()] = null;
       piece.setLocation(null);
       for (GameObserverCallBacks observer : mObservers) {
-        observer.pieceRemoved(piece, location);
+        if (!mInTentativeMove || observer.includeTentativeMoves()) {
+          observer.pieceRemoved(piece, location);
+        }
       }
       mStateChanged = true;
     }
@@ -318,11 +330,15 @@ public class ChessBoardBase {
     // mStateChanged is set to true in removePiece
     removePiece(toLocation);
     setPiece(piece, toLocation);
-    for (GameObserverCallBacks observer : mObservers) {
-      observer.pieceMoved(move);
-    }
     Location fromLocation = move.getFrom();
     mBoard[fromLocation.getRow()][fromLocation.getCol()] = null;
+//    for (GameObserverCallBacks observer : mObservers) {
+    for (int i = mObservers.size() - 1; i >= 0; --i) {
+      GameObserverCallBacks observer = mObservers.get(i);
+      if (!mInTentativeMove || observer.includeTentativeMoves()) {
+        observer.pieceMoved(move);
+      }
+    }
   }
 
   /**

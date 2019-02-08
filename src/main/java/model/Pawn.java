@@ -58,9 +58,6 @@ public class Pawn extends Piece {
           mGhost = new Ghost(chessBoard, getSide(), this);
           chessBoard.setPiece(mGhost, mGhostLocation);
         }
-      } else if (mGhost != null && mGhost.getLocation() != null) {
-        // Only remove the ghost if it's on the board.
-        chessBoard.removePiece(mGhost.getLocation());
       }
     }
     super.setLocation(location);

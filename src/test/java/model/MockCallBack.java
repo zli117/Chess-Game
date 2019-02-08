@@ -30,6 +30,11 @@ public class MockCallBack implements GameObserverCallBacks {
     mRemoved = pieceRemoved;
   }
 
+  @Override
+  public boolean includeTentativeMoves() {
+    return false;
+  }
+
   public Side getCheckedSide() {
     return mCheckedSide;
   }

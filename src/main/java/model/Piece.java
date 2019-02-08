@@ -132,6 +132,7 @@ public abstract class Piece {
     Set<Move> adjustedMoves = getAdjustedMoves();
     Set<Move> safeMoves = new HashSet<>();
     ChessBoardBase chessBoardBase = getChessBoard();
+    chessBoardBase.beginTentativeMove();
     for (Move move : adjustedMoves) {
       MoveTracker tracker = new MoveTracker();
       chessBoardBase.registerObserver(tracker);
@@ -154,6 +155,7 @@ public abstract class Piece {
         chessBoardBase.setPiece(removed.getA(), removed.getB());
       }
     }
+    chessBoardBase.endTentativeMove();
     setAdjustedMoves(safeMoves);
   }
 
