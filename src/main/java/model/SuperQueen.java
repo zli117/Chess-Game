@@ -7,7 +7,7 @@ import java.util.List;
 import utils.Vector;
 
 /**
- * A queen combines the power of normal queen and knight
+ * A queen combines the power of normal queen and knight.
  * <table border="1">
  * <tr>
  * <td>o  </td> <td>  </td> <td>  </td> <td> o </td> <td>  </td> <td>  </td>
@@ -48,7 +48,7 @@ import utils.Vector;
 public class SuperQueen extends Queen {
 
   /**
-   * Construct a super queen
+   * Construct a super queen.
    */
   public SuperQueen(ChessBoardBase chessBoard, Side side) {
     super(chessBoard, side);

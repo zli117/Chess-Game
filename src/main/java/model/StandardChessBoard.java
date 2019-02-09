@@ -18,14 +18,17 @@ public class StandardChessBoard extends ChessBoardBase {
     super(height, width);
   }
 
-  private boolean checkHasLegalMoves(Side side) {
+  /**
+   * Check whether the side has any piece has a legal move.
+   */
+  private boolean checkHasNoLegalMoves(Side side) {
     for (Piece piece : getPiecesFromSide(side)) {
       Set<Move> moves = getLegalMoves(piece.getLocation());
       if (!moves.isEmpty()) {
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   /**
@@ -35,9 +38,10 @@ public class StandardChessBoard extends ChessBoardBase {
    * @return True if there's no legal move available, false otherwise or invalid
    * condition
    */
+  @Override
   public boolean checkStaleMate(Side side) {
     King king = getKing(side);
-    return king != null && !checkHasLegalMoves(side)
+    return king != null && checkHasNoLegalMoves(side)
         && !checkKingPossiblyUnderCheck(side);
   }
 
@@ -48,9 +52,10 @@ public class StandardChessBoard extends ChessBoardBase {
    * @return True if the side has been checkmated, false otherwise or status is
    * invalid.
    */
+  @Override
   public boolean checkCheckMate(Side side) {
     King king = getKing(side);
-    return king != null && !checkHasLegalMoves(side)
+    return king != null && checkHasNoLegalMoves(side)
         && checkKingPossiblyUnderCheck(side);
   }
 

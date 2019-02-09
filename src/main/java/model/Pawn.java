@@ -109,7 +109,7 @@ public class Pawn extends Piece {
   }
 
   @Override
-  public URL getImageResourceURL() {
+  public URL getImageResourceUrl() {
     if (getSide() == Side.White) {
       return getClass().getResource("/images/45px-Chess_plt45.svg.png");
     } else {

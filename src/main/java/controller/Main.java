@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import java.io.FileNotFoundException;
 import model.ChessBoardBase;
@@ -9,6 +9,9 @@ import view.Window;
 
 public class Main {
 
+  /**
+   * Main method.
+   */
   public static void main(String[] args) {
     String filePath = args[0];
     ChessBoardBase chessBoard = null;

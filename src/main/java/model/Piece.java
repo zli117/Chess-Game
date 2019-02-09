@@ -243,8 +243,8 @@ public abstract class Piece {
 
 
   /**
-   * Get the image url for this piece
+   * Get the image url for this piece.
    */
-  public abstract URL getImageResourceURL();
+  public abstract URL getImageResourceUrl();
 
 }

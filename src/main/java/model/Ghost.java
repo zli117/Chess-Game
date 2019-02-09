@@ -77,7 +77,7 @@ public class Ghost extends Piece implements GameObserverCallBacks {
    * empty.
    */
   @Override
-  public URL getImageResourceURL() {
+  public URL getImageResourceUrl() {
     return null;
   }
 

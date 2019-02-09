@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 
 public class Window extends JFrame {
 
+  /**
+   * Create a window with title and chess board widget.
+   */
   public Window(String title, ChessBoard chessBoard) {
     JPanel basePanel = new JPanel();
     basePanel.setLayout(new BoxLayout(basePanel, BoxLayout.LINE_AXIS));

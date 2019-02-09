@@ -36,7 +36,7 @@ public class Queen extends Piece {
   }
 
   @Override
-  public URL getImageResourceURL() {
+  public URL getImageResourceUrl() {
     if (getSide() == Side.White) {
       return getClass().getResource("/images/45px-Chess_qlt45.svg.png");
     } else {

@@ -176,7 +176,7 @@ public class King extends Piece {
    * Get the icon for king.
    */
   @Override
-  public URL getImageResourceURL() {
+  public URL getImageResourceUrl() {
     if (getSide() == Side.White) {
       return getClass().getResource("/images/45px-Chess_klt45.svg.png");
     } else {

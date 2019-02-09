@@ -21,6 +21,13 @@ import model.SuperQueen;
 
 public class BoardBuilder {
 
+  /**
+   * Create a board from board class name.
+   *
+   * @param boardName The class name of the board.
+   * @param height    The height of the board.
+   * @param width     The width of the board.
+   */
   public static ChessBoardBase boardFactory(String boardName, int height,
       int width) {
     if (boardName.equals("StandardChessBoard")) {
@@ -29,6 +36,9 @@ public class BoardBuilder {
     return null;
   }
 
+  /**
+   * Create a piece from piece name and side name.
+   */
   public static Piece pieceFactory(ChessBoardBase board, String pieceName,
       String sideName) {
     Side side;
@@ -66,6 +76,11 @@ public class BoardBuilder {
     return null;
   }
 
+  /**
+   * Construct a board from a file.
+   *
+   * @param filePath The file URL.
+   */
   public static ChessBoardBase constructFromFile(URL filePath)
       throws RuntimeException, FileNotFoundException {
     File file = new File(filePath.getFile());
@@ -97,7 +112,7 @@ public class BoardBuilder {
                   pieceName, sideName));
         }
         if (piece instanceof King) {
-          board.setKing((King)piece, new Location(i, j));
+          board.setKing((King) piece, new Location(i, j));
         } else {
           board.setPiece(piece, new Location(i, j));
         }

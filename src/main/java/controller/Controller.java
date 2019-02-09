@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -8,9 +8,9 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import model.ChessBoardBase;
 import model.Piece;
 import model.Side;
-import model.StandardChessBoard;
 import utils.Location;
 import utils.Move;
 import view.ChessBoard;
@@ -23,12 +23,15 @@ import view.ViewCallBack;
 public class Controller implements ViewCallBack {
 
   private ChessBoard mChessBoardView;
-  private StandardChessBoard mChessBoardModel;
+  private ChessBoardBase mChessBoardModel;
   private HashMap<URL, Icon> mCachedIcon;
   private Map<Location, Move> mLegalMoves;
   private Side mCurrentSide;
 
-  public Controller(StandardChessBoard chessBoardModel,
+  /**
+   * Create a controller from the chess board and view.
+   */
+  public Controller(ChessBoardBase chessBoardModel,
       ChessBoard chessBoardView) {
     mChessBoardModel = chessBoardModel;
     mChessBoardView = chessBoardView;
@@ -38,6 +41,9 @@ public class Controller implements ViewCallBack {
     mLegalMoves = null;
   }
 
+  /**
+   * Load an icon from url.
+   */
   private Icon loadIcon(URL url) {
     if (!mCachedIcon.containsKey(url)) {
       try {
@@ -51,6 +57,9 @@ public class Controller implements ViewCallBack {
     return mCachedIcon.get(url);
   }
 
+  /**
+   * Update the board ui.
+   */
   public void boardRedraw() {
     int height = mChessBoardModel.getHeight();
     int width = mChessBoardModel.getWidth();
@@ -58,17 +67,20 @@ public class Controller implements ViewCallBack {
       for (int j = 0; j < width; ++j) {
         Location location = new Location(i, j);
         Piece piece = mChessBoardModel.getPiece(location);
-        URL imageURL;
-        if (piece == null || (imageURL = piece.getImageResourceURL()) == null) {
+        URL imageUrl;
+        if (piece == null || (imageUrl = piece.getImageResourceUrl()) == null) {
           mChessBoardView.setIcon(location, null);
         } else {
-          Icon icon = loadIcon(imageURL);
+          Icon icon = loadIcon(imageUrl);
           mChessBoardView.setIcon(location, icon);
         }
       }
     }
   }
 
+  /**
+   * Called when a grid is clicked.
+   */
   @Override
   public void gridClicked(Location location) {
     if (mLegalMoves == null) {

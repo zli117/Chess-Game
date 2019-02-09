@@ -48,7 +48,7 @@ public class Jumper extends Piece {
   }
 
   @Override
-  public URL getImageResourceURL() {
+  public URL getImageResourceUrl() {
     return null;
   }
 }
