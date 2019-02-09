@@ -1,5 +1,6 @@
 package model;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -66,6 +67,13 @@ public abstract class Piece {
    */
   public boolean hasMoved() {
     return mMoved;
+  }
+
+  /**
+   * Check whether this is the piece's first time of moving.
+   */
+  public boolean isFirstTimeMoved() {
+    return mFirstTimeMoved;
   }
 
   /**
@@ -156,11 +164,13 @@ public abstract class Piece {
    */
   public Set<Move> getMovesAndAttacks() {
     LinkedHashSet<Move> moves = new LinkedHashSet<>();
+    //Straight line moves.
     List<Vector> directions = getStraightLineMoveDirections();
     for (Vector direction : directions) {
       moves.addAll(getMovesInOneDir(direction));
     }
 
+    // One step at a time moves.
     List<Vector> relativeLocations = getOneStepOffsets();
     Location current = getLocation();
     for (Vector relativeLocation : relativeLocations) {
@@ -168,7 +178,7 @@ public abstract class Piece {
           current.getIncrement(relativeLocation));
       attackMove.attack();
       moves.add(attackMove);
-      // Same reason as unbounded piece. The move is an optional attack.
+      // Same reason as straight line pieces. The move is an optional attack.
       Move move = new Move(current,
           current.getIncrement(relativeLocation));
       moves.add(move);
@@ -230,5 +240,11 @@ public abstract class Piece {
    */
   public void killed() {
   }
+
+
+  /**
+   * Get the image url for this piece.
+   */
+  public abstract URL getImageResourceUrl();
 
 }

@@ -5,7 +5,10 @@ package model;
  */
 public enum Side {
 
-  Black, White;
+  White, Black;
+
+  public Side next() {
+    return Side.values()[(ordinal() + 1) % Side.values().length];
+  }
 
 }
-

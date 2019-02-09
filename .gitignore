@@ -152,5 +152,8 @@ gradle-app.setting
 # IDE stuff
 .idea/*
 
+# Doxygen stuff
+doxygen_docs/*
+doxygen.tag
 
 

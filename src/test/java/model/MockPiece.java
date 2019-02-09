@@ -1,5 +1,6 @@
 package model;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -86,6 +87,11 @@ public class MockPiece extends Piece {
   @Override
   public boolean canKillGhost() {
     return mCanKillGhost;
+  }
+
+  @Override
+  public URL getImageResourceUrl() {
+    return null;
   }
 
   @Override

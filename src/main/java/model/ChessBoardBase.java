@@ -193,7 +193,7 @@ public class ChessBoardBase {
    *
    * @param location The location
    */
-  Piece getPiece(Location location) {
+  public Piece getPiece(Location location) {
     if (checkValidLocation(location)) {
       return mBoard[location.getRow()][location.getCol()];
     }
@@ -265,7 +265,8 @@ public class ChessBoardBase {
     if (piece != null) {
       mBoard[location.getRow()][location.getCol()] = null;
       piece.setLocation(null);
-      for (GameObserverCallBacks observer : mObservers) {
+      for (int i = mObservers.size() - 1; i >= 0; --i) {
+        GameObserverCallBacks observer = mObservers.get(i);
         observer.pieceRemoved(piece, location);
       }
       mStateChanged = true;
@@ -318,11 +319,13 @@ public class ChessBoardBase {
     // mStateChanged is set to true in removePiece
     removePiece(toLocation);
     setPiece(piece, toLocation);
-    for (GameObserverCallBacks observer : mObservers) {
-      observer.pieceMoved(move);
-    }
     Location fromLocation = move.getFrom();
     mBoard[fromLocation.getRow()][fromLocation.getCol()] = null;
+    // The observer might remove itself during callback
+    for (int i = mObservers.size() - 1; i >= 0; --i) {
+      GameObserverCallBacks observer = mObservers.get(i);
+      observer.pieceMoved(move);
+    }
   }
 
   /**
@@ -416,6 +419,40 @@ public class ChessBoardBase {
         }
       }
     }
+    return false;
+  }
+
+  /**
+   * Get the side of the piece at the location. If the location is invalid or
+   * doesn't contain a piece (even a ghost), return null.
+   */
+  public Side getSideOfLocation(Location location) {
+    Piece piece = getPiece(location);
+    if (piece != null) {
+      return piece.getSide();
+    }
+    return null;
+  }
+
+  /**
+   * Check whether one side has no legal move.
+   *
+   * @param side The side
+   * @return True if there's no legal move available, false otherwise or invalid
+   * condition
+   */
+  public boolean checkStaleMate(Side side) {
+    return false;
+  }
+
+  /**
+   * Check whether one side has been checkmated.
+   *
+   * @param side The side
+   * @return True if the side has been checkmated, false otherwise or status is
+   * invalid.
+   */
+  public boolean checkCheckMate(Side side) {
     return false;
   }
 

@@ -1,5 +1,6 @@
 package model;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,15 @@ public class Bishop extends Piece {
         new Vector(-1, 1),
         new Vector(1, -1)};
     return new ArrayList<>(Arrays.asList(directions));
+  }
+
+  @Override
+  public URL getImageResourceUrl() {
+    if (getSide() == Side.White) {
+      return getClass().getResource("/images/45px-Chess_blt45.svg.png");
+    } else {
+      return getClass().getResource("/images/45px-Chess_bdt45.svg.png");
+    }
   }
 
 }

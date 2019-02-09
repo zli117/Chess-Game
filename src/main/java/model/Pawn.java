@@ -1,5 +1,6 @@
 package model;
 
+import java.net.URL;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -14,6 +15,7 @@ public class Pawn extends Piece {
 
   private boolean mMovingUp;
   private Location mGhostLocation;
+  private Ghost mGhost;
 
   /**
    * New Create a pawn.
@@ -25,6 +27,7 @@ public class Pawn extends Piece {
     super(chessBoard, side);
     mMovingUp = true;
     mGhostLocation = null;
+    mGhost = null;
   }
 
   /**
@@ -40,26 +43,21 @@ public class Pawn extends Piece {
 
     // Set the ghost if the pawn has not moved before and it's moving two steps
     Location currLocation = getLocation();
-    if (location != null && !hasMoved() && currLocation != null) {
-      // If the new location is two steps away from the current one we set a
-      // ghost at the place as if the pawn has only moved one step
-      if (Math.abs(location.getRow() - currLocation.getRow()) == 2) {
-        mGhostLocation = new Location(
-            (currLocation.getRow() + location.getRow()) / 2,
-            currLocation.getCol());
-        Ghost ghost = new Ghost(chessBoard, getSide(), this);
-        chessBoard.setPiece(ghost, mGhostLocation);
-      }
-    } else if (mGhostLocation != null && currLocation != null) {
-      // If the pawn has a ghost, but it gets moved / removed, remove the ghost
-      // from the board
-      chessBoard.removePiece(mGhostLocation);
-      // Only remove the reference to the ghost if the piece moves to a
-      // different location on the board, but not get removed from the board.
-      // Since the user might undo the operation and this pawn might someday get
-      // back to the board again.
-      if (location != null) {
-        mGhostLocation = null;
+    // If the current location is null, this means we are adding the piece to
+    // the board. Nothing should be done in terms of ghost. Since if this is
+    // initializing the board, there should have no ghost. Otherwise if it's
+    // restoring, then the ghost will be taken care of.
+    if (currLocation != null) {
+      if (location != null && !hasMoved()) {
+        // If the new location is two steps away from the current one we set a
+        // ghost at the place as if the pawn has only moved one step
+        if (Math.abs(location.getRow() - currLocation.getRow()) == 2) {
+          mGhostLocation = new Location(
+              (currLocation.getRow() + location.getRow()) / 2,
+              currLocation.getCol());
+          mGhost = new Ghost(chessBoard, getSide(), this);
+          chessBoard.setPiece(mGhost, mGhostLocation);
+        }
       }
     }
     super.setLocation(location);
@@ -108,6 +106,15 @@ public class Pawn extends Piece {
   @Override
   public boolean canKillGhost() {
     return true;
+  }
+
+  @Override
+  public URL getImageResourceUrl() {
+    if (getSide() == Side.White) {
+      return getClass().getResource("/images/45px-Chess_plt45.svg.png");
+    } else {
+      return getClass().getResource("/images/45px-Chess_pdt45.svg.png");
+    }
   }
 
 }

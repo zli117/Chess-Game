@@ -1,5 +1,6 @@
 package model;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -164,11 +165,23 @@ public class King extends Piece {
     }
     if (dangerousLocation.contains(currLocation.getLeft())) {
       adjustedMoves
-          .remove(new Move(currLocation, currLocation.getRight().getLeft()));
+          .remove(new Move(currLocation, currLocation.getLeft().getLeft()));
     }
 
     setAdjustedMoves(adjustedMoves);
     chessBoard.restoreWithHold();
+  }
+
+  /**
+   * Get the icon for king.
+   */
+  @Override
+  public URL getImageResourceUrl() {
+    if (getSide() == Side.White) {
+      return getClass().getResource("/images/45px-Chess_klt45.svg.png");
+    } else {
+      return getClass().getResource("/images/45px-Chess_kdt45.svg.png");
+    }
   }
 
 }
