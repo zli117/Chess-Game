@@ -58,7 +58,7 @@ public class Controller implements ViewCallBack {
   }
 
   /**
-   * Update the board ui.
+   * Update the board view.
    */
   public void boardRedraw() {
     int height = mChessBoardModel.getHeight();

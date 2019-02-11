@@ -298,4 +298,16 @@ public class ChessBoardBaseTest {
     assertNull(chessBoardBase.getKing(Side.White));
   }
 
+  @Test
+  public void testBaseFunctions() {
+    ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
+    assertFalse(chessBoardBase.checkStaleMate(Side.White));
+    assertFalse(chessBoardBase.checkCheckMate(Side.White));
+    MockPiece mockPiece = new MockPiece(chessBoardBase, Side.White);
+    chessBoardBase.setPiece(mockPiece, new Location(2, 3));
+    assertEquals(Side.White,
+        chessBoardBase.getSideOfLocation(new Location(2, 3)));
+    assertNull(chessBoardBase.getSideOfLocation(new Location(2, 5)));
+  }
+
 }
