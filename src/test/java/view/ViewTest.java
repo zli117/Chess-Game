@@ -131,4 +131,14 @@ public class ViewTest {
         testInstructions);
   }
 
+  @Test
+  public void testCheckMate() {
+    String testInstructions = "Click on \"Enable move\". The move the white "
+        + "rook right by one column. Check terminal has printout of "
+        + "\"Checkmate! Black lost\". Click all three pieces on board, and "
+        + "verify that there's no move recommendation from either side.";
+    testDifferentBoardConfigWithMove("/board_checkmate.conf",
+        testInstructions);
+  }
+
 }
