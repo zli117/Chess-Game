@@ -2,6 +2,8 @@ package view;
 
 
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -30,6 +32,7 @@ public class TestWindow extends JFrame {
     passButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
+        setVisible(false);
         env.getContainerThread().interrupt();
       }
     });
@@ -37,6 +40,7 @@ public class TestWindow extends JFrame {
     failButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
+        setVisible(false);
         env.setFailed();
         env.getContainerThread().interrupt();
       }
@@ -48,6 +52,10 @@ public class TestWindow extends JFrame {
     setResizable(false);
     // Basically you can't close the window without pass or fail.
     setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    // Set to center of the screen
+    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    setLocation(dim.width / 2 - getSize().width / 2,
+        dim.height / 2 - getSize().height / 2);
   }
 
 }
