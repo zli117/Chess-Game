@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class TestWindow extends JFrame {
@@ -24,9 +25,11 @@ public class TestWindow extends JFrame {
     testScripArea.setEditable(false);
     testScripArea.setLineWrap(true);
     testScripArea.setText("Test instructions: " + testScript);
+    testScripArea.setWrapStyleWord(true);
+    JScrollPane scrollPane = new JScrollPane(testScripArea);
     basePanel.add(testUI);
     basePanel.add(buttonPanel);
-    basePanel.add(testScripArea);
+    basePanel.add(scrollPane);
     add(basePanel);
     JButton passButton = new JButton("Pass");
     passButton.addActionListener(new ActionListener() {

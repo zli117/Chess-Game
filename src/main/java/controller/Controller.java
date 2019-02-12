@@ -115,10 +115,11 @@ public class Controller implements ViewCallBack {
         }
         if (mChessBoardModel.checkStaleMate(mCurrentSide)) {
           System.out.println("Stalemate");
-          System.exit(0);
+          mChessBoardView.freeze();
         }
         if (mChessBoardModel.checkCheckMate(mCurrentSide)) {
           System.out.printf("Checkmate! %s lost\n", mCurrentSide);
+          mChessBoardView.freeze();
         }
         if (mChessBoardModel.checkKingPossiblyUnderCheck(mCurrentSide)) {
           Location kingLocation = mChessBoardModel.getKing(mCurrentSide)
