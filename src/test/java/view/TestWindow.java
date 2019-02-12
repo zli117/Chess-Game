@@ -16,13 +16,13 @@ import javax.swing.JTextArea;
 /**
  * A window to show the GUI for testing.
  */
-public class TestWindow extends JFrame {
+class TestWindow extends JFrame {
 
   /**
    * Create a window from the container of the GUI, the test instructions and
    * the test environment.
    */
-  public TestWindow(Container testUI, String testScript,
+  TestWindow(Container testUI, String testScript,
       ManualTestEnv env) {
     JPanel basePanel = new JPanel();
     basePanel.setLayout(new BoxLayout(basePanel, BoxLayout.Y_AXIS));

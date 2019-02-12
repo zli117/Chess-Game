@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
  * Manual test environment for the GUI. Checks whether the cmd argument SKIP_GUI
  * is set. If so, skip the test. Otherwise run the GUI in a separate thread.
  */
-public abstract class ManualTestEnv {
+abstract class ManualTestEnv {
 
   private Thread mContainerThread;
   private boolean mFailed;
@@ -14,7 +14,7 @@ public abstract class ManualTestEnv {
   /**
    * Create an environment and run it.
    */
-  public ManualTestEnv() {
+  ManualTestEnv() {
     String skipGui = System.getenv("SKIP_GUI");
     mFailed = false;
     if (skipGui == null) {
