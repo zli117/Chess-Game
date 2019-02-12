@@ -28,7 +28,7 @@ public class Main {
     Controller controller = new Controller((StandardChessBoard) chessBoard,
         chessBoardView);
     controller.boardRedraw();
-    Window window = new Window("Chess Game!!", chessBoardView);
+    Window window = new Window("Chess Game!!", chessBoardView, controller);
     window.setVisible(true);
   }
 

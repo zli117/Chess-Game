@@ -27,6 +27,7 @@ public class Controller implements ViewCallBack {
   private HashMap<URL, Icon> mCachedIcon;
   private Map<Location, Move> mLegalMoves;
   private Side mCurrentSide;
+  private boolean mEnableMoves;
 
   /**
    * Create a controller from the chess board and view.
@@ -39,6 +40,14 @@ public class Controller implements ViewCallBack {
     mChessBoardView.addCallBack(this);
     mCurrentSide = Side.values()[0];
     mLegalMoves = null;
+    mEnableMoves = false;
+  }
+
+  /**
+   * Enable piece moves.
+   */
+  public void toggleMoves() {
+    mEnableMoves = !mEnableMoves;
   }
 
   /**
@@ -98,22 +107,24 @@ public class Controller implements ViewCallBack {
     } else {
       Move move = mLegalMoves.get(location);
       // Not allowed to implement in this checkpoint.
-      if (move != null && mChessBoardModel.movePiece(move)) {
-        mCurrentSide = mCurrentSide.next();
-      }
-      mLegalMoves = null;
       mChessBoardView.resetAllColor();
-      if (mChessBoardModel.checkStaleMate(mCurrentSide)) {
-        System.out.println("Stalemate");
-        System.exit(0);
-      }
-      if (mChessBoardModel.checkCheckMate(mCurrentSide)) {
-        System.out.printf("Checkmate! %s lost\n", mCurrentSide);
-      }
-      if (mChessBoardModel.checkKingPossiblyUnderCheck(mCurrentSide)) {
-        Location kingLocation = mChessBoardModel.getKing(mCurrentSide)
-            .getLocation();
-        mChessBoardView.showWarningColor(kingLocation);
+      mLegalMoves = null;
+      if (mEnableMoves) {
+        if (move != null && mChessBoardModel.movePiece(move)) {
+          mCurrentSide = mCurrentSide.next();
+        }
+        if (mChessBoardModel.checkStaleMate(mCurrentSide)) {
+          System.out.println("Stalemate");
+          System.exit(0);
+        }
+        if (mChessBoardModel.checkCheckMate(mCurrentSide)) {
+          System.out.printf("Checkmate! %s lost\n", mCurrentSide);
+        }
+        if (mChessBoardModel.checkKingPossiblyUnderCheck(mCurrentSide)) {
+          Location kingLocation = mChessBoardModel.getKing(mCurrentSide)
+              .getLocation();
+          mChessBoardView.showWarningColor(kingLocation);
+        }
       }
     }
     boardRedraw();
