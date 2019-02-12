@@ -1,6 +1,7 @@
 package model;
 
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -70,6 +71,15 @@ public class SuperQueen extends Queen {
         new Vector(-2, -1),
         new Vector(-1, -2)};
     return new ArrayList<>(Arrays.asList(relativeLocations));
+  }
+
+  @Override
+  public URL getImageResourceUrl() {
+    if (getSide() == Side.White) {
+      return getClass().getResource("/images/squeen-white.png");
+    } else {
+      return getClass().getResource("/images/squeen-black.png");
+    }
   }
 
 }

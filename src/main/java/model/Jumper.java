@@ -49,6 +49,11 @@ public class Jumper extends Piece {
 
   @Override
   public URL getImageResourceUrl() {
-    return null;
+    if (getSide() == Side.White) {
+      return getClass().getResource("/images/jumper-white.png");
+    } else {
+      return getClass().getResource("/images/jumper-black.png");
+    }
   }
+
 }
