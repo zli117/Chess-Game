@@ -8,6 +8,9 @@ import utils.BoardBuilder;
 
 public class ViewTest {
 
+  /**
+   * Helper function to test static board.
+   */
   public void testDifferentBoardConfig(String configPath,
       String testInstruction) {
     new ManualTestEnv() {
@@ -34,6 +37,9 @@ public class ViewTest {
     };
   }
 
+  /**
+   * Helper function to test movable board.
+   */
   public void testDifferentBoardConfigWithMove(String configPath,
       String instructions) {
     new ManualTestEnv() {
