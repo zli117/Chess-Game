@@ -218,15 +218,15 @@ public class KingTest {
   public void testImageUrlIsValid() {
     try {
       King king = new King(null, Side.White);
-      URL imageURL = king.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = king.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }
     try {
       King king = new King(null, Side.Black);
-      URL imageURL = king.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = king.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }

@@ -41,15 +41,15 @@ public class KnightTest {
   public void testImageUrlIsValid() {
     try {
       Knight knight = new Knight(null, Side.White);
-      URL imageURL = knight.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = knight.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }
     try {
       Knight knight = new Knight(null, Side.Black);
-      URL imageURL = knight.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = knight.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }

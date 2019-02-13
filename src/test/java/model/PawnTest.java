@@ -166,15 +166,15 @@ public class PawnTest {
   public void testImageUrlIsValid() {
     try {
       Pawn pawn = new Pawn(null, Side.White);
-      URL imageURL = pawn.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = pawn.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }
     try {
       Pawn pawn = new Pawn(null, Side.Black);
-      URL imageURL = pawn.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = pawn.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }

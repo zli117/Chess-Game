@@ -25,15 +25,15 @@ public class QueenTest {
   public void testImageUrlIsValid() {
     try {
       Queen queen = new Queen(null, Side.White);
-      URL imageURL = queen.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = queen.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }
     try {
       Queen queen = new Queen(null, Side.Black);
-      URL imageURL = queen.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = queen.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }

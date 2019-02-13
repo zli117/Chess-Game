@@ -25,15 +25,15 @@ public class RookTest {
   public void testImageUrlIsValid() {
     try {
       Rook rook = new Rook(null, Side.White);
-      URL imageURL = rook.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = rook.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }
     try {
       Rook rook = new Rook(null, Side.Black);
-      URL imageURL = rook.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = rook.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }

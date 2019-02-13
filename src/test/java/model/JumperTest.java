@@ -50,15 +50,15 @@ public class JumperTest {
   public void testImageUrlIsValid() {
     try {
       Jumper jumper = new Jumper(null, Side.White);
-      URL imageURL = jumper.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = jumper.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }
     try {
       Jumper jumper = new Jumper(null, Side.Black);
-      URL imageURL = jumper.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = jumper.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }

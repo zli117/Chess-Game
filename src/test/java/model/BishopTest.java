@@ -49,15 +49,15 @@ public class BishopTest {
   public void testImageUrlIsValid() {
     try {
       Bishop bishop = new Bishop(null, Side.White);
-      URL imageURL = bishop.getImageResourceUrl();
-      BufferedImage image = ImageIO.read(imageURL);
+      URL imageUrl = bishop.getImageResourceUrl();
+      BufferedImage image = ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }
     try {
       Bishop bishop = new Bishop(null, Side.Black);
-      URL imageURL = bishop.getImageResourceUrl();
-      BufferedImage image = ImageIO.read(imageURL);
+      URL imageUrl = bishop.getImageResourceUrl();
+      BufferedImage image = ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }

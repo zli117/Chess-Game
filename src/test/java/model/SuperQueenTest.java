@@ -25,15 +25,15 @@ public class SuperQueenTest {
   public void testImageUrlIsValid() {
     try {
       SuperQueen superQueen = new SuperQueen(null, Side.White);
-      URL imageURL = superQueen.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = superQueen.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }
     try {
       SuperQueen superQueen = new SuperQueen(null, Side.Black);
-      URL imageURL = superQueen.getImageResourceUrl();
-      ImageIO.read(imageURL);
+      URL imageUrl = superQueen.getImageResourceUrl();
+      ImageIO.read(imageUrl);
     } catch (Exception exception) {
       fail();
     }
