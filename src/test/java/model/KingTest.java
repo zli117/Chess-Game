@@ -64,7 +64,6 @@ public class KingTest {
     Location rightCastling = new Location(6, 6);
     Set<Move> moves = chessBoardBase.getLegalMoves(kingLocation);
 
-
     assertFalse(moves.contains(new Move(kingLocation, leftCastling)));
     assertTrue(moves.contains(new Move(kingLocation, rightCastling)));
 

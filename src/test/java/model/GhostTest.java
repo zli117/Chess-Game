@@ -39,7 +39,7 @@ public class GhostTest {
 
   @Test
   public void testNoImage() {
-    Ghost ghost= new Ghost(null, Side.White, null);
+    Ghost ghost = new Ghost(null, Side.White, null);
     assertNull(ghost.getImageResourceUrl());
     ghost = new Ghost(null, Side.Black, null);
     assertNull(ghost.getImageResourceUrl());

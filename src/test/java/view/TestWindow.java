@@ -37,7 +37,7 @@ class TestWindow extends JFrame {
     testScripArea.setWrapStyleWord(true);
     Font font = testScripArea.getFont();
     float size = font.getSize() + 5.0f;
-    testScripArea.setFont( font.deriveFont(size) );
+    testScripArea.setFont(font.deriveFont(size));
 
     JScrollPane scrollPane = new JScrollPane(testScripArea);
 
