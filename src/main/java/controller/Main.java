@@ -1,6 +1,6 @@
 package controller;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.swing.UIManager;
 import model.ChessBoardBase;
 import model.StandardChessBoard;
@@ -24,8 +24,8 @@ public class Main {
     try {
       chessBoard = BoardBuilder
           .constructFromFile(Main.class.getResource(filePath));
-    } catch (FileNotFoundException missingFile) {
-      System.err.println(missingFile);
+    } catch (IOException exception) {
+      System.err.println(exception);
       System.exit(1);
     }
 

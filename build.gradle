@@ -27,3 +27,9 @@ dependencies {
     compile 'info.picocli:picocli:3.8.2'
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'controller.Main'
+    }
+}
+

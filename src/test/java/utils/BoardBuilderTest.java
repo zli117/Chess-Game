@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import model.ChessBoardBase;
 import model.Jumper;
 import model.Piece;
@@ -27,7 +27,7 @@ public class BoardBuilderTest {
       assertTrue(chessBoardBase instanceof StandardChessBoard);
       assertEquals(8, chessBoardBase.getWidth());
       assertEquals(8, chessBoardBase.getHeight());
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       fail();
     }
   }
@@ -72,7 +72,7 @@ public class BoardBuilderTest {
       ChessBoardBase chessBoard = BoardBuilder
           .constructFromFile(getClass().getResource("/invalid_board_1.conf"));
       fail();
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       fail();
     } catch (RuntimeException runtimeException) {
       assertEquals("Invalid board name: StandardChess",
@@ -87,7 +87,7 @@ public class BoardBuilderTest {
           .constructFromFile(getClass().getResource("/invalid_board_2.conf"));
       System.out.println(chessBoard);
       fail();
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       fail();
     } catch (RuntimeException runtimeException) {
       assertEquals("Invalid piece config at 0, 2: (Bshop, Black)",
@@ -102,7 +102,7 @@ public class BoardBuilderTest {
           .constructFromFile(getClass().getResource("/invalid_board_3.conf"));
       System.out.println(chessBoard);
       fail();
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       fail();
     } catch (RuntimeException runtimeException) {
       assertEquals("Insufficient pieces for row 1, expected 8, got 7",
