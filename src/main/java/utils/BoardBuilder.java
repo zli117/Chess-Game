@@ -98,7 +98,7 @@ public class BoardBuilder {
       String row = scanner.nextLine();
       Matcher matcher = pattern.matcher(row);
       int j = 0;
-      for (int k = 0; j < width && matcher.find(k);
+      for (int k = 0; k < row.length() && j < width && matcher.find(k);
           ++j, k = matcher.end() + 1) {
         String pieceName = matcher.group("piece");
         String sideName = matcher.group("side");
