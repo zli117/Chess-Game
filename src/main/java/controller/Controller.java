@@ -3,6 +3,7 @@ package controller;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.InvalidPropertiesFormatException;
 import java.util.Map;
 import java.util.Set;
 import javax.imageio.ImageIO;
@@ -48,6 +49,13 @@ public class Controller implements ViewCallBack {
    */
   public void toggleMoves() {
     mEnableMoves = !mEnableMoves;
+  }
+
+  /**
+   * Check if moves are enabled
+   */
+  public boolean isMovesEnabled() {
+    return mEnableMoves;
   }
 
   /**

@@ -19,7 +19,7 @@ public class MockPiece extends Piece {
   private boolean mModifiedAdjustedMoves;
   private boolean mSetAdjustedMoves;
 
-  MockPiece(ChessBoardBase chessBoard, Side side) {
+  public MockPiece(ChessBoardBase chessBoard, Side side) {
     super(chessBoard, side);
     mKilled = false;
     mCanKillGhost = false;
