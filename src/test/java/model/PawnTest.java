@@ -51,7 +51,6 @@ public class PawnTest {
         new Move(newLocation.getAbove(), newLocation.getAbove().getAbove()));
     assertNull(chessBoardBase.getPiece(pawn.getLocation().getBelow()));
 
-
     pawn = new Pawn(chessBoardBase, Side.White);
     chessBoardBase.setPiece(pawn, new Location(6, 6));
     assertTrue(chessBoardBase
@@ -119,6 +118,18 @@ public class PawnTest {
     assertTrue(chessBoardBase.movePiece(captureMove));
     assertNull(upPawn.getLocation());
     assertTrue(chessBoardBase.getPiece(captureMove.getTo()) instanceof Pawn);
+  }
+
+  @Test
+  public void testPieceMoved() {
+    ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
+    Ghost ghost = new Ghost(chessBoardBase, Side.White, null);
+    chessBoardBase.setPiece(ghost, new Location(3, 2));
+    ghost.pieceMoved(new Move(new Location(1, 2), new Location(3, 4)));
+    assertNotNull(ghost.getLocation());
+    ghost.pieceMoved(new Move(new Location(1, 2), new Location(3, 4)));
+    assertNull(ghost.getLocation());
+    ghost.pieceMoved(new Move(new Location(1, 2), new Location(3, 4)));
   }
 
   @Test

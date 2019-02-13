@@ -133,10 +133,10 @@ public class ChessBoard extends JPanel {
   }
 
   /**
-   * Freeze any further move.
+   * Freeze the board to prevent further moves.
    */
-  public void setFreeze(boolean freeze) {
-    mFrozen = freeze;
+  public void freeze() {
+    mFrozen = true;
   }
 
 }

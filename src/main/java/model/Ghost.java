@@ -85,7 +85,7 @@ public class Ghost extends Piece implements GameObserverCallBacks {
   public void pieceMoved(Move move) {
     Location myLocation = getLocation();
     ChessBoardBase chessBoard = getChessBoard();
-    if (!mInitialPawnMove && myLocation != null && chessBoard != null) {
+    if (!mInitialPawnMove && myLocation != null) {
       // Remove itself if some piece has moved and the ghost is still on the
       // board
       chessBoard.removePiece(myLocation);

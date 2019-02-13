@@ -4,6 +4,7 @@ jdk: oraclejdk8
 
 script:
   - chmod +x gradlew
+  - export SKIP_GUI=True
   - ./gradlew build
   - ./gradlew test
   - ./gradlew checkstyleMain
