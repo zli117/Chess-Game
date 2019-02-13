@@ -5,8 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.net.URL;
 import java.util.Set;
+import javax.imageio.ImageIO;
 import org.junit.Test;
 import utils.Location;
 import utils.Move;
@@ -157,6 +160,24 @@ public class PawnTest {
     assertNotNull(upPawn.getLocation());
     assertFalse(chessBoardBase.movePiece(captureMove));
     System.out.println(chessBoardBase);
+  }
+
+  @Test
+  public void testImageUrlIsValid() {
+    try {
+      Pawn pawn = new Pawn(null, Side.White);
+      URL imageURL = pawn.getImageResourceUrl();
+      ImageIO.read(imageURL);
+    } catch (Exception exception) {
+      fail();
+    }
+    try {
+      Pawn pawn = new Pawn(null, Side.Black);
+      URL imageURL = pawn.getImageResourceUrl();
+      ImageIO.read(imageURL);
+    } catch (Exception exception) {
+      fail();
+    }
   }
 
 }

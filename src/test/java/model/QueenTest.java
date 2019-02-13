@@ -10,29 +10,29 @@ import org.junit.Test;
 import utils.Location;
 import utils.Move;
 
-public class SuperQueenTest {
+public class QueenTest {
 
   @Test
-  public void testSuperQueenMoves() {
+  public void testQueenMoves() {
     ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
-    SuperQueen superQueen = new SuperQueen(chessBoardBase, Side.White);
-    chessBoardBase.setPiece(superQueen, new Location(4, 4));
-    Set<Move> moves = chessBoardBase.getLegalMoves(superQueen.getLocation());
-    assertEquals(35, moves.size());
+    Queen queen = new Queen(chessBoardBase, Side.White);
+    chessBoardBase.setPiece(queen, new Location(4, 4));
+    Set<Move> moves = chessBoardBase.getLegalMoves(queen.getLocation());
+    assertEquals(27, moves.size());
   }
 
   @Test
   public void testImageUrlIsValid() {
     try {
-      SuperQueen superQueen = new SuperQueen(null, Side.White);
-      URL imageURL = superQueen.getImageResourceUrl();
+      Queen queen = new Queen(null, Side.White);
+      URL imageURL = queen.getImageResourceUrl();
       ImageIO.read(imageURL);
     } catch (Exception exception) {
       fail();
     }
     try {
-      SuperQueen superQueen = new SuperQueen(null, Side.Black);
-      URL imageURL = superQueen.getImageResourceUrl();
+      Queen queen = new Queen(null, Side.Black);
+      URL imageURL = queen.getImageResourceUrl();
       ImageIO.read(imageURL);
     } catch (Exception exception) {
       fail();

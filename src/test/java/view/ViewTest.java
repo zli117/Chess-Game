@@ -96,7 +96,9 @@ public class ViewTest {
   @Test
   public void testStandardBoardWithMove() {
     String testInstructions = "Check whether the board is consistent with "
-        + "standard chess board. Click \"Enable move\".";
+        + "standard chess board. Click \"Enable move\". Move one white piece. "
+        + "Then verify that no white piece is allowed to move. Also verify if "
+        + "the black piece has legal move, it's allowed to move.";
     testDifferentBoardConfigWithMove("/board.conf", testInstructions);
   }
 

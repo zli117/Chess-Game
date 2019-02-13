@@ -37,4 +37,12 @@ public class GhostTest {
     assertTrue(ghost.getMovesAndAttacks().isEmpty());
   }
 
+  @Test
+  public void testNoImage() {
+    Ghost ghost= new Ghost(null, Side.White, null);
+    assertNull(ghost.getImageResourceUrl());
+    ghost = new Ghost(null, Side.Black, null);
+    assertNull(ghost.getImageResourceUrl());
+  }
+
 }

@@ -3,8 +3,12 @@ package model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.Set;
+import javax.imageio.ImageIO;
 import org.junit.Test;
 import utils.Location;
 import utils.Move;
@@ -41,6 +45,24 @@ public class JumperTest {
     assertTrue(
         moves.contains(
             new Move(rook.getLocation(), jumper.getLocation().getRight())));
+  }
+
+  @Test
+  public void testImageUrlIsValid() {
+    try {
+      Jumper jumper = new Jumper(null, Side.White);
+      URL imageURL = jumper.getImageResourceUrl();
+      ImageIO.read(imageURL);
+    } catch (Exception exception) {
+      fail();
+    }
+    try {
+      Jumper jumper = new Jumper(null, Side.Black);
+      URL imageURL = jumper.getImageResourceUrl();
+      ImageIO.read(imageURL);
+    } catch (Exception exception) {
+      fail();
+    }
   }
 
 }
