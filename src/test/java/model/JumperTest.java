@@ -1,6 +1,8 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
 import org.junit.Test;
@@ -16,6 +18,13 @@ public class JumperTest {
     chessBoardBase.setPiece(jumper, new Location(4, 4));
     Set<Move> moves = chessBoardBase.getLegalMoves(jumper.getLocation());
     assertEquals(6, moves.size());
+  }
+
+  @Test
+  public void testJumperIsGhost() {
+    Jumper jumper = new Jumper(null, Side.White);
+    assertTrue(jumper.isGhost());
+    assertFalse(jumper.canKillGhost());
   }
 
 }

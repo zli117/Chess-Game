@@ -2,12 +2,14 @@ package view;
 
 import controller.Controller;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -29,6 +31,7 @@ public class Window extends JFrame {
         controller.toggleMoves();
       }
     });
+    toggleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     basePanel.add(toggleButton);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setTitle(title);
