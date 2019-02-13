@@ -96,19 +96,20 @@ public class ViewTest {
 
   @Test
   public void testStandardBoardWithMove() {
-    String testInstructions = "Check whether the board is consistent with "
-        + "standard chess board. Click \"Enable move\". Move one white piece. "
-        + "Then verify that no white piece is allowed to move. Also verify if "
-        + "the black piece has legal move, it's allowed to move.";
+    String testInstructions = "Click \"Enable move\". Move leftmost white pawn "
+        + "up by two tiles. Then verify that no white piece is allowed to "
+        + "move. Also verify if any black piece has legal move, it's allowed "
+        + "to move.";
     testDifferentBoardConfigWithMove("/board.conf", testInstructions);
   }
 
   @Test
   public void testSuperQueenWithMove() {
-    String testInstructions = "Click \"Enable move\". Move leftmost white pawn "
-        + "up by two tiles. Then verify that no white piece is allowed to "
-        + "move. Also verify if any black piece has legal move, it's allowed "
-        + "to move.";
+    String testInstructions = "Click on \"Enable move\". Then click on white "
+        + "super queen and move it all the way to the left. Then move the "
+        + "leftmost black Pawn down by one tile. Then capture the Pawn below "
+        + "black queen with the white SuperQueen. Verify black King is under "
+        + "check (background turns blue)";
     testDifferentBoardConfigWithMove("/board_with_squeen.conf",
         testInstructions);
   }
