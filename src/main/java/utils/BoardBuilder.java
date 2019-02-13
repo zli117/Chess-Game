@@ -1,7 +1,6 @@
 package utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -82,9 +81,8 @@ public class BoardBuilder {
    * @param filePath The file URL.
    */
   public static ChessBoardBase constructFromFile(URL filePath)
-      throws RuntimeException, FileNotFoundException {
-    File file = new File(filePath.getFile());
-    Scanner scanner = new Scanner(file);
+      throws RuntimeException, IOException {
+    Scanner scanner = new Scanner(filePath.openStream());
     int height = Integer.parseInt(scanner.nextLine());
     int width = Integer.parseInt(scanner.nextLine());
     String boardName = scanner.nextLine();

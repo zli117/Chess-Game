@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import model.ChessBoardBase;
@@ -46,7 +46,7 @@ public class ControllerTest {
       controller.boardRedraw();
       // The mock piece should not show up since the url for icon is invalid.
       assertEquals(32, mockChessBoard.getPieceCounter());
-    } catch (FileNotFoundException exception) {
+    } catch (IOException exception) {
       fail();
     }
     try {
@@ -77,7 +77,7 @@ public class ControllerTest {
       assertEquals(23, mockChessBoard.getHintColorCounter());
       controller.gridClicked(new Location(2, 6));
       assertTrue(mockChessBoard.isFrozen());
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       fail();
     }
 
@@ -94,7 +94,7 @@ public class ControllerTest {
       controller.gridClicked(new Location(7, 7));
       assertTrue(mockChessBoard.isFrozen());
       assertEquals(1, mockChessBoard.getWarningColorCounter());
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       fail();
     }
   }

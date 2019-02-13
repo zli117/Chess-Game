@@ -1,7 +1,7 @@
 package view;
 
 import controller.Controller;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import model.ChessBoardBase;
 import org.junit.Test;
 import utils.BoardBuilder;
@@ -21,8 +21,8 @@ public class ViewTest {
         try {
           chessBoard = BoardBuilder
               .constructFromFile(getClass().getResource(configPath));
-        } catch (FileNotFoundException missingFile) {
-          System.err.println(missingFile);
+        } catch (IOException exception) {
+          System.err.println(exception);
           System.exit(1);
         }
 
@@ -51,8 +51,8 @@ public class ViewTest {
         try {
           chessBoard = BoardBuilder
               .constructFromFile(getClass().getResource(configPath));
-        } catch (FileNotFoundException missingFile) {
-          System.err.println(missingFile);
+        } catch (IOException exception) {
+          System.err.println(exception);
           System.exit(1);
         }
 
