@@ -3,6 +3,7 @@ package view;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,17 +24,23 @@ class TestWindow extends JFrame {
    * the test environment.
    */
   TestWindow(Container testUI, String testScript,
-      ManualTestEnv env) {
+      ManualTestEnv env, String testName) {
     JPanel basePanel = new JPanel();
     basePanel.setLayout(new BoxLayout(basePanel, BoxLayout.Y_AXIS));
     JPanel buttonPanel = new JPanel();
     buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+
     JTextArea testScripArea = new JTextArea();
     testScripArea.setEditable(false);
     testScripArea.setLineWrap(true);
     testScripArea.setText("Test instructions: " + testScript);
     testScripArea.setWrapStyleWord(true);
+    Font font = testScripArea.getFont();
+    float size = font.getSize() + 5.0f;
+    testScripArea.setFont(font.deriveFont(size));
+
     JScrollPane scrollPane = new JScrollPane(testScripArea);
+
     basePanel.add(testUI);
     basePanel.add(buttonPanel);
     basePanel.add(scrollPane);
@@ -57,7 +64,7 @@ class TestWindow extends JFrame {
     });
     buttonPanel.add(passButton);
     buttonPanel.add(failButton);
-    setTitle("Test");
+    setTitle(testName);
     setSize(600, 600);
     setResizable(false);
     // Basically you can't close the window without pass or fail.

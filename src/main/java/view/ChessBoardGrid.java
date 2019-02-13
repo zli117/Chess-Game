@@ -13,7 +13,7 @@ class ChessBoardGrid extends JButton {
   /**
    * Create a chess board grid button.
    */
-  public ChessBoardGrid() {
+  ChessBoardGrid() {
     super();
 
     // To prevent showing a different color when clicked down on a button
@@ -29,53 +29,53 @@ class ChessBoardGrid extends JButton {
   /**
    * Set the default color of the piece.
    */
-  public void setDefaultColor(Color defaultColor) {
+  void setDefaultColor(Color defaultColor) {
     mDefaultColor = defaultColor;
   }
 
   /**
    * Set the background color of selected case.
    */
-  public void setSelectedColor(Color selectedColor) {
+  void setSelectedColor(Color selectedColor) {
     mSelectedColor = selectedColor;
   }
 
   /**
    * Set the color of warning.
    */
-  public void setWarningColor(Color warningColor) {
+  void setWarningColor(Color warningColor) {
     mWarningColor = warningColor;
   }
 
   /**
    * Set the color of hint.
    */
-  public void setHintColor(Color hintColor) {
+  void setHintColor(Color hintColor) {
     mHintColor = hintColor;
   }
 
   /**
    * Reset the color back to default.
    */
-  public void resetColor() {
+  void resetColor() {
     setBackground(mDefaultColor);
   }
 
   /**
    * Set the color to be selected color.
    */
-  public void showSelected() {
+  void showSelected() {
     setBackground(mSelectedColor);
   }
 
   /**
    * Set the color to be warning color.
    */
-  public void showWarning() {
+  void showWarning() {
     setBackground(mWarningColor);
   }
 
-  public void showHint() {
+  void showHint() {
     setBackground(mHintColor);
   }
 

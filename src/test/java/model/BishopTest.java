@@ -3,8 +3,12 @@ package model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.Set;
+import javax.imageio.ImageIO;
 import org.junit.Test;
 import utils.Location;
 import utils.Move;
@@ -39,6 +43,24 @@ public class BishopTest {
     assertFalse(possibleMoves.contains(move));
     move.attack();
     assertFalse(possibleMoves.contains(move));
+  }
+
+  @Test
+  public void testImageUrlIsValid() {
+    try {
+      Bishop bishop = new Bishop(null, Side.White);
+      URL imageUrl = bishop.getImageResourceUrl();
+      BufferedImage image = ImageIO.read(imageUrl);
+    } catch (Exception exception) {
+      fail();
+    }
+    try {
+      Bishop bishop = new Bishop(null, Side.Black);
+      URL imageUrl = bishop.getImageResourceUrl();
+      BufferedImage image = ImageIO.read(imageUrl);
+    } catch (Exception exception) {
+      fail();
+    }
   }
 
 }

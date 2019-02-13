@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.BoxLayout;
@@ -29,6 +30,7 @@ public class Window extends JFrame {
         controller.toggleMoves();
       }
     });
+    toggleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     basePanel.add(toggleButton);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setTitle(title);

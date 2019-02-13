@@ -4,8 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.net.URL;
 import java.util.Set;
+import javax.imageio.ImageIO;
 import org.junit.Test;
 import utils.Location;
 import utils.Move;
@@ -60,7 +63,6 @@ public class KingTest {
     Location leftCastling = new Location(6, 2);
     Location rightCastling = new Location(6, 6);
     Set<Move> moves = chessBoardBase.getLegalMoves(kingLocation);
-
 
     assertFalse(moves.contains(new Move(kingLocation, leftCastling)));
     assertTrue(moves.contains(new Move(kingLocation, rightCastling)));
@@ -210,6 +212,24 @@ public class KingTest {
 
     moves = chessBoardBase.getLegalMoves(pawn.getLocation());
     assertEquals(3, moves.size());
+  }
+
+  @Test
+  public void testImageUrlIsValid() {
+    try {
+      King king = new King(null, Side.White);
+      URL imageUrl = king.getImageResourceUrl();
+      ImageIO.read(imageUrl);
+    } catch (Exception exception) {
+      fail();
+    }
+    try {
+      King king = new King(null, Side.Black);
+      URL imageUrl = king.getImageResourceUrl();
+      ImageIO.read(imageUrl);
+    } catch (Exception exception) {
+      fail();
+    }
   }
 
 }

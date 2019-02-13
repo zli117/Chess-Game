@@ -26,7 +26,10 @@ import utils.Vector;
  * </td> <td> J </td> <td> x </td>
  * </tr>
  * </table>
- * o is reachable location. x is not reachable.
+ * o is reachable location. x is not reachable. The Jumper is also a ghost,
+ * meaning that normal pieces won't see it and can go pass it. It's also
+ * possible that other piece will kick the Jumper off the board if those piece
+ * happen to be in the same spot.
  */
 public class Jumper extends Piece {
 
@@ -54,6 +57,11 @@ public class Jumper extends Piece {
     } else {
       return getClass().getResource("/images/jumper-black.png");
     }
+  }
+
+  @Override
+  public boolean isGhost() {
+    return true;
   }
 
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.FileNotFoundException;
+import javax.swing.UIManager;
 import model.ChessBoardBase;
 import model.StandardChessBoard;
 import utils.BoardBuilder;
@@ -13,6 +14,11 @@ public class Main {
    * Main method.
    */
   public static void main(String[] args) {
+    try {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch (Exception e) {
+      // Do nothing.
+    }
     String filePath = args[0];
     ChessBoardBase chessBoard = null;
     try {

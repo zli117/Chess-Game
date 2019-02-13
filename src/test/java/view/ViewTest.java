@@ -13,6 +13,7 @@ public class ViewTest {
    */
   public void testDifferentBoardConfig(String configPath,
       String testInstruction) {
+    String testName = Thread.currentThread().getStackTrace()[2].getMethodName();
     new ManualTestEnv() {
       @Override
       void runTest(ManualTestEnv env) {
@@ -31,7 +32,7 @@ public class ViewTest {
             chessBoardView);
         controller.boardRedraw();
         TestWindow testWindow = new TestWindow(chessBoardView, testInstruction,
-            env);
+            env, testName);
         testWindow.setVisible(true);
       }
     };
@@ -42,6 +43,7 @@ public class ViewTest {
    */
   public void testDifferentBoardConfigWithMove(String configPath,
       String instructions) {
+    String testName = Thread.currentThread().getStackTrace()[2].getMethodName();
     new ManualTestEnv() {
       @Override
       void runTest(ManualTestEnv env) {
@@ -61,7 +63,7 @@ public class ViewTest {
         controller.boardRedraw();
         Window window = new Window("Chess Game!!", chessBoardView, controller);
         TestWindow testWindow = new TestWindow(window.getContentPane(),
-            instructions, env);
+            instructions, env, testName);
         testWindow.setVisible(true);
       }
     };
@@ -69,9 +71,10 @@ public class ViewTest {
 
   @Test
   public void testStandardBoard() {
-    String testInstructions = "Verify the display of the board is consistent "
-        + "with the standard chess board. Click at the white pawns, verify "
-        + "they can move two steps and verify white knights moves are correct.";
+    String testInstructions = "Click at all the white pawns, and verify they "
+        + "can move two steps. Then click at both white knights and verify "
+        + "there are two moves available for each. Verify the display of the "
+        + "board is consistent with the standard chess board as shown below.";
     testDifferentBoardConfig("/board.conf", testInstructions);
   }
 
@@ -85,25 +88,28 @@ public class ViewTest {
 
   @Test
   public void testJumper() {
-    String testInstructions = "Verify there are two jumpers on the board. "
-        + "One from white and another from black. Click on the white jumper, "
-        + "verify the move pattern corresponds to the screen shot.";
+    String testInstructions = "Verify there are two jumpers on the board. One "
+        + "from white and another from black. Click on the white jumper, verify "
+        + "the move pattern corresponds to the screen shot.";
     testDifferentBoardConfig("/board_with_jumper.conf", testInstructions);
   }
 
   @Test
   public void testStandardBoardWithMove() {
-    String testInstructions = "Check whether the board is consistent with "
-        + "standard chess board. Click \"Enable move\".";
+    String testInstructions = "Click \"Enable move\". Move leftmost white pawn "
+        + "up by two tiles. Then verify that no white piece is allowed to "
+        + "move. Also verify if any black piece has legal move, it's allowed "
+        + "to move.";
     testDifferentBoardConfigWithMove("/board.conf", testInstructions);
   }
 
   @Test
   public void testSuperQueenWithMove() {
     String testInstructions = "Click on \"Enable move\". Then click on white "
-        + "super queen and move it to an empty location. Next move a black "
-        + "piece, but make sure it don't capture the white super queen. Then "
-        + "move the white super queen to capture one black piece.";
+        + "super queen and move it all the way to the left. Then move the "
+        + "leftmost black Pawn down by one tile. Then capture the Pawn below "
+        + "black queen with the white SuperQueen. Verify black King is under "
+        + "check (background turns blue)";
     testDifferentBoardConfigWithMove("/board_with_squeen.conf",
         testInstructions);
   }
@@ -111,18 +117,19 @@ public class ViewTest {
   @Test
   public void testJumperWithMove() {
     String testInstructions = "Click on \"Enable move\". Then click on white "
-        + "jumper and move it to an empty location. Next move a black "
-        + "piece, but make sure it don't capture the white jumper. Then "
-        + "move the white jumper to capture one black piece.";
+        + "jumper and move it to the right by two tiles. Next move the "
+        + "leftmost black pawn down by one tile. Then move the white jumper up "
+        + "to capture the black Bishop. Verify the black Bishop has been "
+        + "captured, and black King is not under check.";
     testDifferentBoardConfigWithMove("/board_with_jumper.conf",
         testInstructions);
   }
 
   @Test
   public void testUnderCheckWarning() {
-    String testInstructions = "Click on \"Enable move\". The move the white "
-        + "rook up by one row. Check the black king's grid turns blue as a "
-        + "warning for checking.";
+    String testInstructions = "Click on \"Enable move\". Then move the white "
+        + "rook up by one tile. Check the black king's grid turns blue as a "
+        + "warning for checking. Verify chess board looks like the screen shot";
     testDifferentBoardConfigWithMove("/board_check_warning.conf",
         testInstructions);
   }
@@ -130,19 +137,20 @@ public class ViewTest {
   @Test
   public void testStaleMate() {
     String testInstructions = "Click on \"Enable move\". The move the white "
-        + "queen up by one row. Check terminal has printout of \"Stalemate\"."
-        + " Click all three pieces on board, and verify that there's no move"
-        + " recommendation from either side.";
+        + "queen up by one row. Check terminal has printout of \"Stalemate\". "
+        + "Click all three pieces on board, and verify that there's no move "
+        + "recommendation from either side.";
     testDifferentBoardConfigWithMove("/board_stalemate.conf",
         testInstructions);
   }
 
   @Test
   public void testCheckMate() {
-    String testInstructions = "Click on \"Enable move\". The move the white "
-        + "rook right by one column. Check terminal has printout of "
+    String testInstructions = "Click on \"Enable move\". Then move the white "
+        + "rook right by one tile. Check terminal has the printout of "
         + "\"Checkmate! Black lost\". Click all three pieces on board, and "
-        + "verify that there's no move recommendation from either side.";
+        + "verify that there's no move recommendation from either side and "
+        + "black King is under check.";
     testDifferentBoardConfigWithMove("/board_checkmate.conf",
         testInstructions);
   }

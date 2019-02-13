@@ -155,5 +155,7 @@ gradle-app.setting
 # Doxygen stuff
 doxygen_docs/*
 doxygen.tag
+html/*
+latex/*
 
 

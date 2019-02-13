@@ -51,6 +51,13 @@ public class Controller implements ViewCallBack {
   }
 
   /**
+   * Check if moves are enabled.
+   */
+  public boolean isMovesEnabled() {
+    return mEnableMoves;
+  }
+
+  /**
    * Load an icon from url.
    */
   private Icon loadIcon(URL url) {
