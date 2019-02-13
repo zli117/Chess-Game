@@ -8,11 +8,15 @@
 
 ## Test Under Check Warning
  * Test name: testUnderCheckWarning
- * Test instructions: Click on "Enable move". Then move the white rook up by one tile. Check the black king's grid turns blue as a warning for checking. Verify chess board looks like following: ![under_check](screenshots/under_check.png)
+ * Test instructions: Click on "Enable move". Then move the white rook up by one tile. Check the black king's grid turns blue as a warning for checking. Verify chess board looks like following: 
+ 
+ ![under_check](screenshots/under_check.png)
 
 ## Test Display of Static Board
  * Test name: testStandardBoard
- * Test instructions: Click at all the white pawns, and verify they can move two steps. Then click at both white knights and verify there are two moves available for each. Verify the display of the board is consistent with the standard chess board as shown below. ![standard_board](screenshots/standard_board.png)
+ * Test instructions: Click at all the white pawns, and verify they can move two steps. Then click at both white knights and verify there are two moves available for each. Verify the display of the board is consistent with the standard chess board as shown below. 
+ 
+ ![standard_board](screenshots/standard_board.png)
 
 ## Test Standard Board with Moves
  * Test name: testStandardBoardWithMove
@@ -28,8 +32,12 @@
 
 ## Test Jumper Legal Moves
  * Test name: testJumper
- * Test instructions: Verify there are two jumpers on the board. One from white and another from black. Click on the white jumper, verify the move pattern corresponds to the screen shot. ![jumper_moves](jumper_moves.png)
+ * Test instructions: Verify there are two jumpers on the board. One from white and another from black. Click on the white jumper, verify the move pattern corresponds to the screen shot. 
+ 
+ ![jumper_moves](screenshots/jumper_moves.png)
 
 ## Test SuperQueen Legal Moves
  * Test name: testSuperQueen
- * Test instructions: Verify there are two super queens on the board. One from white and another from black. Click on the white super queen, verify the move pattern corresponds to the screen shot. ![superqueen_moves](superqueen_moves.png)
+ * Test instructions: Verify there are two super queens on the board. One from white and another from black. Click on the white super queen, verify the move pattern corresponds to the screen shot. 
+ 
+ ![superqueen_moves](screenshots/superqueen_moves.png)
