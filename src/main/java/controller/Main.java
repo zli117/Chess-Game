@@ -3,7 +3,6 @@ package controller;
 import java.io.IOException;
 import javax.swing.UIManager;
 import model.ChessBoardBase;
-import model.StandardChessBoard;
 import utils.BoardBuilder;
 import view.ChessBoard;
 import view.Window;
@@ -31,8 +30,7 @@ public class Main {
 
     ChessBoard chessBoardView = new ChessBoard(chessBoard.getHeight(),
         chessBoard.getWidth());
-    Controller controller = new Controller((StandardChessBoard) chessBoard,
-        chessBoardView);
+    Controller controller = new Controller(chessBoard, chessBoardView);
     controller.boardRedraw();
     Window window = new Window("Chess Game!!", chessBoardView, controller);
     window.setVisible(true);
