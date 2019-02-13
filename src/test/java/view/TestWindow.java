@@ -24,7 +24,7 @@ class TestWindow extends JFrame {
    * the test environment.
    */
   TestWindow(Container testUI, String testScript,
-      ManualTestEnv env) {
+      ManualTestEnv env, String testName) {
     JPanel basePanel = new JPanel();
     basePanel.setLayout(new BoxLayout(basePanel, BoxLayout.Y_AXIS));
     JPanel buttonPanel = new JPanel();
@@ -64,7 +64,7 @@ class TestWindow extends JFrame {
     });
     buttonPanel.add(passButton);
     buttonPanel.add(failButton);
-    setTitle("Test");
+    setTitle(testName);
     setSize(600, 600);
     setResizable(false);
     // Basically you can't close the window without pass or fail.

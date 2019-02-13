@@ -27,4 +27,20 @@ public class JumperTest {
     assertFalse(jumper.canKillGhost());
   }
 
+  @Test
+  public void testPassingGhost() {
+    ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
+    Jumper jumper = new Jumper(chessBoardBase, Side.White);
+    Rook rook = new Rook(chessBoardBase, Side.White);
+    chessBoardBase.setPiece(jumper, new Location(4, 4));
+    chessBoardBase.setPiece(rook, new Location(4, 2));
+
+    Set<Move> moves = chessBoardBase.getLegalMoves(rook.getLocation());
+    assertTrue(
+        moves.contains(new Move(rook.getLocation(), jumper.getLocation())));
+    assertTrue(
+        moves.contains(
+            new Move(rook.getLocation(), jumper.getLocation().getRight())));
+  }
+
 }

@@ -13,6 +13,7 @@ public class ViewTest {
    */
   public void testDifferentBoardConfig(String configPath,
       String testInstruction) {
+    String testName = Thread.currentThread().getStackTrace()[2].getMethodName();
     new ManualTestEnv() {
       @Override
       void runTest(ManualTestEnv env) {
@@ -31,7 +32,7 @@ public class ViewTest {
             chessBoardView);
         controller.boardRedraw();
         TestWindow testWindow = new TestWindow(chessBoardView, testInstruction,
-            env);
+            env, testName);
         testWindow.setVisible(true);
       }
     };
@@ -42,6 +43,7 @@ public class ViewTest {
    */
   public void testDifferentBoardConfigWithMove(String configPath,
       String instructions) {
+    String testName = Thread.currentThread().getStackTrace()[2].getMethodName();
     new ManualTestEnv() {
       @Override
       void runTest(ManualTestEnv env) {
@@ -61,7 +63,7 @@ public class ViewTest {
         controller.boardRedraw();
         Window window = new Window("Chess Game!!", chessBoardView, controller);
         TestWindow testWindow = new TestWindow(window.getContentPane(),
-            instructions, env);
+            instructions, env, testName);
         testWindow.setVisible(true);
       }
     };
