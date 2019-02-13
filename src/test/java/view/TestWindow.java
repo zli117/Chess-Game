@@ -50,7 +50,7 @@ class TestWindow extends JFrame {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
         setVisible(false);
-        env.getContainerThread().interrupt();
+        env.interruptContainerThread();
       }
     });
     JButton failButton = new JButton("Fail");
@@ -59,7 +59,7 @@ class TestWindow extends JFrame {
       public void actionPerformed(ActionEvent actionEvent) {
         setVisible(false);
         env.setFailed();
-        env.getContainerThread().interrupt();
+        env.interruptContainerThread();
       }
     });
     buttonPanel.add(passButton);

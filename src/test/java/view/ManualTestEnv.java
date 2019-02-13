@@ -49,10 +49,10 @@ abstract class ManualTestEnv {
   abstract void runTest(ManualTestEnv env);
 
   /**
-   * Get the thread that's the parent of the GUI thread.
+   * Interrupt the thread containing GUI.
    */
-  Thread getContainerThread() {
-    return mContainerThread;
+  void interruptContainerThread() {
+    mContainerThread.interrupt();
   }
 
   /**
