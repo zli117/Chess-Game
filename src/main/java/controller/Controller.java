@@ -51,7 +51,7 @@ public class Controller implements ViewCallBack {
   }
 
   /**
-   * Check if moves are enabled
+   * Check if moves are enabled.
    */
   public boolean isMovesEnabled() {
     return mEnableMoves;
