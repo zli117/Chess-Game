@@ -34,7 +34,7 @@ public class Window extends JFrame {
     basePanel.add(toggleButton);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setTitle(title);
-    setSize(450, 500);
+    setSize(400, 500);
     setResizable(false);
 
     // Set to center of the screen
