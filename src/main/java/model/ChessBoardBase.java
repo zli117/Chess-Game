@@ -24,6 +24,7 @@ public class ChessBoardBase {
   private Stack<Piece> mWithHeldPieces;
   private boolean mStateChanged;
   private Map<Side, King> mKings;
+  private boolean mTentative;
 
   /**
    * Create a chess board.
@@ -42,6 +43,15 @@ public class ChessBoardBase {
     mWithHeldPieces = new Stack<>();
     mStateChanged = false;
     mKings = new HashMap<>();
+    mTentative = false;
+  }
+
+  public void setTentative(boolean tentative) {
+    mTentative = tentative;
+  }
+
+  public boolean isTentative() {
+    return mTentative;
   }
 
   /**
