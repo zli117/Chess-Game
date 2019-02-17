@@ -28,12 +28,8 @@ public class Command implements GameObserverCallBacks {
     mChessBoard = chessBoard;
   }
 
-  public void setTentative() {
+  void setTentative() {
     mTentative = true;
-  }
-
-  public boolean isTentative() {
-    return mTentative;
   }
 
   public void execute() {
@@ -82,18 +78,9 @@ public class Command implements GameObserverCallBacks {
     mRemovedPieces.add(new Pair<>(pieceRemoved, location));
   }
 
-  /**
-   * Retrieve all the removed pieces during tracked period.
-   */
-  public List<Pair<Piece, Location>> getRemovedPieces() {
-    return mRemovedPieces;
-  }
-
-  /**
-   * Retrieve all the moves during tracked period.
-   */
-  public List<Move> getMoves() {
-    return mPerformedMoves;
+  @Override
+  public boolean canTrackTentative() {
+    return mTentative;
   }
 
 }

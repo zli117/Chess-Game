@@ -46,12 +46,12 @@ public class ChessBoardBase {
     mTentative = false;
   }
 
-  public void setTentative(boolean tentative) {
-    mTentative = tentative;
-  }
-
   public boolean isTentative() {
     return mTentative;
+  }
+
+  public void setTentative(boolean tentative) {
+    mTentative = tentative;
   }
 
   /**
@@ -277,7 +277,9 @@ public class ChessBoardBase {
       piece.setLocation(null);
       for (int i = mObservers.size() - 1; i >= 0; --i) {
         GameObserverCallBacks observer = mObservers.get(i);
-        observer.pieceRemoved(piece, location);
+        if (!mTentative || observer.canTrackTentative()) {
+          observer.pieceRemoved(piece, location);
+        }
       }
       mStateChanged = true;
     }
@@ -334,7 +336,9 @@ public class ChessBoardBase {
     // The observer might remove itself during callback
     for (int i = mObservers.size() - 1; i >= 0; --i) {
       GameObserverCallBacks observer = mObservers.get(i);
-      observer.pieceMoved(move);
+      if (!mTentative || observer.canTrackTentative()) {
+        observer.pieceMoved(move);
+      }
     }
   }
 

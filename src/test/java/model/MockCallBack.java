@@ -38,4 +38,9 @@ public class MockCallBack implements GameObserverCallBacks {
     return mRemoved;
   }
 
+  @Override
+  public boolean canTrackTentative() {
+    return true;
+  }
+
 }

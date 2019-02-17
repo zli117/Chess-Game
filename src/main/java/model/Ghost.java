@@ -97,4 +97,9 @@ public class Ghost extends Piece implements GameObserverCallBacks {
   public void pieceRemoved(Piece pieceRemoved, Location originalLocation) {
   }
 
+  @Override
+  public boolean canTrackTentative() {
+    return true;
+  }
+
 }

@@ -23,4 +23,9 @@ public interface GameObserverCallBacks {
    */
   void pieceRemoved(Piece pieceRemoved, Location originalLocation);
 
+  /**
+   * Whether the observer can track tentative moves.
+   */
+  boolean canTrackTentative();
+
 }
