@@ -5,10 +5,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -23,15 +25,15 @@ public class Window extends JFrame {
     basePanel.add(chessBoard);
     setLayout(new BorderLayout());
     add(basePanel);
-    JToggleButton toggleButton = new JToggleButton("Enable Move");
-    toggleButton.addChangeListener(new ChangeListener() {
+    JButton undoButton = new JButton("Undo");
+    undoButton.addActionListener(new ActionListener() {
       @Override
-      public void stateChanged(ChangeEvent changeEvent) {
-        controller.toggleMoves();
+      public void actionPerformed(ActionEvent actionEvent) {
+        controller.undo();
       }
     });
-    toggleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-    basePanel.add(toggleButton);
+    undoButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    basePanel.add(undoButton);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setTitle(title);
     setSize(400, 500);

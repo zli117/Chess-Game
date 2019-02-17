@@ -18,18 +18,6 @@ import utils.Location;
 public class ControllerTest {
 
   @Test
-  public void testToggleMoves() {
-    ChessBoardBase chessBoardBase = new ChessBoardBase(8, 8);
-    MockChessBoard mockChessBoard = new MockChessBoard(8, 8);
-    Controller controller = new Controller(chessBoardBase, mockChessBoard);
-    assertFalse(controller.isMovesEnabled());
-    controller.toggleMoves();
-    assertTrue(controller.isMovesEnabled());
-    controller.toggleMoves();
-    assertFalse(controller.isMovesEnabled());
-  }
-
-  @Test
   public void testRedrawBoard() {
     try {
       ChessBoardBase chessBoardBase = BoardBuilder
@@ -67,11 +55,6 @@ public class ControllerTest {
       MockChessBoard mockChessBoard = new MockChessBoard(
           chessBoardBase.getHeight(), chessBoardBase.getWidth());
       Controller controller = new Controller(chessBoardBase, mockChessBoard);
-      controller.gridClicked(new Location(3, 6));
-      assertEquals(23, mockChessBoard.getHintColorCounter());
-      controller.gridClicked(new Location(2, 6));
-      assertFalse(mockChessBoard.isFrozen());
-      controller.toggleMoves();
       mockChessBoard.resetHintColorCounter();
       controller.gridClicked(new Location(3, 6));
       assertEquals(23, mockChessBoard.getHintColorCounter());
@@ -88,7 +71,6 @@ public class ControllerTest {
       MockChessBoard mockChessBoard = new MockChessBoard(
           chessBoardBase.getHeight(), chessBoardBase.getWidth());
       Controller controller = new Controller(chessBoardBase, mockChessBoard);
-      controller.toggleMoves();
       controller.gridClicked(new Location(7, 6));
       assertEquals(14, mockChessBoard.getHintColorCounter());
       controller.gridClicked(new Location(7, 7));

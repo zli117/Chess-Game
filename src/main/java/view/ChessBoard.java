@@ -139,4 +139,11 @@ public class ChessBoard extends JPanel {
     mFrozen = true;
   }
 
+  /**
+   * Unfreeze the board.
+   */
+  public void unFreeze() {
+    mFrozen = false;
+  }
+
 }

@@ -16,6 +16,7 @@ public class Command implements GameObserverCallBacks {
   private boolean mTentative;
   private Move mInitialMove;
   private ChessBoardBase mChessBoard;
+  private Side mSideInitiated;
 
   /**
    * Default constructor. Doesn't need any parameter.
@@ -26,26 +27,43 @@ public class Command implements GameObserverCallBacks {
     mTentative = false;
     mInitialMove = move;
     mChessBoard = chessBoard;
+    mSideInitiated = null;
   }
 
   void setTentative() {
     mTentative = true;
   }
 
-  public void execute() {
+  public boolean hasSide() {
+    return mSideInitiated != null;
+  }
+
+  public Side getSide() {
+    return mSideInitiated;
+  }
+
+  public void setSide(Side side) {
+    mSideInitiated = side;
+  }
+
+  public boolean execute() {
     boolean previousStatus = mChessBoard.isTentative();
+    boolean result = true;
     mChessBoard.setTentative(mTentative);
     mChessBoard.registerObserver(this);
     if (mTentative) {
       mChessBoard.moveWithOutCheck(mInitialMove);
     } else {
-      mChessBoard.movePiece(mInitialMove);
+      result = mChessBoard.movePiece(mInitialMove);
     }
     mChessBoard.removeObserver(this);
     mChessBoard.setTentative(previousStatus);
+    return result;
   }
 
   public void undo() {
+    boolean previousStatus = mChessBoard.isTentative();
+    mChessBoard.setTentative(mTentative);
     for (Move trackedMove : mPerformedMoves) {
       Move inverse = trackedMove.inverseMove();
       Piece movedPiece = mChessBoard.getPiece(inverse.getFrom());
@@ -58,6 +76,7 @@ public class Command implements GameObserverCallBacks {
     for (Pair<Piece, Location> removed : mRemovedPieces) {
       mChessBoard.setPiece(removed.getA(), removed.getB());
     }
+    mChessBoard.setTentative(previousStatus);
   }
 
   /**

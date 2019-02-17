@@ -5,10 +5,12 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import model.ChessBoardBase;
+import model.Command;
 import model.Piece;
 import model.Side;
 import utils.Location;
@@ -27,7 +29,7 @@ public class Controller implements ViewCallBack {
   private HashMap<URL, Icon> mCachedIcon;
   private Map<Location, Move> mLegalMoves;
   private Side mCurrentSide;
-  private boolean mEnableMoves;
+  private Stack<Command> mCommands;
 
   /**
    * Create a controller from the chess board and view.
@@ -40,21 +42,21 @@ public class Controller implements ViewCallBack {
     mChessBoardView.addCallBack(this);
     mCurrentSide = Side.values()[0];
     mLegalMoves = null;
-    mEnableMoves = false;
+    mCommands = new Stack<>();
   }
 
-  /**
-   * Enable piece moves.
-   */
-  public void toggleMoves() {
-    mEnableMoves = !mEnableMoves;
-  }
-
-  /**
-   * Check if moves are enabled.
-   */
-  public boolean isMovesEnabled() {
-    return mEnableMoves;
+  public void undo() {
+    if (!mCommands.isEmpty()) {
+      Command command = mCommands.pop();
+      command.undo();
+      mLegalMoves = null;
+      if (command.hasSide()) {
+        mCurrentSide = command.getSide();
+      }
+      mChessBoardView.resetAllColor();
+      boardRedraw();
+      mChessBoardView.unFreeze();
+    }
   }
 
   /**
@@ -99,6 +101,7 @@ public class Controller implements ViewCallBack {
    */
   @Override
   public void gridClicked(Location location) {
+    System.out.println(mCurrentSide);
     if (mLegalMoves == null) {
       if (mChessBoardModel.getSideOfLocation(location) == mCurrentSide) {
         mLegalMoves = new HashMap<>(); // Maps target location to the move.
@@ -116,23 +119,24 @@ public class Controller implements ViewCallBack {
       // Not allowed to implement in this checkpoint.
       mChessBoardView.resetAllColor();
       mLegalMoves = null;
-      if (mEnableMoves) {
-        if (move != null && mChessBoardModel.movePiece(move)) {
-          mCurrentSide = mCurrentSide.next();
-        }
-        if (mChessBoardModel.checkStaleMate(mCurrentSide)) {
-          System.out.println("Stalemate");
-          mChessBoardView.freeze();
-        }
-        if (mChessBoardModel.checkCheckMate(mCurrentSide)) {
-          System.out.printf("Checkmate! %s lost\n", mCurrentSide);
-          mChessBoardView.freeze();
-        }
-        if (mChessBoardModel.checkKingPossiblyUnderCheck(mCurrentSide)) {
-          Location kingLocation = mChessBoardModel.getKing(mCurrentSide)
-              .getLocation();
-          mChessBoardView.showWarningColor(kingLocation);
-        }
+      Command command = new Command(move, mChessBoardModel);
+      command.setSide(mCurrentSide);
+      if (move != null && command.execute()) {
+        mCurrentSide = mCurrentSide.next();
+        mCommands.push(command);
+      }
+      if (mChessBoardModel.checkStaleMate(mCurrentSide)) {
+        System.out.println("Stalemate");
+        mChessBoardView.freeze();
+      }
+      if (mChessBoardModel.checkCheckMate(mCurrentSide)) {
+        System.out.printf("Checkmate! %s lost\n", mCurrentSide);
+        mChessBoardView.freeze();
+      }
+      if (mChessBoardModel.checkKingPossiblyUnderCheck(mCurrentSide)) {
+        Location kingLocation = mChessBoardModel.getKing(mCurrentSide)
+            .getLocation();
+        mChessBoardView.showWarningColor(kingLocation);
       }
     }
     boardRedraw();
