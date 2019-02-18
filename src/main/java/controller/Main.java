@@ -18,6 +18,7 @@ public class Main {
     } catch (Exception e) {
       // Do nothing.
     }
+
     String filePath = args[0];
     ChessBoardBase chessBoard = null;
     try {
@@ -30,10 +31,11 @@ public class Main {
 
     ChessBoard chessBoardView = new ChessBoard(chessBoard.getHeight(),
         chessBoard.getWidth());
-    Controller controller = new Controller(chessBoard, chessBoardView);
-    controller.boardRedraw();
-    Window window = new Window("Chess Game!!", chessBoardView, controller);
+    Window window = new Window("Chess Game!!", chessBoardView);
     window.setVisible(true);
+    window.pack();
+    Controller controller = new Controller(chessBoard, chessBoardView, window);
+    controller.boardRedraw();
   }
 
 }

@@ -2,18 +2,19 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 import utils.Location;
 
 public class ChessBoard extends JPanel {
 
+  private final int GRID_SIZE = 70;
   private ChessBoardGrid[][] mChessSquares;
-  private ArrayList<ViewCallBack> mCallBacks;
+  private ChessBoardCallBack mCallBack;
   private boolean mFrozen;
 
   /**
@@ -21,32 +22,34 @@ public class ChessBoard extends JPanel {
    */
   public ChessBoard(int height, int width) {
     super();
-    setLayout(new GridLayout(height, width));
+    setLayout(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
     mChessSquares = new ChessBoardGrid[height][width];
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
         mChessSquares[i][j] = getGridButton(i, j);
-        add(mChessSquares[i][j]);
+        constraints.gridx = j;
+        constraints.gridy = i;
+        add(mChessSquares[i][j], constraints);
       }
+      mCallBack = null;
+      mFrozen = false;
     }
-    setMinimumSize(new Dimension(55 * width, 55 * height));
-    setMaximumSize(new Dimension(55 * width, 55 * height));
-    mCallBacks = new ArrayList<>();
-    mFrozen = false;
   }
 
   /**
    * Add a callback.
    */
-  public void addCallBack(ViewCallBack callBack) {
-    mCallBacks.add(callBack);
+  public void setCallBack(ChessBoardCallBack callBack) {
+    mCallBack = callBack;
   }
 
   /**
    * Set a button at location.
    */
   private ChessBoardGrid getGridButton(int row, int col) {
-    final Color[] colors = {new Color(254, 205, 159), new Color(211, 140, 71)};
+    final Color[] colors = {new Color(254, 205, 159),
+        new Color(211, 140, 71)};
     final Color hintColor = new Color(255, 124, 253, 255);
     final Color selectedColor = new Color(151, 255, 248, 255);
     final Color warningColor = new Color(2, 4, 255, 255);
@@ -55,10 +58,8 @@ public class ChessBoard extends JPanel {
     button.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        if (!mFrozen) {
-          for (ViewCallBack callBack : mCallBacks) {
-            callBack.gridClicked(location);
-          }
+        if (!mFrozen && mCallBack != null) {
+          mCallBack.gridClicked(location);
         }
       }
     });
@@ -69,8 +70,9 @@ public class ChessBoard extends JPanel {
     button.setBorderPainted(false);
     button.setFocusPainted(false);
     button.resetColor();
-    button.setMinimumSize(new Dimension(55, 55));
-    button.setMaximumSize(new Dimension(55, 55));
+    button.setMinimumSize(new Dimension(GRID_SIZE, GRID_SIZE));
+    button.setPreferredSize(new Dimension(GRID_SIZE, GRID_SIZE));
+    button.setMaximumSize(new Dimension(GRID_SIZE, GRID_SIZE));
     return button;
   }
 

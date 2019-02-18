@@ -11,7 +11,6 @@ import model.ChessBoardBase;
 import model.Jumper;
 import model.Piece;
 import model.Queen;
-import model.Side;
 import model.StandardChessBoard;
 import model.SuperQueen;
 import org.junit.Test;

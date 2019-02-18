@@ -1,4 +1,4 @@
-package model;
+package utils;
 
 /**
  * Enum to denote the side of a piece.

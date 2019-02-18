@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import utils.Location;
 import utils.Move;
+import utils.Side;
 import utils.Vector;
 
 /**

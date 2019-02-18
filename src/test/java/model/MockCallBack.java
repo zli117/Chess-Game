@@ -2,6 +2,7 @@ package model;
 
 import utils.Location;
 import utils.Move;
+import utils.Side;
 
 public class MockCallBack implements GameObserverCallBacks {
 

@@ -3,7 +3,7 @@ package controller;
 import javax.swing.Icon;
 import utils.Location;
 import view.ChessBoard;
-import view.ViewCallBack;
+import view.ChessBoardCallBack;
 
 public class MockChessBoard extends ChessBoard {
 
@@ -21,7 +21,7 @@ public class MockChessBoard extends ChessBoard {
   }
 
   @Override
-  public void addCallBack(ViewCallBack callBack) {
+  public void setCallBack(ChessBoardCallBack callBack) {
   }
 
   @Override

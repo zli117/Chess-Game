@@ -5,6 +5,7 @@ import java.util.List;
 import utils.Location;
 import utils.Move;
 import utils.Pair;
+import utils.Side;
 
 /**
  * Listens for game state changes.

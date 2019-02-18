@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import org.junit.Test;
 import utils.Location;
 import utils.Move;
+import utils.Side;
 
 public class KnightTest {
 

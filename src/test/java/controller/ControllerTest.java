@@ -1,7 +1,6 @@
 package controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -10,7 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import model.ChessBoardBase;
-import model.Side;
+import utils.Side;
 import org.junit.Test;
 import utils.BoardBuilder;
 import utils.Location;

@@ -3,7 +3,7 @@ package controller;
 import java.net.URL;
 import model.ChessBoardBase;
 import model.MockPiece;
-import model.Side;
+import utils.Side;
 
 public class MockPieceWithInvalidUrl extends MockPiece {
 

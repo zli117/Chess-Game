@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import utils.Location;
 import utils.Move;
+import utils.Side;
 import utils.Vector;
 
 public class MockPiece extends Piece {

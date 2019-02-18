@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.Stack;
 import utils.Location;
 import utils.Move;
+import utils.Side;
 
 /**
  * Base class of the chess board. Responsible for basic operations such as

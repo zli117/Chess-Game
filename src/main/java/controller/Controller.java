@@ -12,50 +12,61 @@ import javax.swing.ImageIcon;
 import model.ChessBoardBase;
 import model.Command;
 import model.Piece;
-import model.Side;
 import utils.Location;
 import utils.Move;
+import utils.Side;
 import view.ChessBoard;
-import view.ViewCallBack;
+import view.ChessBoardCallBack;
+import view.Window;
+import view.WindowCallBack;
 
 /**
  * The controller of MVC. Responsible for player turns, showing information on
  * the GUI etc.
  */
-public class Controller implements ViewCallBack {
+public class Controller implements ChessBoardCallBack, WindowCallBack {
 
   private ChessBoard mChessBoardView;
   private ChessBoardBase mChessBoardModel;
+  private Window mWindow;
   private HashMap<URL, Icon> mCachedIcon;
   private Map<Location, Move> mLegalMoves;
   private Side mCurrentSide;
+  private int[] mScores;
   private Stack<Command> mCommands;
 
   /**
    * Create a controller from the chess board and view.
    */
   public Controller(ChessBoardBase chessBoardModel,
-      ChessBoard chessBoardView) {
+      ChessBoard chessBoardView, Window window) {
+    mWindow = window;
+    mWindow.setEnabledUndoButton(false);
+    mWindow.setCallBack(this);
     mChessBoardModel = chessBoardModel;
     mChessBoardView = chessBoardView;
     mCachedIcon = new HashMap<>();
-    mChessBoardView.addCallBack(this);
-    mCurrentSide = Side.values()[0];
+    mChessBoardView.setCallBack(this);
+    setCurrentSide(Side.values()[0]);
     mLegalMoves = null;
     mCommands = new Stack<>();
+    mScores = new int[Side.values().length];
+    for (int i = 0; i < mScores.length; ++i) {
+      setScore(Side.values()[i], 0);
+    }
   }
 
-  public void undo() {
-    if (!mCommands.isEmpty()) {
-      Command command = mCommands.pop();
-      command.undo();
-      mLegalMoves = null;
-      if (command.hasSide()) {
-        mCurrentSide = command.getSide();
-      }
-      mChessBoardView.resetAllColor();
-      boardRedraw();
-      mChessBoardView.unFreeze();
+  private void setCurrentSide(Side side) {
+    mCurrentSide = side;
+    if (mWindow != null) {
+      mWindow.setCurrentSide(side);
+    }
+  }
+
+  private void setScore(Side side, int score) {
+    mScores[side.ordinal()] = score;
+    if (mWindow != null) {
+      mWindow.setScore(side, score);
     }
   }
 
@@ -101,7 +112,6 @@ public class Controller implements ViewCallBack {
    */
   @Override
   public void gridClicked(Location location) {
-    System.out.println(mCurrentSide);
     if (mLegalMoves == null) {
       if (mChessBoardModel.getSideOfLocation(location) == mCurrentSide) {
         mLegalMoves = new HashMap<>(); // Maps target location to the move.
@@ -122,8 +132,9 @@ public class Controller implements ViewCallBack {
       Command command = new Command(move, mChessBoardModel);
       command.setSide(mCurrentSide);
       if (move != null && command.execute()) {
-        mCurrentSide = mCurrentSide.next();
+        setCurrentSide(mCurrentSide.next());
         mCommands.push(command);
+        mWindow.setEnabledUndoButton(true);
       }
       if (mChessBoardModel.checkStaleMate(mCurrentSide)) {
         System.out.println("Stalemate");
@@ -140,6 +151,39 @@ public class Controller implements ViewCallBack {
       }
     }
     boardRedraw();
+  }
+
+  @Override
+  public void onUndo() {
+    if (!mCommands.isEmpty()) {
+      Command command = mCommands.pop();
+      if (mCommands.isEmpty()) {
+        mWindow.setEnabledUndoButton(false);
+      }
+      command.undo();
+      mLegalMoves = null;
+      if (command.hasSide()) {
+        setCurrentSide(command.getSide());
+      }
+      mChessBoardView.resetAllColor();
+      boardRedraw();
+      mChessBoardView.unFreeze();
+    }
+  }
+
+  @Override
+  public void onRestart() {
+
+  }
+
+  @Override
+  public void onOpenConfig() {
+
+  }
+
+  @Override
+  public void onForfeit() {
+
   }
 
 }
