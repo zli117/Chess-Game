@@ -1,10 +1,11 @@
 package view;
 
+import static org.junit.Assert.fail;
+
 import controller.Controller;
 import java.io.IOException;
-import model.ChessBoardBase;
+import javax.swing.JMenuBar;
 import org.junit.Test;
-import utils.BoardBuilder;
 
 public class ViewTest {
 
@@ -18,24 +19,16 @@ public class ViewTest {
     new ManualTestEnv() {
       @Override
       void runTest(ManualTestEnv env) {
-        ChessBoardBase chessBoard = null;
-        try {
-          chessBoard = BoardBuilder
-              .constructFromFile(getClass().getResource(configPath));
-        } catch (IOException exception) {
-          System.err.println(exception);
-          System.exit(1);
-        }
-
-        ChessBoard chessBoardView = new ChessBoard(chessBoard.getHeight(),
-            chessBoard.getWidth());
+        ChessBoard chessBoardView = new ChessBoard(8, 8);
         Window window = new Window("Chess Game!!", chessBoardView);
         TestWindow testWindow = new TestWindow(window.getContentPane(),
             instructions, env, testName);
+        testWindow.setJMenuBar(window.getJMenuBar());
         testWindow.setVisible(true);
-        Controller controller = new Controller(chessBoard, chessBoardView,
-            window);
-        controller.boardRedraw();
+        Controller controller = new Controller(window);
+        if (!controller.loadConfig(getClass().getResource(configPath))) {
+          fail();
+        }
       }
     };
   }

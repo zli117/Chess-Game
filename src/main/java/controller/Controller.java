@@ -59,7 +59,7 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
     }
   }
 
-  boolean loadConfig(URL configPath) {
+  public boolean loadConfig(URL configPath) {
     try {
       mChessBoardModel = BoardBuilder.constructFromFile(configPath);
       if (mChessBoardModel.getHeight() != mChessBoardView.getGridRows()
