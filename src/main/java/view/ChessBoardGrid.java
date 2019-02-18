@@ -1,11 +1,11 @@
 package view;
 
 import java.awt.Color;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 class ChessBoardGrid extends JButton {
 
-  private Color mDefaultColor;
   private Color mSelectedColor;
   private Color mHintColor;
   private Color mWarningColor;
@@ -20,17 +20,9 @@ class ChessBoardGrid extends JButton {
     setContentAreaFilled(false);
     setOpaque(true);
 
-    mDefaultColor = new Color(0, 0, 0);
     mSelectedColor = new Color(0, 0, 0);
     mHintColor = new Color(0, 0, 0);
     mWarningColor = new Color(0, 0, 0);
-  }
-
-  /**
-   * Set the default color of the piece.
-   */
-  void setDefaultColor(Color defaultColor) {
-    mDefaultColor = defaultColor;
   }
 
   /**
@@ -58,25 +50,28 @@ class ChessBoardGrid extends JButton {
    * Reset the color back to default.
    */
   void resetColor() {
-    setBackground(mDefaultColor);
+    setBorderPainted(false);
   }
 
   /**
    * Set the color to be selected color.
    */
   void showSelected() {
-    setBackground(mSelectedColor);
+    setBorderPainted(true);
+    setBorder(BorderFactory.createLineBorder(mSelectedColor, 5));
   }
 
   /**
    * Set the color to be warning color.
    */
   void showWarning() {
-    setBackground(mWarningColor);
+    setBorderPainted(true);
+    setBorder(BorderFactory.createLineBorder(mWarningColor, 5));
   }
 
   void showHint() {
-    setBackground(mHintColor);
+    setBorderPainted(true);
+    setBorder(BorderFactory.createLineBorder(mHintColor, 5));
   }
 
 }
