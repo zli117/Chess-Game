@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.nio.file.Paths;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -48,15 +50,21 @@ public class Window extends JFrame {
     infoPanel.setLayout(infoLayout);
     mCurrentSide = new JLabel();
     mScores = new JLabel[totalSides];
-    infoPanel.add(mCurrentSide);
+    JPanel currentSideWrapper = new JPanel();
+    currentSideWrapper.add(mCurrentSide);
+    currentSideWrapper.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    infoPanel.add(currentSideWrapper);
     Font font = mCurrentSide.getFont();
     float size = font.getSize() + 3.0f;
     mCurrentSide.setFont(font.deriveFont(size));
     mCurrentSide.setText(" ");
     for (int i = 0; i < mScores.length; ++i) {
       JLabel label = new JLabel();
+      JPanel scoreWrapper = new JPanel();
+      scoreWrapper.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+      scoreWrapper.add(label);
       mScores[i] = label;
-      infoPanel.add(label);
+      infoPanel.add(scoreWrapper);
       label.setFont(font.deriveFont(size));
     }
 
