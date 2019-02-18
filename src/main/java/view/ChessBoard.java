@@ -16,12 +16,16 @@ public class ChessBoard extends JPanel {
   private ChessBoardGrid[][] mChessSquares;
   private ChessBoardCallBack mCallBack;
   private boolean mFrozen;
+  private int mHeight;
+  private int mWidth;
 
   /**
    * Create a chess board widget with height and width.
    */
   public ChessBoard(int height, int width) {
     super();
+    mHeight = height;
+    mWidth = width;
     setLayout(new GridBagLayout());
     GridBagConstraints constraints = new GridBagConstraints();
     mChessSquares = new ChessBoardGrid[height][width];
@@ -146,6 +150,14 @@ public class ChessBoard extends JPanel {
    */
   public void unFreeze() {
     mFrozen = false;
+  }
+
+  public int getGridRows() {
+    return mHeight;
+  }
+
+  public int getGridCols() {
+    return mWidth;
   }
 
 }

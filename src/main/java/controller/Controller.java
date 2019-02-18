@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ import javax.swing.ImageIcon;
 import model.ChessBoardBase;
 import model.Command;
 import model.Piece;
+import utils.BoardBuilder;
 import utils.Location;
 import utils.Move;
 import utils.Side;
@@ -26,6 +28,7 @@ import view.WindowCallBack;
  */
 public class Controller implements ChessBoardCallBack, WindowCallBack {
 
+  private URL mConfigPath;
   private ChessBoard mChessBoardView;
   private ChessBoardBase mChessBoardModel;
   private Window mWindow;
@@ -38,13 +41,13 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
   /**
    * Create a controller from the chess board and view.
    */
-  public Controller(ChessBoardBase chessBoardModel,
-      ChessBoard chessBoardView, Window window) {
+  public Controller(Window window) {
+    mConfigPath = null;
     mWindow = window;
     mWindow.setEnabledUndoButton(false);
     mWindow.setCallBack(this);
-    mChessBoardModel = chessBoardModel;
-    mChessBoardView = chessBoardView;
+    mChessBoardModel = null;
+    mChessBoardView = mWindow.getChessBoard();
     mCachedIcon = new HashMap<>();
     mChessBoardView.setCallBack(this);
     setCurrentSide(Side.values()[0]);
@@ -54,6 +57,21 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
     for (int i = 0; i < mScores.length; ++i) {
       setScore(Side.values()[i], 0);
     }
+  }
+
+  boolean loadConfig(URL configPath) {
+    try {
+      mChessBoardModel = BoardBuilder.constructFromFile(configPath);
+      if (mChessBoardModel.getHeight() != mChessBoardView.getGridRows()
+          || mChessBoardModel.getWidth() != mChessBoardView.getGridRows()) {
+        return false;
+      }
+    } catch (IOException exception) {
+      return false;
+    }
+    mConfigPath = configPath;
+    boardRedraw();
+    return true;
   }
 
   private void setCurrentSide(Side side) {
@@ -90,8 +108,8 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
    * Update the board view.
    */
   public void boardRedraw() {
-    int height = mChessBoardModel.getHeight();
-    int width = mChessBoardModel.getWidth();
+    int height = mChessBoardView.getGridRows();
+    int width = mChessBoardView.getGridCols();
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
         Location location = new Location(i, j);
@@ -112,6 +130,9 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
    */
   @Override
   public void gridClicked(Location location) {
+    if (mChessBoardModel == null) {
+      return;
+    }
     if (mLegalMoves == null) {
       if (mChessBoardModel.getSideOfLocation(location) == mCurrentSide) {
         mLegalMoves = new HashMap<>(); // Maps target location to the move.
@@ -173,17 +194,30 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
 
   @Override
   public void onRestart() {
-
+    loadConfig(mConfigPath);
+    for (int i = 0; i < mScores.length; ++i) {
+      setScore(Side.values()[i], mScores[i] + 1);
+    }
+    setCurrentSide(Side.values()[0]);
+    mCommands = new Stack<>();
+    mWindow.setEnabledUndoButton(false);
   }
 
   @Override
-  public void onOpenConfig() {
-
+  public void onOpenConfig(URL fileURL) {
+    loadConfig(fileURL);
+    mCommands = new Stack<>();
+    mWindow.setEnabledUndoButton(false);
   }
 
   @Override
   public void onForfeit() {
-
+    loadConfig(mConfigPath);
+    Side side = mCurrentSide.next();
+    setScore(side, mScores[side.ordinal()] + 1);
+    setCurrentSide(Side.values()[0]);
+    mCommands = new Stack<>();
+    mWindow.setEnabledUndoButton(false);
   }
 
 }

@@ -8,7 +8,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.nio.file.Paths;
 import javax.swing.BoxLayout;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -24,61 +26,13 @@ public class Window extends JFrame {
   private JLabel mCurrentSide;
   private JLabel[] mScores;
   private WindowCallBack mCallback;
+  private ChessBoard mChessBoard;
 
   /**
    * Create a window with title and chess board widget.
    */
   public Window(String title, ChessBoard chessBoard) {
-    // Build the menu bar
-    JMenuBar menuBar = new JMenuBar();
-    JMenu fileMenu = new JMenu("File");
-    JMenu gameMenu = new JMenu("Game");
-    menuBar.add(fileMenu);
-    menuBar.add(gameMenu);
-
-    JMenuItem openConfig = new JMenuItem("Open config file");
-    openConfig.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        System.out.println("Open a config file");
-      }
-    });
-    fileMenu.add(openConfig);
-
-    JMenuItem restartGame = new JMenuItem("Restart game");
-    restartGame.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        if (mCallback != null) {
-          mCallback.onRestart();
-        }
-      }
-    });
-    gameMenu.add(restartGame);
-
-    mUndoMove = new JMenuItem("Undo last move");
-    mUndoMove.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-    mUndoMove.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        if (mCallback != null) {
-          mCallback.onUndo();
-        }
-      }
-    });
-    gameMenu.add(mUndoMove);
-    setJMenuBar(menuBar);
-
-    JMenuItem forfeit = new JMenuItem("Forfeit");
-    forfeit.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        if (mCallback != null) {
-          mCallback.onForfeit();
-        }
-      }
-    });
+    mChessBoard = chessBoard;
 
     // Set up the content of the window
     Container contentPane = getContentPane();
@@ -105,6 +59,75 @@ public class Window extends JFrame {
     }
 
     contentPane.add(infoPanel);
+
+    // Build the menu bar
+    JMenuBar menuBar = new JMenuBar();
+    JMenu fileMenu = new JMenu("File");
+    JMenu gameMenu = new JMenu("Game");
+    menuBar.add(fileMenu);
+    menuBar.add(gameMenu);
+
+    JMenuItem openConfig = new JMenuItem("Open config file");
+    openConfig.setAccelerator(KeyStroke.getKeyStroke(
+        KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setCurrentDirectory(Paths.get("").toAbsolutePath().toFile());
+    openConfig.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        if (fileChooser.showOpenDialog(contentPane)
+            == JFileChooser.APPROVE_OPTION) {
+          try {
+            mCallback.onOpenConfig(
+                fileChooser.getSelectedFile().toURI().toURL());
+          } catch (Exception e) {
+            System.out.println(e);
+          }
+        }
+      }
+    });
+    fileMenu.add(openConfig);
+
+    JMenuItem restartGame = new JMenuItem("Restart game");
+    restartGame.setAccelerator(KeyStroke.getKeyStroke(
+        KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    restartGame.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        if (mCallback != null) {
+          mCallback.onRestart();
+        }
+      }
+    });
+    gameMenu.add(restartGame);
+
+    mUndoMove = new JMenuItem("Undo last move");
+    mUndoMove.setAccelerator(KeyStroke.getKeyStroke(
+        KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    mUndoMove.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        if (mCallback != null) {
+          mCallback.onUndo();
+        }
+      }
+    });
+    gameMenu.add(mUndoMove);
+
+    JMenuItem forfeit = new JMenuItem("Forfeit");
+    forfeit.setAccelerator(KeyStroke.getKeyStroke(
+        KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    forfeit.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        if (mCallback != null) {
+          mCallback.onForfeit();
+        }
+      }
+    });
+    gameMenu.add(forfeit);
+
+    setJMenuBar(menuBar);
 
     pack();
 
@@ -134,6 +157,10 @@ public class Window extends JFrame {
   public void setScore(Side side, int score) {
     JLabel label = mScores[side.ordinal()];
     label.setText(String.format("%s score: %d", side, score));
+  }
+
+  public ChessBoard getChessBoard() {
+    return mChessBoard;
   }
 
 }
