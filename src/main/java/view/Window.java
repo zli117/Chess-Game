@@ -19,6 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 import utils.Side;
 
 public class Window extends JFrame {
@@ -169,7 +170,7 @@ public class Window extends JFrame {
     int chosen = JOptionPane
         .showOptionDialog(this, String.format("%s is checkmated", lost),
             "Checkmate", JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+            JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);
     // 1 is the option of OK and Restart
     if (chosen == 1) {
       mCallback.onRestart(false);
@@ -178,15 +179,18 @@ public class Window extends JFrame {
 
   public void showStalemate() {
     Object[] options = {"Close", "OK and Restart"};
-    int chosen = JOptionPane
-        .showOptionDialog(this, "Stalemate",
-            "Stalemate", JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+    int chosen = JOptionPane.showOptionDialog(this, "Stalemate",
+        "Stalemate", JOptionPane.OK_CANCEL_OPTION,
+        JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);
     // 1 is the option of OK and Restart
     if (chosen == 1) {
       mCallback.onRestart(true);
     }
+  }
 
+  public void showErrorDialog(String reason) {
+    JOptionPane.showMessageDialog(this, reason, "Error",
+        JOptionPane.ERROR_MESSAGE);
   }
 
 }

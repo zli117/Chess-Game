@@ -66,13 +66,16 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
           || mChessBoardModel.getWidth() != mChessBoardView.getGridRows()) {
         return false;
       }
-    } catch (IOException exception) {
+    } catch (Exception e) {
       return false;
     }
     mConfigPath = configPath;
 
     mChessBoardView.resetAllColor();
     boardRedraw();
+    setCurrentSide(Side.values()[0]);
+    mCommands = new Stack<>();
+    mWindow.setEnabledUndoButton(false);
     return true;
   }
 
@@ -209,14 +212,13 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
     if (isTie) {
       incrementScore(false);
     }
-    setCurrentSide(Side.values()[0]);
-    mCommands = new Stack<>();
-    mWindow.setEnabledUndoButton(false);
   }
 
   @Override
   public void onOpenConfig(URL fileURL) {
-    loadConfig(fileURL);
+    if (!loadConfig(fileURL)) {
+      mWindow.showErrorDialog("Invalid config file");
+    }
     mCommands = new Stack<>();
     mWindow.setEnabledUndoButton(false);
   }
@@ -225,9 +227,6 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
   public void onForfeit() {
     loadConfig(mConfigPath);
     incrementScore(true);
-    setCurrentSide(Side.values()[0]);
-    mCommands = new Stack<>();
-    mWindow.setEnabledUndoButton(false);
   }
 
   public int getScore(Side side) {
