@@ -25,8 +25,8 @@ class TestWindow extends JFrame {
    */
   TestWindow(Container testUI, String testScript,
       ManualTestEnv env, String testName) {
-    JPanel basePanel = new JPanel();
-    basePanel.setLayout(new BoxLayout(basePanel, BoxLayout.Y_AXIS));
+    Container contentPane = getContentPane();
+    contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
     JPanel buttonPanel = new JPanel();
     buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 
@@ -38,13 +38,13 @@ class TestWindow extends JFrame {
     Font font = testScripArea.getFont();
     float size = font.getSize() + 5.0f;
     testScripArea.setFont(font.deriveFont(size));
+    testScripArea.setRows(5);
 
     JScrollPane scrollPane = new JScrollPane(testScripArea);
 
-    basePanel.add(testUI);
-    basePanel.add(buttonPanel);
-    basePanel.add(scrollPane);
-    add(basePanel);
+    contentPane.add(testUI);
+    contentPane.add(buttonPanel);
+    contentPane.add(scrollPane);
     JButton passButton = new JButton("Pass");
     passButton.addActionListener(new ActionListener() {
       @Override
@@ -65,7 +65,7 @@ class TestWindow extends JFrame {
     buttonPanel.add(passButton);
     buttonPanel.add(failButton);
     setTitle(testName);
-    setSize(600, 600);
+    pack();
     setResizable(false);
     // Basically you can't close the window without pass or fail.
     setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

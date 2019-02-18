@@ -8,40 +8,11 @@ import utils.BoardBuilder;
 
 public class ViewTest {
 
-  /**
-   * Helper function to test static board.
-   */
-  public void testDifferentBoardConfig(String configPath,
-      String testInstruction) {
-    String testName = Thread.currentThread().getStackTrace()[2].getMethodName();
-    new ManualTestEnv() {
-      @Override
-      void runTest(ManualTestEnv env) {
-        ChessBoardBase chessBoard = null;
-        try {
-          chessBoard = BoardBuilder
-              .constructFromFile(getClass().getResource(configPath));
-        } catch (IOException exception) {
-          System.err.println(exception);
-          System.exit(1);
-        }
-
-        ChessBoard chessBoardView = new ChessBoard(chessBoard.getHeight(),
-            chessBoard.getWidth());
-        Controller controller = new Controller(chessBoard,
-            chessBoardView);
-        controller.boardRedraw();
-        TestWindow testWindow = new TestWindow(chessBoardView, testInstruction,
-            env, testName);
-        testWindow.setVisible(true);
-      }
-    };
-  }
 
   /**
    * Helper function to test movable board.
    */
-  public void testDifferentBoardConfigWithMove(String configPath,
+  private void testDifferentBoardConfigWithMove(String configPath,
       String instructions) {
     String testName = Thread.currentThread().getStackTrace()[2].getMethodName();
     new ManualTestEnv() {
@@ -58,40 +29,15 @@ public class ViewTest {
 
         ChessBoard chessBoardView = new ChessBoard(chessBoard.getHeight(),
             chessBoard.getWidth());
-        Controller controller = new Controller(chessBoard,
-            chessBoardView);
-        controller.boardRedraw();
-        Window window = new Window("Chess Game!!", chessBoardView, controller);
+        Window window = new Window("Chess Game!!", chessBoardView);
         TestWindow testWindow = new TestWindow(window.getContentPane(),
             instructions, env, testName);
         testWindow.setVisible(true);
+        Controller controller = new Controller(chessBoard, chessBoardView,
+            window);
+        controller.boardRedraw();
       }
     };
-  }
-
-  @Test
-  public void testStandardBoard() {
-    String testInstructions = "Click at all the white pawns, and verify they "
-        + "can move two steps. Then click at both white knights and verify "
-        + "there are two moves available for each. Verify the display of the "
-        + "board is consistent with the standard chess board as shown below.";
-    testDifferentBoardConfig("/board.conf", testInstructions);
-  }
-
-  @Test
-  public void testSuperQueen() {
-    String testInstructions = "Verify there are two super queens on the board. "
-        + "One from white and another from black. Click on the white super "
-        + "queen, verify the move pattern corresponds to the screen shot.";
-    testDifferentBoardConfig("/board_with_squeen.conf", testInstructions);
-  }
-
-  @Test
-  public void testJumper() {
-    String testInstructions = "Verify there are two jumpers on the board. One "
-        + "from white and another from black. Click on the white jumper, verify "
-        + "the move pattern corresponds to the screen shot.";
-    testDifferentBoardConfig("/board_with_jumper.conf", testInstructions);
   }
 
   @Test

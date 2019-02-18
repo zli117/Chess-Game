@@ -13,7 +13,7 @@ import utils.Side;
 public class Command implements GameObserverCallBacks {
 
   private List<Pair<Piece, Location>> mRemovedPieces;
-  private List<Move> mPerformedMoves;
+  private List<Pair<Move, Boolean>> mPerformedMoves;
   private boolean mTentative;
   private Move mInitialMove;
   private ChessBoardBase mChessBoard;
@@ -65,10 +65,11 @@ public class Command implements GameObserverCallBacks {
   public void undo() {
     boolean previousStatus = mChessBoard.isTentative();
     mChessBoard.setTentative(mTentative);
-    for (Move trackedMove : mPerformedMoves) {
+    for (Pair<Move, Boolean> move : mPerformedMoves) {
+      Move trackedMove = move.getA();
+      boolean firstTimeMoved = move.getB();
       Move inverse = trackedMove.inverseMove();
       Piece movedPiece = mChessBoard.getPiece(inverse.getFrom());
-      boolean firstTimeMoved = movedPiece.isFirstTimeMoved();
       mChessBoard.moveWithOutCheck(inverse);
       if (firstTimeMoved) {
         movedPiece.resetMoved();
@@ -87,7 +88,8 @@ public class Command implements GameObserverCallBacks {
    */
   @Override
   public void pieceMoved(Move move) {
-    mPerformedMoves.add(move);
+    Piece movedTo = mChessBoard.getPiece(move.getTo());
+    mPerformedMoves.add(new Pair<>(move, movedTo.isFirstTimeMoved()));
   }
 
   /**
