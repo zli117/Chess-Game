@@ -6,6 +6,7 @@ import javax.swing.JButton;
 
 class ChessBoardGrid extends JButton {
 
+  private Color mBackgroundColor;
   private Color mSelectedColor;
   private Color mHintColor;
   private Color mWarningColor;
@@ -20,13 +21,19 @@ class ChessBoardGrid extends JButton {
     setContentAreaFilled(false);
     setOpaque(true);
 
+    mBackgroundColor = new Color(0, 0, 0);
     mSelectedColor = new Color(0, 0, 0);
     mHintColor = new Color(0, 0, 0);
     mWarningColor = new Color(0, 0, 0);
   }
 
+  void setBackgroundColor(Color backgroundColor) {
+    mBackgroundColor = backgroundColor;
+    setBackground(mBackgroundColor);
+  }
+
   /**
-   * Set the background color of selected case.
+   * Set
    */
   void setSelectedColor(Color selectedColor) {
     mSelectedColor = selectedColor;
@@ -51,22 +58,21 @@ class ChessBoardGrid extends JButton {
    */
   void resetColor() {
     setBorderPainted(false);
+    setBackground(mBackgroundColor);
   }
 
   /**
    * Set the color to be selected color.
    */
   void showSelected() {
-    setBorderPainted(true);
-    setBorder(BorderFactory.createLineBorder(mSelectedColor, 5));
+    setBackground(mSelectedColor);
   }
 
   /**
    * Set the color to be warning color.
    */
   void showWarning() {
-    setBorderPainted(true);
-    setBorder(BorderFactory.createLineBorder(mWarningColor, 5));
+    setBackground(mWarningColor);
   }
 
   void showHint() {

@@ -56,7 +56,7 @@ public class ChessBoard extends JPanel {
         new Color(211, 140, 71)};
     final Color hintColor = new Color(255, 124, 253, 255);
     final Color selectedColor = new Color(151, 255, 248, 255);
-    final Color warningColor = new Color(255, 0, 171, 255);
+    final Color warningColor = new Color(20, 22, 255, 255);
     final ChessBoardGrid button = new ChessBoardGrid();
     Location location = new Location(row, col);
     button.addActionListener(new ActionListener() {
@@ -67,7 +67,7 @@ public class ChessBoard extends JPanel {
         }
       }
     });
-    button.setBackground(colors[(row + col) % 2]);
+    button.setBackgroundColor(colors[(row + col) % 2]);
     button.setHintColor(hintColor);
     button.setSelectedColor(selectedColor);
     button.setWarningColor(warningColor);
