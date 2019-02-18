@@ -70,6 +70,8 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
       return false;
     }
     mConfigPath = configPath;
+
+    mChessBoardView.resetAllColor();
     boardRedraw();
     return true;
   }
@@ -125,6 +127,15 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
     }
   }
 
+  private void incrementScore(boolean skipCurrent) {
+    for (int i = 0; i < mScores.length; ++i) {
+      Side side = Side.values()[i];
+      if (!skipCurrent || side != mCurrentSide) {
+        setScore(side, mScores[i] + 1);
+      }
+    }
+  }
+
   /**
    * Called when a grid is clicked.
    */
@@ -157,21 +168,21 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
         mCommands.push(command);
         mWindow.setEnabledUndoButton(true);
       }
-      if (mChessBoardModel.checkStaleMate(mCurrentSide)) {
-        System.out.println("Stalemate");
-        mChessBoardView.freeze();
-      }
-      if (mChessBoardModel.checkCheckMate(mCurrentSide)) {
-        System.out.printf("Checkmate! %s lost\n", mCurrentSide);
-        mChessBoardView.freeze();
-      }
-      if (mChessBoardModel.checkKingPossiblyUnderCheck(mCurrentSide)) {
-        Location kingLocation = mChessBoardModel.getKing(mCurrentSide)
-            .getLocation();
-        mChessBoardView.showWarningColor(kingLocation);
-      }
     }
     boardRedraw();
+    if (mChessBoardModel.checkKingPossiblyUnderCheck(mCurrentSide)) {
+      Location kingLocation = mChessBoardModel.getKing(mCurrentSide)
+          .getLocation();
+      mChessBoardView.showWarningColor(kingLocation);
+    }
+    if (mChessBoardModel.checkStaleMate(mCurrentSide)) {
+      incrementScore(false);
+      mWindow.showStalemate();
+    }
+    if (mChessBoardModel.checkCheckMate(mCurrentSide)) {
+      incrementScore(true);
+      mWindow.showCheckmate(mCurrentSide);
+    }
   }
 
   @Override
@@ -193,10 +204,10 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
   }
 
   @Override
-  public void onRestart() {
+  public void onRestart(boolean isTie) {
     loadConfig(mConfigPath);
-    for (int i = 0; i < mScores.length; ++i) {
-      setScore(Side.values()[i], mScores[i] + 1);
+    if (isTie) {
+      incrementScore(false);
     }
     setCurrentSide(Side.values()[0]);
     mCommands = new Stack<>();
@@ -213,11 +224,14 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
   @Override
   public void onForfeit() {
     loadConfig(mConfigPath);
-    Side side = mCurrentSide.next();
-    setScore(side, mScores[side.ordinal()] + 1);
+    incrementScore(true);
     setCurrentSide(Side.values()[0]);
     mCommands = new Stack<>();
     mWindow.setEnabledUndoButton(false);
+  }
+
+  public int getScore(Side side) {
+    return mScores[side.ordinal()];
   }
 
 }

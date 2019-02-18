@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import utils.Side;
@@ -95,13 +96,13 @@ public class Window extends JFrame {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
         if (mCallback != null) {
-          mCallback.onRestart();
+          mCallback.onRestart(true);
         }
       }
     });
     gameMenu.add(restartGame);
 
-    mUndoMove = new JMenuItem("Undo last move");
+    mUndoMove = new JMenuItem("Undo");
     mUndoMove.setAccelerator(KeyStroke.getKeyStroke(
         KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     mUndoMove.addActionListener(new ActionListener() {
@@ -161,6 +162,31 @@ public class Window extends JFrame {
 
   public ChessBoard getChessBoard() {
     return mChessBoard;
+  }
+
+  public void showCheckmate(Side lost) {
+    Object[] options = {"Close", "OK and Restart"};
+    int chosen = JOptionPane
+        .showOptionDialog(this, String.format("%s is checkmated", lost),
+            "Checkmate", JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+    // 1 is the option of OK and Restart
+    if (chosen == 1) {
+      mCallback.onRestart(false);
+    }
+  }
+
+  public void showStalemate() {
+    Object[] options = {"Close", "OK and Restart"};
+    int chosen = JOptionPane
+        .showOptionDialog(this, "Stalemate",
+            "Stalemate", JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+    // 1 is the option of OK and Restart
+    if (chosen == 1) {
+      mCallback.onRestart(true);
+    }
+
   }
 
 }
