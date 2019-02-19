@@ -1,8 +1,9 @@
-package model;
+package utils;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import utils.Side;
 
 public class SideTest {
 

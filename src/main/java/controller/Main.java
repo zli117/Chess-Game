@@ -1,9 +1,6 @@
 package controller;
 
-import java.io.IOException;
 import javax.swing.UIManager;
-import model.ChessBoardBase;
-import utils.BoardBuilder;
 import view.ChessBoard;
 import view.Window;
 
@@ -18,22 +15,20 @@ public class Main {
     } catch (Exception e) {
       // Do nothing.
     }
-    String filePath = args[0];
-    ChessBoardBase chessBoard = null;
-    try {
-      chessBoard = BoardBuilder
-          .constructFromFile(Main.class.getResource(filePath));
-    } catch (IOException exception) {
-      System.err.println(exception);
-      System.exit(1);
-    }
 
-    ChessBoard chessBoardView = new ChessBoard(chessBoard.getHeight(),
-        chessBoard.getWidth());
-    Controller controller = new Controller(chessBoard, chessBoardView);
-    controller.boardRedraw();
-    Window window = new Window("Chess Game!!", chessBoardView, controller);
+    String filePath = args[0];
+
+    ChessBoard chessBoardView = new ChessBoard(8, 8);
+    Window window = new Window("Chess Game!!", chessBoardView);
     window.setVisible(true);
+    window.pack();
+    Controller controller = new Controller(window);
+    if (!controller.loadConfig(Main.class.getResource(filePath))) {
+      System.err.printf(
+          "%s is not a valid resource path. Falling back to default board\n",
+          filePath);
+      controller.loadConfig(Main.class.getResource("/board.conf"));
+    }
   }
 
 }

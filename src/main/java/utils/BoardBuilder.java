@@ -14,7 +14,6 @@ import model.Pawn;
 import model.Piece;
 import model.Queen;
 import model.Rook;
-import model.Side;
 import model.StandardChessBoard;
 import model.SuperQueen;
 

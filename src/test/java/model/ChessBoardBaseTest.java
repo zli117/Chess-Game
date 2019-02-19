@@ -13,6 +13,7 @@ import java.util.Set;
 import org.junit.Test;
 import utils.Location;
 import utils.Move;
+import utils.Side;
 
 public class ChessBoardBaseTest {
 

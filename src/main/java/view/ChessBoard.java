@@ -2,10 +2,10 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 import utils.Location;
@@ -13,33 +13,36 @@ import utils.Location;
 public class ChessBoard extends JPanel {
 
   private ChessBoardGrid[][] mChessSquares;
-  private ArrayList<ViewCallBack> mCallBacks;
-  private boolean mFrozen;
+  private ChessBoardCallBack mCallBack;
+  private int mHeight;
+  private int mWidth;
 
   /**
    * Create a chess board widget with height and width.
    */
   public ChessBoard(int height, int width) {
     super();
-    setLayout(new GridLayout(height, width));
+    mHeight = height;
+    mWidth = width;
+    setLayout(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
     mChessSquares = new ChessBoardGrid[height][width];
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
         mChessSquares[i][j] = getGridButton(i, j);
-        add(mChessSquares[i][j]);
+        constraints.gridx = j;
+        constraints.gridy = i;
+        add(mChessSquares[i][j], constraints);
       }
+      mCallBack = null;
     }
-    setMinimumSize(new Dimension(55 * width, 55 * height));
-    setMaximumSize(new Dimension(55 * width, 55 * height));
-    mCallBacks = new ArrayList<>();
-    mFrozen = false;
   }
 
   /**
    * Add a callback.
    */
-  public void addCallBack(ViewCallBack callBack) {
-    mCallBacks.add(callBack);
+  public void setCallBack(ChessBoardCallBack callBack) {
+    mCallBack = callBack;
   }
 
   /**
@@ -49,28 +52,28 @@ public class ChessBoard extends JPanel {
     final Color[] colors = {new Color(254, 205, 159), new Color(211, 140, 71)};
     final Color hintColor = new Color(255, 124, 253, 255);
     final Color selectedColor = new Color(151, 255, 248, 255);
-    final Color warningColor = new Color(2, 4, 255, 255);
+    final Color warningColor = new Color(20, 22, 255, 255);
     final ChessBoardGrid button = new ChessBoardGrid();
     Location location = new Location(row, col);
     button.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        if (!mFrozen) {
-          for (ViewCallBack callBack : mCallBacks) {
-            callBack.gridClicked(location);
-          }
+        if (mCallBack != null) {
+          mCallBack.gridClicked(location);
         }
       }
     });
-    button.setDefaultColor(colors[(row + col) % 2]);
+    button.setBackgroundColor(colors[(row + col) % 2]);
     button.setHintColor(hintColor);
     button.setSelectedColor(selectedColor);
     button.setWarningColor(warningColor);
     button.setBorderPainted(false);
     button.setFocusPainted(false);
     button.resetColor();
-    button.setMinimumSize(new Dimension(55, 55));
-    button.setMaximumSize(new Dimension(55, 55));
+    int gridSize = 70;
+    button.setMinimumSize(new Dimension(gridSize, gridSize));
+    button.setPreferredSize(new Dimension(gridSize, gridSize));
+    button.setMaximumSize(new Dimension(gridSize, gridSize));
     return button;
   }
 
@@ -133,10 +136,17 @@ public class ChessBoard extends JPanel {
   }
 
   /**
-   * Freeze the board to prevent further moves.
+   * Get number of rows in this board.
    */
-  public void freeze() {
-    mFrozen = true;
+  public int getGridRows() {
+    return mHeight;
+  }
+
+  /**
+   * Get number of columns in this board.
+   */
+  public int getGridCols() {
+    return mWidth;
   }
 
 }

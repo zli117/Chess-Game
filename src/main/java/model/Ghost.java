@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import utils.Location;
 import utils.Move;
+import utils.Side;
 
 /**
  * Ghost piece for en passant implementation. If killed, will kill the
@@ -95,6 +96,11 @@ public class Ghost extends Piece implements GameObserverCallBacks {
 
   @Override
   public void pieceRemoved(Piece pieceRemoved, Location originalLocation) {
+  }
+
+  @Override
+  public boolean canTrackTentative() {
+    return true;
   }
 
 }

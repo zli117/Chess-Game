@@ -2,6 +2,7 @@ package model;
 
 import utils.Location;
 import utils.Move;
+import utils.Side;
 
 public class MockCallBack implements GameObserverCallBacks {
 
@@ -36,6 +37,11 @@ public class MockCallBack implements GameObserverCallBacks {
 
   public Piece getRemoved() {
     return mRemoved;
+  }
+
+  @Override
+  public boolean canTrackTentative() {
+    return true;
   }
 
 }

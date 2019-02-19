@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.Stack;
 import utils.Location;
 import utils.Move;
+import utils.Side;
 
 /**
  * Base class of the chess board. Responsible for basic operations such as
@@ -24,6 +25,7 @@ public class ChessBoardBase {
   private Stack<Piece> mWithHeldPieces;
   private boolean mStateChanged;
   private Map<Side, King> mKings;
+  private boolean mTentative;
 
   /**
    * Create a chess board.
@@ -42,6 +44,15 @@ public class ChessBoardBase {
     mWithHeldPieces = new Stack<>();
     mStateChanged = false;
     mKings = new HashMap<>();
+    mTentative = false;
+  }
+
+  public boolean isTentative() {
+    return mTentative;
+  }
+
+  public void setTentative(boolean tentative) {
+    mTentative = tentative;
   }
 
   /**
@@ -267,7 +278,9 @@ public class ChessBoardBase {
       piece.setLocation(null);
       for (int i = mObservers.size() - 1; i >= 0; --i) {
         GameObserverCallBacks observer = mObservers.get(i);
-        observer.pieceRemoved(piece, location);
+        if (!mTentative || observer.canTrackTentative()) {
+          observer.pieceRemoved(piece, location);
+        }
       }
       mStateChanged = true;
     }
@@ -324,7 +337,9 @@ public class ChessBoardBase {
     // The observer might remove itself during callback
     for (int i = mObservers.size() - 1; i >= 0; --i) {
       GameObserverCallBacks observer = mObservers.get(i);
-      observer.pieceMoved(move);
+      if (!mTentative || observer.canTrackTentative()) {
+        observer.pieceMoved(move);
+      }
     }
   }
 

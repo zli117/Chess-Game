@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import utils.Location;
 import utils.Move;
+import utils.Side;
 
 public class StandardChessBoardTest {
 

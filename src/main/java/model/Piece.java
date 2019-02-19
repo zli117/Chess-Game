@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import utils.Location;
 import utils.Move;
-import utils.Pair;
+import utils.Side;
 import utils.Vector;
 
 
@@ -65,8 +65,16 @@ public abstract class Piece {
   /**
    * Check whether the piece has moved.
    */
-  public boolean hasMoved() {
+  boolean hasMoved() {
     return mMoved;
+  }
+
+  void resetMoved() {
+    mMoved = false;
+  }
+
+  boolean isFirstTimeMoved() {
+    return mFirstTimeMoved;
   }
 
   /**
@@ -126,26 +134,13 @@ public abstract class Piece {
     Set<Move> safeMoves = new HashSet<>();
     ChessBoardBase chessBoardBase = getChessBoard();
     for (Move move : adjustedMoves) {
-      MoveTracker tracker = new MoveTracker();
-      chessBoardBase.registerObserver(tracker);
-      chessBoardBase.moveWithOutCheck(move);
+      Command command = new Command(move, chessBoardBase);
+      command.setTentative();
+      command.execute();
       if (!chessBoardBase.checkKingPossiblyUnderCheck(getSide())) {
         safeMoves.add(move);
       }
-      // Undo the move
-      chessBoardBase.removeObserver(tracker);
-      for (Move trackedMove : tracker.getMoves()) {
-        Move inverse = trackedMove.inverseMove();
-        Piece movedPiece = chessBoardBase.getPiece(inverse.getFrom());
-        boolean firstTimeMoved = movedPiece.mFirstTimeMoved;
-        chessBoardBase.moveWithOutCheck(inverse);
-        if (firstTimeMoved) {
-          movedPiece.mMoved = false;
-        }
-      }
-      for (Pair<Piece, Location> removed : tracker.getRemovedPieces()) {
-        chessBoardBase.setPiece(removed.getA(), removed.getB());
-      }
+      command.undo();
     }
     setAdjustedMoves(safeMoves);
   }

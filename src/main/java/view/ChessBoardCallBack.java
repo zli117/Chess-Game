@@ -2,7 +2,7 @@ package view;
 
 import utils.Location;
 
-public interface ViewCallBack {
+public interface ChessBoardCallBack {
 
   void gridClicked(Location location);
 

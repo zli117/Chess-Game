@@ -2,6 +2,7 @@ package model;
 
 import java.util.Set;
 import utils.Move;
+import utils.Side;
 
 /**
  * Chess game with standard rule and stalemate, checkmate condition.
