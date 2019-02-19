@@ -33,7 +33,7 @@ class ChessBoardGrid extends JButton {
   }
 
   /**
-   * Set
+   * Set the color of the grid if it has been selected.
    */
   void setSelectedColor(Color selectedColor) {
     mSelectedColor = selectedColor;
@@ -75,6 +75,9 @@ class ChessBoardGrid extends JButton {
     setBackground(mWarningColor);
   }
 
+  /**
+   * Show the hint at the border of the legal target grids.
+   */
   void showHint() {
     setBorderPainted(true);
     setBorder(BorderFactory.createLineBorder(mHintColor, 5));

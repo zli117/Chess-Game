@@ -31,24 +31,42 @@ public class Command implements GameObserverCallBacks {
     mSideInitiated = null;
   }
 
+  /**
+   * Set whether the command is for tentative moves.
+   */
   void setTentative() {
     mTentative = true;
   }
 
+  /**
+   * Check whether the command is associated with a side.
+   */
   public boolean hasSide() {
     return mSideInitiated != null;
   }
 
+  /**
+   * Get the side the command is associated with. Null if there's no side
+   * associated.
+   */
   public Side getSide() {
     return mSideInitiated;
   }
 
+  /**
+   * Set the side this command is linked with.
+   */
   public void setSide(Side side) {
     mSideInitiated = side;
   }
 
+  /**
+   * Execute the command.
+   *
+   * @return True if successful, false otherwise.
+   */
   public boolean execute() {
-    boolean previousStatus = mChessBoard.isTentative();
+    final boolean previousStatus = mChessBoard.isTentative();
     boolean result = true;
     mChessBoard.setTentative(mTentative);
     mChessBoard.registerObserver(this);
@@ -62,8 +80,11 @@ public class Command implements GameObserverCallBacks {
     return result;
   }
 
+  /**
+   * Undo the moves.
+   */
   public void undo() {
-    boolean previousStatus = mChessBoard.isTentative();
+    final boolean previousStatus = mChessBoard.isTentative();
     mChessBoard.setTentative(mTentative);
     for (Pair<Move, Boolean> move : mPerformedMoves) {
       Move trackedMove = move.getA();
@@ -100,6 +121,10 @@ public class Command implements GameObserverCallBacks {
     mRemovedPieces.add(new Pair<>(pieceRemoved, location));
   }
 
+  /**
+   * Whether this command can track tentative moves. If the command is
+   * tentative, then yes, it can. Otherwise it can't.
+   */
   @Override
   public boolean canTrackTentative() {
     return mTentative;

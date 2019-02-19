@@ -21,7 +21,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import javax.swing.UIManager;
 import utils.Side;
 
 public class Window extends JFrame {
@@ -78,8 +77,8 @@ public class Window extends JFrame {
     menuBar.add(gameMenu);
 
     JMenuItem openConfig = new JMenuItem("Open config file");
-    openConfig.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    openConfig.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+        Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setCurrentDirectory(Paths.get("").toAbsolutePath().toFile());
     openConfig.addActionListener(new ActionListener() {
@@ -88,8 +87,8 @@ public class Window extends JFrame {
         if (fileChooser.showOpenDialog(contentPane)
             == JFileChooser.APPROVE_OPTION) {
           try {
-            mCallback.onOpenConfig(
-                fileChooser.getSelectedFile().toURI().toURL());
+            mCallback
+                .onOpenConfig(fileChooser.getSelectedFile().toURI().toURL());
           } catch (Exception e) {
             System.out.println(e);
           }
@@ -99,8 +98,8 @@ public class Window extends JFrame {
     fileMenu.add(openConfig);
 
     JMenuItem restartGame = new JMenuItem("Restart game");
-    restartGame.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    restartGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
+        Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     restartGame.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
@@ -112,8 +111,8 @@ public class Window extends JFrame {
     gameMenu.add(restartGame);
 
     mUndoMove = new JMenuItem("Undo");
-    mUndoMove.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    mUndoMove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
+        Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     mUndoMove.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
@@ -125,8 +124,8 @@ public class Window extends JFrame {
     gameMenu.add(mUndoMove);
 
     JMenuItem forfeit = new JMenuItem("Forfeit");
-    forfeit.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    forfeit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F,
+        Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     forfeit.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
@@ -152,27 +151,45 @@ public class Window extends JFrame {
     mCallback = null;
   }
 
+  /**
+   * Set whether undo menu item is enabled.
+   */
   public void setEnabledUndoButton(boolean enabled) {
     mUndoMove.setEnabled(enabled);
   }
 
+  /**
+   * Set the window callback.
+   */
   public void setCallBack(WindowCallBack callBack) {
     mCallback = callBack;
   }
 
+  /**
+   * Set the current side to play.
+   */
   public void setCurrentSide(Side side) {
     mCurrentSide.setText(String.format("Current side: %s", side));
   }
 
+  /**
+   * Set the score of a side.
+   */
   public void setScore(Side side, int score) {
     JLabel label = mScores[side.ordinal()];
     label.setText(String.format("%s score: %d", side, score));
   }
 
+  /**
+   * Get the chess board in this window.
+   */
   public ChessBoard getChessBoard() {
     return mChessBoard;
   }
 
+  /**
+   * Show a dialog to inform player of checkmate of a side.
+   */
   public void showCheckmate(Side lost) {
     Object[] options = {"Close", "OK and Restart"};
     int chosen = JOptionPane
@@ -185,20 +202,26 @@ public class Window extends JFrame {
     }
   }
 
+  /**
+   * Show a dialog to inform player of stalemate.
+   */
   public void showStalemate() {
     Object[] options = {"Close", "OK and Restart"};
-    int chosen = JOptionPane.showOptionDialog(this, "Stalemate",
-        "Stalemate", JOptionPane.OK_CANCEL_OPTION,
-        JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);
+    int chosen = JOptionPane.showOptionDialog(this, "Stalemate", "Stalemate",
+        JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+        options, options[1]);
     // 1 is the option of OK and Restart
     if (chosen == 1) {
       mCallback.onRestart(false);
     }
   }
 
+  /**
+   * Show a dialog to inform player of some error.
+   */
   public void showErrorDialog(String reason) {
-    JOptionPane.showMessageDialog(this, reason, "Error",
-        JOptionPane.ERROR_MESSAGE);
+    JOptionPane
+        .showMessageDialog(this, reason, "Error", JOptionPane.ERROR_MESSAGE);
   }
 
 }

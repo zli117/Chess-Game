@@ -1,7 +1,6 @@
 package controller;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,6 +58,12 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
     }
   }
 
+  /**
+   * Load config from URL.
+   *
+   * @param configPath URL to the config file.
+   * @return True if successful, false otherwise.
+   */
   public boolean loadConfig(URL configPath) {
     try {
       mChessBoardModel = BoardBuilder.constructFromFile(configPath);
@@ -79,6 +84,9 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
     return true;
   }
 
+  /**
+   * Set the current side and update the UI.
+   */
   private void setCurrentSide(Side side) {
     mCurrentSide = side;
     if (mWindow != null) {
@@ -86,6 +94,9 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
     }
   }
 
+  /**
+   * Set current score of the side and update the UI.
+   */
   private void setScore(Side side, int score) {
     mScores[side.ordinal()] = score;
     if (mWindow != null) {
@@ -130,6 +141,12 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
     }
   }
 
+  /**
+   * Increment scores by 1.
+   *
+   * @param skipCurrent If true, only increment opponents' score. If false,
+   *                    increment everyone' score.
+   */
   private void incrementScore(boolean skipCurrent) {
     for (int i = 0; i < mScores.length; ++i) {
       Side side = Side.values()[i];
@@ -214,8 +231,8 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
   }
 
   @Override
-  public void onOpenConfig(URL fileURL) {
-    if (!loadConfig(fileURL)) {
+  public void onOpenConfig(URL fileUrl) {
+    if (!loadConfig(fileUrl)) {
       mWindow.showErrorDialog("Invalid config file");
     }
     mCommands = new Stack<>();

@@ -8,7 +8,7 @@ public interface WindowCallBack {
 
   void onRestart(boolean isTie);
 
-  void onOpenConfig(URL fileURL);
+  void onOpenConfig(URL fileUrl);
 
   void onForfeit();
 

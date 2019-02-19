@@ -12,7 +12,6 @@ import utils.Location;
 
 public class ChessBoard extends JPanel {
 
-  private final int GRID_SIZE = 70;
   private ChessBoardGrid[][] mChessSquares;
   private ChessBoardCallBack mCallBack;
   private int mHeight;
@@ -71,9 +70,10 @@ public class ChessBoard extends JPanel {
     button.setBorderPainted(false);
     button.setFocusPainted(false);
     button.resetColor();
-    button.setMinimumSize(new Dimension(GRID_SIZE, GRID_SIZE));
-    button.setPreferredSize(new Dimension(GRID_SIZE, GRID_SIZE));
-    button.setMaximumSize(new Dimension(GRID_SIZE, GRID_SIZE));
+    int gridSize = 70;
+    button.setMinimumSize(new Dimension(gridSize, gridSize));
+    button.setPreferredSize(new Dimension(gridSize, gridSize));
+    button.setMaximumSize(new Dimension(gridSize, gridSize));
     return button;
   }
 
@@ -135,10 +135,16 @@ public class ChessBoard extends JPanel {
     }
   }
 
+  /**
+   * Get number of rows in this board.
+   */
   public int getGridRows() {
     return mHeight;
   }
 
+  /**
+   * Get number of columns in this board.
+   */
   public int getGridCols() {
     return mWidth;
   }
