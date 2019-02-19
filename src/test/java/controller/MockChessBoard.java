@@ -50,11 +50,6 @@ public class MockChessBoard extends ChessBoard {
 
   }
 
-  @Override
-  public void freeze() {
-    mFrozen = true;
-  }
-
   int getPieceCounter() {
     return mPieceCounter;
   }

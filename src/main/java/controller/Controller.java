@@ -202,7 +202,6 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
       }
       mChessBoardView.resetAllColor();
       boardRedraw();
-      mChessBoardView.unFreeze();
     }
   }
 

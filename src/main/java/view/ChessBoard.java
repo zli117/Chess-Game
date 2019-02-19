@@ -15,7 +15,6 @@ public class ChessBoard extends JPanel {
   private final int GRID_SIZE = 70;
   private ChessBoardGrid[][] mChessSquares;
   private ChessBoardCallBack mCallBack;
-  private boolean mFrozen;
   private int mHeight;
   private int mWidth;
 
@@ -37,7 +36,6 @@ public class ChessBoard extends JPanel {
         add(mChessSquares[i][j], constraints);
       }
       mCallBack = null;
-      mFrozen = false;
     }
   }
 
@@ -61,7 +59,7 @@ public class ChessBoard extends JPanel {
     button.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        if (!mFrozen && mCallBack != null) {
+        if (mCallBack != null) {
           mCallBack.gridClicked(location);
         }
       }
@@ -135,13 +133,6 @@ public class ChessBoard extends JPanel {
         grid.resetColor();
       }
     }
-  }
-
-  /**
-   * Unfreeze the board.
-   */
-  public void unFreeze() {
-    mFrozen = false;
   }
 
   public int getGridRows() {
