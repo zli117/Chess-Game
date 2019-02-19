@@ -52,8 +52,7 @@ public class ChessBoard extends JPanel {
    * Set a button at location.
    */
   private ChessBoardGrid getGridButton(int row, int col) {
-    final Color[] colors = {new Color(254, 205, 159),
-        new Color(211, 140, 71)};
+    final Color[] colors = {new Color(254, 205, 159), new Color(211, 140, 71)};
     final Color hintColor = new Color(255, 124, 253, 255);
     final Color selectedColor = new Color(151, 255, 248, 255);
     final Color warningColor = new Color(20, 22, 255, 255);
@@ -136,13 +135,6 @@ public class ChessBoard extends JPanel {
         grid.resetColor();
       }
     }
-  }
-
-  /**
-   * Freeze the board to prevent further moves.
-   */
-  public void freeze() {
-    mFrozen = true;
   }
 
   /**

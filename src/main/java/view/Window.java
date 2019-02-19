@@ -192,7 +192,7 @@ public class Window extends JFrame {
         JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);
     // 1 is the option of OK and Restart
     if (chosen == 1) {
-      mCallback.onRestart(true);
+      mCallback.onRestart(false);
     }
   }
 
