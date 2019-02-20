@@ -2,9 +2,10 @@ package controller;
 
 import utils.Side;
 import view.ChessBoard;
-import view.Window;
+import view.WindowCallBack;
+import view.WindowInterface;
 
-public class MockWindow extends Window {
+public class MockWindow implements WindowInterface {
 
   boolean mUndoEnabled;
   Side mCurrentSide;
@@ -12,13 +13,23 @@ public class MockWindow extends Window {
   Side mCheckedSide;
   boolean mShowStalemateCalled;
   boolean mShowErrorDialogCalled;
+  private ChessBoard mChessboard;
 
   MockWindow(ChessBoard chessBoard) {
-    super("Mock", chessBoard);
+    mChessboard = chessBoard;
     mScores = new int[2];
     mCheckedSide = null;
     mShowStalemateCalled = false;
     mShowErrorDialogCalled = false;
+  }
+
+  @Override
+  public void setCallBack(WindowCallBack callBack) {
+  }
+
+  @Override
+  public ChessBoard getChessBoard() {
+    return mChessboard;
   }
 
   @Override

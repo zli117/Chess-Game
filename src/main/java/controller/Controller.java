@@ -18,8 +18,8 @@ import utils.Move;
 import utils.Side;
 import view.ChessBoard;
 import view.ChessBoardCallBack;
-import view.Window;
 import view.WindowCallBack;
+import view.WindowInterface;
 
 /**
  * The controller of MVC. Responsible for player turns, showing information on
@@ -30,7 +30,7 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
   private URL mConfigPath;
   private ChessBoard mChessBoardView;
   private ChessBoardBase mChessBoardModel;
-  private Window mWindow;
+  private WindowInterface mWindow;
   private HashMap<URL, Icon> mCachedIcon;
   private Map<Location, Move> mLegalMoves;
   private Side mCurrentSide;
@@ -40,7 +40,7 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
   /**
    * Create a controller from the chess board and view.
    */
-  public Controller(Window window) {
+  public Controller(WindowInterface window) {
     mConfigPath = null;
     mWindow = window;
     mWindow.setEnabledUndoButton(false);

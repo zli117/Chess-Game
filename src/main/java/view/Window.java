@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import utils.Side;
 
-public class Window extends JFrame {
+public class Window extends JFrame implements WindowInterface {
 
   private JMenuItem mUndoMove;
   private JLabel mCurrentSide;
