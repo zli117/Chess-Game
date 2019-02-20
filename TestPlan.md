@@ -18,17 +18,20 @@
 
 ## testUnderCheckWarning
  * Test instructions: Move the white rook up by one tile. Check the black king's grid turns blue as a warning for checking.
-   ![testUnderCheckWarning](screenshots/testUnderCheckWarning.png)
+ 
+ ![testUnderCheckWarning](screenshots/testUnderCheckWarning.png)
 
 ## testStandardBoardWithMove
  * Test instructions: Move leftmost white pawn up by two tiles. Then verify that no white piece is allowed to move. Also verify if any black piece has legal move, it's allowed to move.
 
 ## testOpenValidConfig
  * Test instructions: Assuming the working directory is the root dir of the project. Click on "File/Open config file", and navigate to src/test/resources/board_with_jumper.conf, and click Open. Verify the board contains two jumpers, one black one white.
+ 
  ![testOpenValidConfig](screenshots/testOpenValidConfig.png)
 
 ## testSuperQueenWithMove
  * Test instructions: Click on white super queen and move it all the way to the left. Then move the leftmost black Pawn down by one tile. Then capture the Pawn below black queen with the white SuperQueen. Verify black King is under check (background turns blue).
+ 
  ![testSuperQueenWithMove](screenshots/testSuperQueenWithMove.png)
  
 ## testRestart
@@ -36,10 +39,12 @@
 
 ## testUndoWithMove
  * Test instructions: Move one white pawn up by two tiles, then move one black pawn down by one tiles. Then move the moved white pawn up by one tile. Hit undo, check the moved white pawn is down by one tile. Then hit undo twice, and check the board is the same as beginning. Then click on the moved white pawn and verify it can move up by two tiles.
+ 
  ![testUndoWithMove](screenshots/testUndoWithMove.png)
  
 ## testCheckmate
  * Test instructions: Move the white Rook right by one tile. Check there's a message dialog showing up with message of "Checkmate". Click on "OK and Restart" and check White has got one point and the board has been restored as in the screen shot.
+ 
  ![testCheckmate](screenshots/testCheckmate.png)
  
 ## testOpenInvalidConfig
