@@ -1,48 +1,49 @@
 package view;
 
 import javax.swing.Icon;
+import javax.swing.JPanel;
 import utils.Location;
 
-public interface ChessBoardInterface {
+public abstract class ChessBoardInterface extends JPanel {
 
   /**
    * Add a callback.
    */
-  void setCallBack(ChessBoardCallBack callBack);
+  public abstract void setCallBack(ChessBoardCallBack callBack);
 
   /**
    * Set icon at location.
    */
-  void setIcon(Location location, Icon icon);
+  public abstract void setIcon(Location location, Icon icon);
 
   /**
    * Show selected color at location.
    */
-  void showSelectedColor(Location location);
+  public abstract void showSelectedColor(Location location);
 
   /**
    * Show the hint color at location.
    */
-  void showHintColor(Location location);
+  public abstract void showHintColor(Location location);
 
   /**
    * Show the warning color at location.
    */
-  void showWarningColor(Location location);
+  public abstract void showWarningColor(Location location);
 
   /**
    * Reset all grids to default color.
    */
-  void resetAllColor();
+  public abstract void resetAllColor();
 
   /**
    * Get number of rows in this board.
    */
-  int getGridRows();
+  public abstract int getGridRows();
 
   /**
    * Get number of columns in this board.
    */
-  int getGridCols();
+  public abstract int getGridCols();
 
 }

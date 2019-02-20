@@ -4,23 +4,26 @@ import javax.swing.Icon;
 import utils.Location;
 import view.ChessBoard;
 import view.ChessBoardCallBack;
+import view.ChessBoardInterface;
 
-public class MockChessBoard extends ChessBoard {
+public class MockChessBoard extends ChessBoardInterface {
 
   private int mPieceCounter;
   private int mHintColorCounter;
   private int mWarningColorCounter;
+  private int mRows;
+  private int mCols;
 
   MockChessBoard(int height, int width) {
-    super(height, width);
     mPieceCounter = 0;
     mHintColorCounter = 0;
     mWarningColorCounter = 0;
+    mRows = height;
+    mCols = width;
   }
 
   @Override
   public void setCallBack(ChessBoardCallBack callBack) {
-    super.setCallBack(callBack);
   }
 
   @Override
@@ -46,6 +49,16 @@ public class MockChessBoard extends ChessBoard {
 
   @Override
   public void resetAllColor() {
+  }
+
+  @Override
+  public int getGridRows() {
+    return mRows;
+  }
+
+  @Override
+  public int getGridCols() {
+    return mCols;
   }
 
   int getPieceCounter() {

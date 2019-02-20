@@ -1,7 +1,7 @@
 package controller;
 
 import utils.Side;
-import view.ChessBoard;
+import view.ChessBoardInterface;
 import view.WindowCallBack;
 import view.WindowInterface;
 
@@ -13,9 +13,9 @@ public class MockWindow implements WindowInterface {
   Side mCheckedSide;
   boolean mShowStalemateCalled;
   boolean mShowErrorDialogCalled;
-  private ChessBoard mChessboard;
+  private ChessBoardInterface mChessboard;
 
-  MockWindow(ChessBoard chessBoard) {
+  MockWindow(ChessBoardInterface chessBoard) {
     mChessboard = chessBoard;
     mScores = new int[2];
     mCheckedSide = null;
@@ -28,7 +28,7 @@ public class MockWindow implements WindowInterface {
   }
 
   @Override
-  public ChessBoard getChessBoard() {
+  public ChessBoardInterface getChessBoard() {
     return mChessboard;
   }
 
