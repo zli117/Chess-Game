@@ -245,8 +245,8 @@ public class ChessBoardBase {
             Location moveTo = move.getTo();
             // checkValidLocation is implicitly called in checkCanCapture and
             // checkIsEmpty
-            if ((move.isAttack() && checkCanCapture(moveTo, piece))
-                || (!move.isAttack() && checkIsEmpty(moveTo))) {
+            if ((move.isAttack() && checkCanCapture(moveTo, piece)) || (
+                !move.isAttack() && checkIsEmpty(moveTo))) {
               adjustedMoves.add(move);
             }
           }
@@ -355,8 +355,8 @@ public class ChessBoardBase {
     for (Piece[] row : mBoard) {
       for (Piece piece : row) {
         if (piece != null) {
-          if ((!include && piece.getSide() != side)
-              || (include && piece.getSide() == side)) {
+          if ((!include && piece.getSide() != side) || (include
+              && piece.getSide() == side)) {
             opponents.add(piece);
           }
         }

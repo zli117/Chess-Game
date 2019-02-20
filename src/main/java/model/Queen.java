@@ -24,15 +24,9 @@ public class Queen extends Piece {
    */
   @Override
   public List<Vector> getStraightLineMoveDirections() {
-    Vector[] directions = {
-        new Vector(1, 1),
-        new Vector(-1, -1),
-        new Vector(-1, 1),
-        new Vector(1, -1),
-        new Vector(1, 0),
-        new Vector(-1, 0),
-        new Vector(0, 1),
-        new Vector(0, -1)};
+    Vector[] directions = {new Vector(1, 1), new Vector(-1, -1),
+        new Vector(-1, 1), new Vector(1, -1), new Vector(1, 0),
+        new Vector(-1, 0), new Vector(0, 1), new Vector(0, -1)};
     return new ArrayList<>(Arrays.asList(directions));
   }
 

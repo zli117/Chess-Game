@@ -43,11 +43,8 @@ public class Jumper extends Piece {
    */
   @Override
   public List<Vector> getStraightLineMoveDirections() {
-    Vector[] directions = {
-        new Vector(2, 0),
-        new Vector(-2, 0),
-        new Vector(0, 2),
-        new Vector(0, -2)};
+    Vector[] directions = {new Vector(2, 0), new Vector(-2, 0),
+        new Vector(0, 2), new Vector(0, -2)};
     return new ArrayList<>(Arrays.asList(directions));
   }
 

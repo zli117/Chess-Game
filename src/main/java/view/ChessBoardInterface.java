@@ -1,7 +1,6 @@
 package view;
 
 import javax.swing.Icon;
-import javax.swing.JPanel;
 import utils.Location;
 
 public interface ChessBoardInterface {

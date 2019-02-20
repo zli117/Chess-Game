@@ -25,11 +25,8 @@ public class Bishop extends Piece {
    */
   @Override
   public List<Vector> getStraightLineMoveDirections() {
-    Vector[] directions = {
-        new Vector(1, 1),
-        new Vector(-1, -1),
-        new Vector(-1, 1),
-        new Vector(1, -1)};
+    Vector[] directions = {new Vector(1, 1), new Vector(-1, -1),
+        new Vector(-1, 1), new Vector(1, -1)};
     return new ArrayList<>(Arrays.asList(directions));
   }
 

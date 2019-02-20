@@ -2,7 +2,6 @@ package controller;
 
 import javax.swing.Icon;
 import utils.Location;
-import view.ChessBoard;
 import view.ChessBoardCallBack;
 import view.ChessBoardInterface;
 

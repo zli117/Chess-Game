@@ -22,8 +22,7 @@ public class Vector extends Pair<Integer, Integer> {
    * @param to   The target location
    */
   public static Vector buildVectorFromLocations(Location from, Location to) {
-    return new Vector(to.getRow() - from.getRow(),
-        to.getCol() - from.getCol());
+    return new Vector(to.getRow() - from.getRow(), to.getCol() - from.getCol());
   }
 
   /**
@@ -55,8 +54,8 @@ public class Vector extends Pair<Integer, Integer> {
       return false;
     }
 
-    return (myHorizontal == 0
-        || (myVertical / myHorizontal == otherVertical / otherHorizontal));
+    return (myHorizontal == 0 || (myVertical / myHorizontal
+        == otherVertical / otherHorizontal));
   }
 
 }
