@@ -123,7 +123,7 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
   /**
    * Update the board view.
    */
-  public void boardRedraw() {
+  private void boardRedraw() {
     int height = mChessBoardView.getGridRows();
     int width = mChessBoardView.getGridCols();
     for (int i = 0; i < height; ++i) {
@@ -235,8 +235,6 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
     if (!loadConfig(fileUrl)) {
       mWindow.showErrorDialog("Invalid config file");
     }
-    mCommands = new Stack<>();
-    mWindow.setEnabledUndoButton(false);
   }
 
   @Override
