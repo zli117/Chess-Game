@@ -29,10 +29,10 @@ public class VectorTest {
      */
     @Parameters
     public static Collection<Object[]> data() {
-      return Arrays.asList(new Object[][]{
-          {0, 0}, {-1, 1}, {2, -1}, {Integer.MAX_VALUE, 2},
-          {4, Integer.MAX_VALUE}, {Integer.MIN_VALUE, 5}, {6, Integer.MIN_VALUE}
-      });
+      return Arrays.asList(
+          new Object[][]{{0, 0}, {-1, 1}, {2, -1}, {Integer.MAX_VALUE, 2},
+              {4, Integer.MAX_VALUE}, {Integer.MIN_VALUE, 5},
+              {6, Integer.MIN_VALUE}});
     }
 
     @Test
@@ -66,10 +66,10 @@ public class VectorTest {
      */
     @Parameters
     public static Collection<Object[]> data() {
-      return Arrays.asList(new Object[][]{
-          {0, 0, 0, 0, 1, 1}, {1, 1, 2, 2, 2, 3}, {1, 1, -1, -1, 1, -1},
-          {0, 1, 0, 2, 1, 1}, {-10, 10, 1, -1, 20, 20}
-      });
+      return Arrays.asList(
+          new Object[][]{{0, 0, 0, 0, 1, 1}, {1, 1, 2, 2, 2, 3},
+              {1, 1, -1, -1, 1, -1}, {0, 1, 0, 2, 1, 1},
+              {-10, 10, 1, -1, 20, 20}});
     }
 
     @Test
@@ -112,10 +112,10 @@ public class VectorTest {
      */
     @Parameters
     public static Collection<Object[]> data() {
-      return Arrays.asList(new Object[][]{
-          {0, 0, 0, 0, 1, 1}, {1, 1, 2, 2, 2, 3}, {1, 1, -1, -1, 1, -1},
-          {0, 1, 0, 2, 1, 1}, {-10, 10, 1, -1, 20, 20}
-      });
+      return Arrays.asList(
+          new Object[][]{{0, 0, 0, 0, 1, 1}, {1, 1, 2, 2, 2, 3},
+              {1, 1, -1, -1, 1, -1}, {0, 1, 0, 2, 1, 1},
+              {-10, 10, 1, -1, 20, 20}});
     }
 
     @Test

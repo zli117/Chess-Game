@@ -23,8 +23,8 @@ class TestWindow extends JFrame {
    * Create a window from the container of the GUI, the test instructions and
    * the test environment.
    */
-  TestWindow(Container testUI, String testScript,
-      ManualTestEnv env, String testName) {
+  TestWindow(Container testUI, String testScript, ManualTestEnv env,
+      String testName) {
     Container contentPane = getContentPane();
     contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
     JPanel buttonPanel = new JPanel();

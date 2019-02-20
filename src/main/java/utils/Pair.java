@@ -67,8 +67,7 @@ public class Pair<A, B> {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    @SuppressWarnings("unchecked")
-    Pair<A, B> other = (Pair<A, B>) o;
+    @SuppressWarnings("unchecked") Pair<A, B> other = (Pair<A, B>) o;
     return other.mA.equals(mA) && other.mB.equals(mB);
   }
 

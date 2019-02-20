@@ -32,15 +32,9 @@ public class King extends Piece {
    */
   @Override
   public List<Vector> getOneStepOffsets() {
-    Vector[] relativeLocations = {
-        new Vector(1, -1),
-        new Vector(1, 0),
-        new Vector(1, 1),
-        new Vector(0, -1),
-        new Vector(0, 1),
-        new Vector(-1, -1),
-        new Vector(-1, 0),
-        new Vector(-1, 1)};
+    Vector[] relativeLocations = {new Vector(1, -1), new Vector(1, 0),
+        new Vector(1, 1), new Vector(0, -1), new Vector(0, 1),
+        new Vector(-1, -1), new Vector(-1, 0), new Vector(-1, 1)};
 
     return new ArrayList<>(Arrays.asList(relativeLocations));
   }
@@ -57,15 +51,12 @@ public class King extends Piece {
     if (currLocation != null && location != null) {
       if (mCastlingTo.contains(location)) {
         if (location.getCol() > currLocation.getCol()) {
-          chessBoard.moveWithOutCheck(
-              new Move(
-                  new Location(currLocation.getRow(),
-                      chessBoard.getWidth() - 1),
-                  location.getLeft()));
+          chessBoard.moveWithOutCheck(new Move(
+              new Location(currLocation.getRow(), chessBoard.getWidth() - 1),
+              location.getLeft()));
         } else {
           chessBoard.moveWithOutCheck(
-              new Move(
-                  new Location(currLocation.getRow(), 0),
+              new Move(new Location(currLocation.getRow(), 0),
                   location.getRight()));
         }
       }
@@ -88,8 +79,7 @@ public class King extends Piece {
       ChessBoardBase chessBoard = getChessBoard();
       Piece rightMost = chessBoard
           .getPiece(new Location(location.getRow(), chessBoard.getWidth() - 1));
-      if (rightMost instanceof Rook
-          && rightMost.getSide() == getSide()
+      if (rightMost instanceof Rook && rightMost.getSide() == getSide()
           && !rightMost.hasMoved()) {
         boolean noPieceBetween = true;
         for (Location toRight = location.getRight();
@@ -109,15 +99,12 @@ public class King extends Piece {
         }
       }
 
-      Piece leftMost = chessBoard
-          .getPiece(new Location(location.getRow(), 0));
-      if (leftMost instanceof Rook
-          && leftMost.getSide() == getSide()
+      Piece leftMost = chessBoard.getPiece(new Location(location.getRow(), 0));
+      if (leftMost instanceof Rook && leftMost.getSide() == getSide()
           && !leftMost.hasMoved()) {
         boolean noPieceBetween = true;
         for (Location toLeft = location.getLeft();
-            !toLeft.equals(leftMost.getLocation());
-            toLeft = toLeft.getLeft()) {
+            !toLeft.equals(leftMost.getLocation()); toLeft = toLeft.getLeft()) {
           if (chessBoard.getPiece(toLeft) != null) {
             noPieceBetween = false;
             break;
@@ -161,8 +148,8 @@ public class King extends Piece {
     // square
     Location currLocation = getLocation();
     if (dangerousLocation.contains(currLocation.getRight())) {
-      adjustedMoves.remove(
-          new Move(currLocation, currLocation.getRight().getRight()));
+      adjustedMoves
+          .remove(new Move(currLocation, currLocation.getRight().getRight()));
     }
     if (dangerousLocation.contains(currLocation.getLeft())) {
       adjustedMoves

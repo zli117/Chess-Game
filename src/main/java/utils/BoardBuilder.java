@@ -89,8 +89,8 @@ public class BoardBuilder {
     if (board == null) {
       throw new RuntimeException("Invalid board name: " + boardName);
     }
-    Pattern pattern = Pattern.compile(
-        "\\s*((?<piece>[a-zA-Z]+)_(?<side>[A-Z][a-zA-Z]*))?(\\s*|,)");
+    Pattern pattern = Pattern
+        .compile("\\s*((?<piece>[a-zA-Z]+)_(?<side>[A-Z][a-zA-Z]*))?(\\s*|,)");
     for (int i = 0; i < height; ++i) {
       String row = scanner.nextLine();
       Matcher matcher = pattern.matcher(row);
@@ -104,8 +104,8 @@ public class BoardBuilder {
         }
         Piece piece = pieceFactory(board, pieceName, sideName);
         if (piece == null) {
-          throw new RuntimeException(
-              String.format("Invalid piece config at %d, %d: (%s, %s)", i, j,
+          throw new RuntimeException(String
+              .format("Invalid piece config at %d, %d: (%s, %s)", i, j,
                   pieceName, sideName));
         }
         if (piece instanceof King) {
@@ -115,9 +115,9 @@ public class BoardBuilder {
         }
       }
       if (j != width) {
-        throw new RuntimeException(
-            String.format("Insufficient pieces for row %d, expected %d, got %d",
-                i, width, j));
+        throw new RuntimeException(String
+            .format("Insufficient pieces for row %d, expected %d, got %d", i,
+                width, j));
       }
     }
     return board;

@@ -42,9 +42,8 @@ public class JumperTest {
     Set<Move> moves = chessBoardBase.getLegalMoves(rook.getLocation());
     assertTrue(
         moves.contains(new Move(rook.getLocation(), jumper.getLocation())));
-    assertTrue(
-        moves.contains(
-            new Move(rook.getLocation(), jumper.getLocation().getRight())));
+    assertTrue(moves.contains(
+        new Move(rook.getLocation(), jumper.getLocation().getRight())));
   }
 
   @Test

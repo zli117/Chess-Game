@@ -23,13 +23,13 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import utils.Side;
 
-public class Window extends JFrame {
+public class Window extends JFrame implements WindowInterface {
 
   private JMenuItem mUndoMove;
   private JLabel mCurrentSide;
   private JLabel[] mScores;
   private WindowCallBack mCallback;
-  private ChessBoard mChessBoard;
+  private ChessBoardInterface mChessBoard;
 
   /**
    * Create a window with title and chess board widget.
@@ -183,7 +183,7 @@ public class Window extends JFrame {
   /**
    * Get the chess board in this window.
    */
-  public ChessBoard getChessBoard() {
+  public ChessBoardInterface getChessBoard() {
     return mChessBoard;
   }
 
@@ -191,13 +191,13 @@ public class Window extends JFrame {
    * Show a dialog to inform player of checkmate of a side.
    */
   public void showCheckmate(Side lost) {
-    Object[] options = {"Close", "OK and Restart"};
+    Object[] options = {"OK and Restart"};
     int chosen = JOptionPane
         .showOptionDialog(this, String.format("%s is checkmated", lost),
-            "Checkmate", JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);
-    // 1 is the option of OK and Restart
-    if (chosen == 1) {
+            "Checkmate", JOptionPane.DEFAULT_OPTION,
+            JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+    // 0 is the option of OK and Restart
+    if (chosen == 0) {
       mCallback.onRestart(false);
     }
   }
@@ -206,12 +206,12 @@ public class Window extends JFrame {
    * Show a dialog to inform player of stalemate.
    */
   public void showStalemate() {
-    Object[] options = {"Close", "OK and Restart"};
+    Object[] options = {"OK and Restart"};
     int chosen = JOptionPane.showOptionDialog(this, "Stalemate", "Stalemate",
-        JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-        options, options[1]);
-    // 1 is the option of OK and Restart
-    if (chosen == 1) {
+        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+        options, options[0]);
+    // 0 is the option of OK and Restart
+    if (chosen == 0) {
       mCallback.onRestart(false);
     }
   }

@@ -62,15 +62,9 @@ public class SuperQueen extends Queen {
   @Override
   public List<Vector> getOneStepOffsets() {
     // We have already inherited Queen's straight line moves.
-    Vector[] relativeLocations = {
-        new Vector(-2, 1),
-        new Vector(-1, 2),
-        new Vector(1, 2),
-        new Vector(2, 1),
-        new Vector(2, -1),
-        new Vector(1, -2),
-        new Vector(-2, -1),
-        new Vector(-1, -2)};
+    Vector[] relativeLocations = {new Vector(-2, 1), new Vector(-1, 2),
+        new Vector(1, 2), new Vector(2, 1), new Vector(2, -1),
+        new Vector(1, -2), new Vector(-2, -1), new Vector(-1, -2)};
     return new ArrayList<>(Arrays.asList(relativeLocations));
   }
 

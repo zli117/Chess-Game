@@ -167,8 +167,7 @@ public abstract class Piece {
       attackMove.attack();
       moves.add(attackMove);
       // Same reason as straight line pieces. The move is an optional attack.
-      Move move = new Move(current,
-          current.getIncrement(relativeLocation));
+      Move move = new Move(current, current.getIncrement(relativeLocation));
       moves.add(move);
     }
 

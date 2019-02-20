@@ -1,43 +1,47 @@
-## Test Stalemate
- * Test name: testStaleMate
- * Test instructions: Click on "Enable move". The move the white queen up by one row. Check terminal has printout of "Stalemate". Click all three pieces on board, and verify that there's no move recommendation from either side.
+## testUndoWithoutMove
+ * Test instructions: Click "Game" on menu bar, and check "Undo" is gray (disabled). Then click on any white piece and check "Undo" again, it should still be disabled.
 
-## Test Jumper Moves
- * Test name: testJumperWithMove
- * Test instructions: Click on "Enable move". Then click on white jumper and move it to the right by two tiles. Next move the leftmost black pawn down by one tile. Then move the white jumper up to capture the black Bishop. Verify the black Bishop has been captured, and black King is not under check.
+## testStaleMate
+ * Test instructions: Move the white queen up by one tile. Check there's a message dialog showing up with message of "Stalemate". Then click on "OK and Restart" and check the game has restarted with both sides' score added by 1.
 
-## Test Under Check Warning
- * Test name: testUnderCheckWarning
- * Test instructions: Click on "Enable move". Then move the white rook up by one tile. Check the black king's grid turns blue as a warning for checking. Verify chess board looks like following: 
+## testForfeitAfterMove
+ * Test instructions: First move one white pawn up by two tiles and then move one black pawn down by one tile. Observe the current side to move is White. Click "Game" menu and select forfeit or hit Ctrl-f. Then check if Black's score has increased by 1.
  
- ![under_check](screenshots/under_check.png)
-
-## Test Display of Static Board
- * Test name: testStandardBoard
- * Test instructions: Click at all the white pawns, and verify they can move two steps. Then click at both white knights and verify there are two moves available for each. Verify the display of the board is consistent with the standard chess board as shown below. 
+## testForfeit
+ * Test instructions: Observe the current side to move is White. Click "Game" menu and select forfeit or hit Ctrl-f. Then check if Black's score has increased by 1.
  
- ![standard_board](screenshots/standard_board.png)
-
-## Test Standard Board with Moves
- * Test name: testStandardBoardWithMove
- * Test instructions: Click "Enable move". Move leftmost white pawn up by two tiles. Then verify that no white piece is allowed to move. Also verify if any black piece has legal move, it's allowed to move.
-
-## Test SuperQueen with Move
- * Test name: testSuperQueenWithMove
- * Test instructions: Click on "Enable move". Then click on white super queen and move it all the way to the left. Then move the leftmost black Pawn down by one tile. Then capture the Pawn below black queen with the white SuperQueen. Verify black King is under check (background turns blue).
-
-## Test Checkmate
- * Test name: testCheckMate
- * Test instructions: Click on "Enable move". Then move the white rook right by one tile. Check terminal has the printout of "Checkmate! Black lost". Click all three pieces on board, and verify that there's no move recommendation from either side and black King is under check.
-
-## Test Jumper Legal Moves
- * Test name: testJumper
- * Test instructions: Verify there are two jumpers on the board. One from white and another from black. Click on the white jumper, verify the move pattern corresponds to the screen shot. 
+## testRestartAfterMove
+ * Test instructions: Move the white Rook up by one tile. Check the black King's tile turns blue (warning). Then hit restart in "Game" or Ctrl-r. Check both sides' score have increased by 1, and white Rook is back to original location and black King's tile is no longer blue.
  
- ![jumper_moves](screenshots/jumper_moves.png)
+## testJumperWithMove
+ * Test instructions: Click on white jumper and move it to the right by two tiles. Next move the leftmost black pawn down by one tile. Then move the white jumper up to capture the black Bishop. Verify the black Bishop has been captured, and black King is not under check.
 
-## Test SuperQueen Legal Moves
- * Test name: testSuperQueen
- * Test instructions: Verify there are two super queens on the board. One from white and another from black. Click on the white super queen, verify the move pattern corresponds to the screen shot. 
+## testUnderCheckWarning
+ * Test instructions: Move the white rook up by one tile. Check the black king's grid turns blue as a warning for checking.
+   ![testUnderCheckWarning](screenshots/testUnderCheckWarning.png)
+
+## testStandardBoardWithMove
+ * Test instructions: Move leftmost white pawn up by two tiles. Then verify that no white piece is allowed to move. Also verify if any black piece has legal move, it's allowed to move.
+
+## testOpenValidConfig
+ * Test instructions: Assuming the working directory is the root dir of the project. Click on "File/Open config file", and navigate to src/test/resources/board_with_jumper.conf, and click Open. Verify the board contains two jumpers, one black one white.
+ ![testOpenValidConfig](screenshots/testOpenValidConfig.png)
+
+## testSuperQueenWithMove
+ * Test instructions: Click on white super queen and move it all the way to the left. Then move the leftmost black Pawn down by one tile. Then capture the Pawn below black queen with the white SuperQueen. Verify black King is under check (background turns blue).
+ ![testSuperQueenWithMove](screenshots/testSuperQueenWithMove.png)
  
- ![superqueen_moves](screenshots/superqueen_moves.png)
+## testRestart
+ * Test instructions: Hit restart in "Game" menu or use key binding of Ctrl-r. Obverse both sides' scores have increased by 1.
+
+## testUndoWithMove
+ * Test instructions: Move one white pawn up by two tiles, then move one black pawn down by one tiles. Then move the moved white pawn up by one tile. Hit undo, check the moved white pawn is down by one tile. Then hit undo twice, and check the board is the same as beginning. Then click on the moved white pawn and verify it can move up by two tiles.
+ ![testUndoWithMove](screenshots/testUndoWithMove.png)
+ 
+## testCheckmate
+ * Test instructions: Move the white Rook right by one tile. Check there's a message dialog showing up with message of "Checkmate". Click on "OK and Restart" and check White has got one point and the board has been restored as in the screen shot.
+ ![testCheckmate](screenshots/testCheckmate.png)
+ 
+## testOpenInvalidConfig
+ * Test instructions: Assuming the working directory is the root dir of the project. Click on "File/Open config file", and navigate to src/test/resources/invalid_board_1.conf, and click Open. Verify there's a dialog window showing up with message "Invalid config file". Click on "OK" the dialog should disappear and chess board is unchanged.
+ 

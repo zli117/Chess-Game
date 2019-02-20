@@ -10,7 +10,7 @@ import javax.swing.Icon;
 import javax.swing.JPanel;
 import utils.Location;
 
-public class ChessBoard extends JPanel {
+public class ChessBoard extends JPanel implements ChessBoardInterface {
 
   private ChessBoardGrid[][] mChessSquares;
   private ChessBoardCallBack mCallBack;

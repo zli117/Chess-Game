@@ -28,15 +28,9 @@ public class Knight extends Piece {
    */
   @Override
   public List<Vector> getOneStepOffsets() {
-    Vector[] relativeLocations = {
-        new Vector(-2, 1),
-        new Vector(-1, 2),
-        new Vector(1, 2),
-        new Vector(2, 1),
-        new Vector(2, -1),
-        new Vector(1, -2),
-        new Vector(-2, -1),
-        new Vector(-1, -2)};
+    Vector[] relativeLocations = {new Vector(-2, 1), new Vector(-1, 2),
+        new Vector(1, 2), new Vector(2, 1), new Vector(2, -1),
+        new Vector(1, -2), new Vector(-2, -1), new Vector(-1, -2)};
     return new ArrayList<>(Arrays.asList(relativeLocations));
   }
 

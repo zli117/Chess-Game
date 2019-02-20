@@ -16,10 +16,10 @@ import utils.BoardBuilder;
 import utils.Location;
 import utils.Move;
 import utils.Side;
-import view.ChessBoard;
 import view.ChessBoardCallBack;
-import view.Window;
+import view.ChessBoardInterface;
 import view.WindowCallBack;
+import view.WindowInterface;
 
 /**
  * The controller of MVC. Responsible for player turns, showing information on
@@ -28,9 +28,9 @@ import view.WindowCallBack;
 public class Controller implements ChessBoardCallBack, WindowCallBack {
 
   private URL mConfigPath;
-  private ChessBoard mChessBoardView;
+  private ChessBoardInterface mChessBoardView;
   private ChessBoardBase mChessBoardModel;
-  private Window mWindow;
+  private WindowInterface mWindow;
   private HashMap<URL, Icon> mCachedIcon;
   private Map<Location, Move> mLegalMoves;
   private Side mCurrentSide;
@@ -40,7 +40,7 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
   /**
    * Create a controller from the chess board and view.
    */
-  public Controller(Window window) {
+  public Controller(WindowInterface window) {
     mConfigPath = null;
     mWindow = window;
     mWindow.setEnabledUndoButton(false);
@@ -123,7 +123,7 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
   /**
    * Update the board view.
    */
-  public void boardRedraw() {
+  private void boardRedraw() {
     int height = mChessBoardView.getGridRows();
     int width = mChessBoardView.getGridCols();
     for (int i = 0; i < height; ++i) {
@@ -235,8 +235,6 @@ public class Controller implements ChessBoardCallBack, WindowCallBack {
     if (!loadConfig(fileUrl)) {
       mWindow.showErrorDialog("Invalid config file");
     }
-    mCommands = new Stack<>();
-    mWindow.setEnabledUndoButton(false);
   }
 
   @Override
