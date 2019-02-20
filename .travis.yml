@@ -2,9 +2,6 @@ language: java
 install: true
 jdk: oraclejdk8
 
-services:
-  - xvfb
-
 script:
   - chmod +x gradlew
   - export SKIP_GUI=True
