@@ -191,13 +191,13 @@ public class Window extends JFrame {
    * Show a dialog to inform player of checkmate of a side.
    */
   public void showCheckmate(Side lost) {
-    Object[] options = {"Close", "OK and Restart"};
+    Object[] options = {"OK and Restart"};
     int chosen = JOptionPane
         .showOptionDialog(this, String.format("%s is checkmated", lost),
-            "Checkmate", JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);
-    // 1 is the option of OK and Restart
-    if (chosen == 1) {
+            "Checkmate", JOptionPane.OK_OPTION,
+            JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+    // 0 is the option of OK and Restart
+    if (chosen == 0) {
       mCallback.onRestart(false);
     }
   }
@@ -206,12 +206,12 @@ public class Window extends JFrame {
    * Show a dialog to inform player of stalemate.
    */
   public void showStalemate() {
-    Object[] options = {"Close", "OK and Restart"};
+    Object[] options = {"OK and Restart"};
     int chosen = JOptionPane.showOptionDialog(this, "Stalemate", "Stalemate",
-        JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-        options, options[1]);
-    // 1 is the option of OK and Restart
-    if (chosen == 1) {
+        JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+        options, options[0]);
+    // 0 is the option of OK and Restart
+    if (chosen == 0) {
       mCallback.onRestart(false);
     }
   }
