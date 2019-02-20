@@ -194,7 +194,7 @@ public class Window extends JFrame {
     Object[] options = {"OK and Restart"};
     int chosen = JOptionPane
         .showOptionDialog(this, String.format("%s is checkmated", lost),
-            "Checkmate", JOptionPane.OK_OPTION,
+            "Checkmate", JOptionPane.DEFAULT_OPTION,
             JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
     // 0 is the option of OK and Restart
     if (chosen == 0) {
@@ -208,7 +208,7 @@ public class Window extends JFrame {
   public void showStalemate() {
     Object[] options = {"OK and Restart"};
     int chosen = JOptionPane.showOptionDialog(this, "Stalemate", "Stalemate",
-        JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
         options, options[0]);
     // 0 is the option of OK and Restart
     if (chosen == 0) {
