@@ -6,7 +6,7 @@ import view.ChessBoard;
 import view.ChessBoardCallBack;
 import view.ChessBoardInterface;
 
-public class MockChessBoard extends ChessBoardInterface {
+public class MockChessBoard implements ChessBoardInterface {
 
   private int mPieceCounter;
   private int mHintColorCounter;

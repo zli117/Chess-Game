@@ -29,7 +29,7 @@ public class Window extends JFrame implements WindowInterface {
   private JLabel mCurrentSide;
   private JLabel[] mScores;
   private WindowCallBack mCallback;
-  private ChessBoard mChessBoard;
+  private ChessBoardInterface mChessBoard;
 
   /**
    * Create a window with title and chess board widget.

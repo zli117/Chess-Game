@@ -7,9 +7,10 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Icon;
+import javax.swing.JPanel;
 import utils.Location;
 
-public class ChessBoard extends ChessBoardInterface {
+public class ChessBoard extends JPanel implements ChessBoardInterface {
 
   private ChessBoardGrid[][] mChessSquares;
   private ChessBoardCallBack mCallBack;
