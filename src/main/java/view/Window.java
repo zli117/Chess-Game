@@ -183,7 +183,7 @@ public class Window extends JFrame implements WindowInterface {
   /**
    * Get the chess board in this window.
    */
-  public ChessBoard getChessBoard() {
+  public ChessBoardInterface getChessBoard() {
     return mChessBoard;
   }
 

@@ -27,7 +27,7 @@ public interface WindowInterface {
   /**
    * Get the chess board in this window.
    */
-  ChessBoard getChessBoard();
+  ChessBoardInterface getChessBoard();
 
   /**
    * Show a dialog to inform player of checkmate of a side.

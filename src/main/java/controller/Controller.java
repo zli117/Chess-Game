@@ -16,8 +16,8 @@ import utils.BoardBuilder;
 import utils.Location;
 import utils.Move;
 import utils.Side;
-import view.ChessBoard;
 import view.ChessBoardCallBack;
+import view.ChessBoardInterface;
 import view.WindowCallBack;
 import view.WindowInterface;
 
@@ -28,7 +28,7 @@ import view.WindowInterface;
 public class Controller implements ChessBoardCallBack, WindowCallBack {
 
   private URL mConfigPath;
-  private ChessBoard mChessBoardView;
+  private ChessBoardInterface mChessBoardView;
   private ChessBoardBase mChessBoardModel;
   private WindowInterface mWindow;
   private HashMap<URL, Icon> mCachedIcon;
