@@ -16,7 +16,7 @@ public class Main {
       // Do nothing.
     }
 
-    String filePath = args[0];
+    String filePath = args.length > 0 ? args[0] : "/board.conf";
 
     ChessBoard chessBoardView = new ChessBoard(8, 8);
     Window window = new Window("Chess Game!!", chessBoardView);
