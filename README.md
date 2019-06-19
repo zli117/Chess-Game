@@ -43,8 +43,8 @@ Chess Game as a show case for OOP design
  * Run Jar:
    * `cd` into `build/libs/`.
    * Run `java -jar chess-game-1.0-SNAPSHOT.jar`
-   * If needed, select custom files in `File > Open config file` or `Ctrl-o` once game window is 
-     visible. 
+   * If needed, select custom board config in `File > Open config file` or `Ctrl-o` once game window 
+     is visible. 
  
  * Run tests:
    * If you want to skip manual tests, set the env variable `SKIP_GUI=True`.
@@ -52,6 +52,7 @@ Chess Game as a show case for OOP design
    ```bash
    ./gradlew test
    ```
+   * Follow instructions to perform manual tests cases.
  
 ## Create custom board config:
 
