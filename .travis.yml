@@ -9,3 +9,6 @@ script:
   - ./gradlew test
   - ./gradlew checkstyleMain
   - ./gradlew checkstyleTest
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
