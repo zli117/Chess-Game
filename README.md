@@ -15,6 +15,7 @@ Chess Game as a show case for OOP design
 
 ## Design:
 
+ * Design is aimed for high cohesion within module and low coupling between modules.
  * MVC architecture: 
    * Model: The chess board, chess rules, all the pieces. Under [model](src/main/java/model) directory.
    * View: The chess board UI, window and control widgets. Under [view](src/main/java/view) directory.
