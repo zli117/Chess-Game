@@ -1,4 +1,4 @@
-# Chess Game [![Build Status](https://travis-ci.com/zli117/Chess-Game.svg?token=j4y2W3bQxnm7LkxGR6Um&branch=master)](https://travis-ci.com/zli117/Chess-Game)
+# Chess Game [![Build Status](https://travis-ci.com/zli117/Chess-Game.svg?token=j4y2W3bQxnm7LkxGR6Um&branch=master)](https://travis-ci.com/zli117/Chess-Game) [![codecov](https://codecov.io/gh/zli117/Chess-Game/branch/master/graph/badge.svg)](https://codecov.io/gh/zli117/Chess-Game)
 
 Chess Game as a show case for OOP design
 
