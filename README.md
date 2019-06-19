@@ -52,7 +52,7 @@ Chess Game as a show case for OOP design
    ```bash
    ./gradlew test
    ```
-   * Follow instructions to perform manual tests cases.
+   * Follow instructions to perform manual tests.
  
 ## Create Custom Board Config:
 
