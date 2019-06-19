@@ -54,7 +54,7 @@ Chess Game as a show case for OOP design
    ```
    * Follow instructions to perform manual tests cases.
  
-## Create custom board config:
+## Create Custom Board Config:
 
 * Example board configs are: [board.conf](src/main/resources/board.conf), 
   [board_with_jumper.conf](src/main/resources/board_with_jumper.conf), and 
