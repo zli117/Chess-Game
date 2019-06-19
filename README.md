@@ -32,7 +32,6 @@ Chess Game as a show case for OOP design
 
  * Requires JRE and JDK version 1.8+
  * Build jar: (in root directory)
- 
  ```bash
  chmod +x gradlew
  # Disable step by step manual test when building
@@ -45,7 +44,7 @@ Chess Game as a show case for OOP design
    * `cd` into `build/libs/`.
    * Run `java -jar chess-game-1.0-SNAPSHOT.jar`
    * If needed, select custom files in `File > Open config file` or `Ctrl-o` once game window is 
-     opened. 
+     visible. 
  
  * Run tests:
    * If you want to skip manual tests, set the env variable `SKIP_GUI=True`.
@@ -53,3 +52,13 @@ Chess Game as a show case for OOP design
    ```bash
    ./gradlew test
    ```
+ 
+## Create custom board config:
+
+* Example board configs are: [board.conf](src/main/resources/board.conf), 
+  [board_with_jumper.conf](src/main/resources/board_with_jumper.conf), and 
+  [board_with_squeen.conf](src/main/resources/board_with_squeen.conf)
+* The first two lines are board height and width respectively
+* The third line is the board type. Currently only supports `StandardChessBoard`.
+* The following lines each represents the config of a row. Each piece is comma separated. Piece 
+  representation follows format: `<piece name>_<piece side>`.
