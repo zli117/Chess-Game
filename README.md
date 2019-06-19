@@ -1,4 +1,4 @@
-# Chess Game [![Build Status](https://travis-ci.com/zli117/Chess-Game.svg?token=j4y2W3bQxnm7LkxGR6Um&branch=master)](https://travis-ci.com/zli117/Chess-Game)
+# Chess Game [![Build Status](https://travis-ci.com/zli117/Chess-Game.svg?token=j4y2W3bQxnm7LkxGR6Um&branch=master)](https://travis-ci.com/zli117/Chess-Game) [![codecov](https://codecov.io/gh/zli117/Chess-Game/branch/master/graph/badge.svg)](https://codecov.io/gh/zli117/Chess-Game)
 
 Chess Game as a show case for OOP design
 
@@ -15,6 +15,7 @@ Chess Game as a show case for OOP design
 
 ## Design:
 
+ * Design is aimed for high cohesion within module and low coupling between modules.
  * MVC architecture: 
    * Model: The chess board, chess rules, all the pieces. Under [model](src/main/java/model) directory.
    * View: The chess board UI, window and control widgets. Under [view](src/main/java/view) directory.
@@ -52,7 +53,7 @@ Chess Game as a show case for OOP design
    ```bash
    ./gradlew test
    ```
-   * Follow instructions to perform manual tests cases.
+   * Follow instructions to perform manual tests.
  
 ## Create Custom Board Config:
 
